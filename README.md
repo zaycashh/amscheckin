@@ -1,2 +1,2 @@
 # amscheckin
-AMS Drug Test Check-In Web App
+AMS Check-In Web App
