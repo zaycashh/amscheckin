@@ -323,8 +323,27 @@
       </p>
 
       <div style="display:flex; gap:10px; margin-top:10px;">
-    <button type="button" class="reset-btn" onclick="resetForm()">Reset Form</button>
-    <button id="submitBtn">Submit Check-In</button>
+
+    <!-- Submit Button (unchanged) -->
+    <button id="submitBtn" style="flex:1;">
+        Submit Check-In
+    </button>
+
+    <!-- Reset Button (RED) -->
+    <button type="button"
+            onclick="resetForm()"
+            style="
+                flex:1;
+                background:#d9534f;
+                color:white;
+                padding:12px;
+                border:none;
+                border-radius:6px;
+                font-size:1rem;
+                cursor:pointer;">
+        Reset Form
+    </button>
+
 </div>
 
       <p id="submitMessage" class="small-text"></p>
