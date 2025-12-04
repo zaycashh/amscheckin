@@ -238,6 +238,25 @@
       audio.volume = 0.35;
       audio.play().catch(e=>console.log(e));
     }
+    
+    function resetForm() {
+    // Clear all text inputs
+    document.querySelectorAll("input[type='text']").forEach(i => i.value = "");
+
+    // Reset dropdowns
+    document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+
+    // Clear signature pad
+    const clearBtn = document.getElementById("clearSigBtn");
+    if (clearBtn) clearBtn.click();
+
+    // Clear status message
+    const msg = document.getElementById("submitMessage");
+    if (msg) msg.innerText = "";
+
+    alert("Form has been reset.");
+}
+
   </script>
 </head>
 <body>
@@ -303,7 +322,11 @@
         Donor must sign above. Date &amp; time in are recorded automatically when you tap "Submit Check-In".
       </p>
 
-      <button id="submitBtn">Submit Check-In</button>
+      <div style="display:flex; gap:10px; margin-top:10px;">
+    <button type="button" class="reset-btn" onclick="resetForm()">Reset Form</button>
+    <button id="submitBtn">Submit Check-In</button>
+</div>
+
       <p id="submitMessage" class="small-text"></p>
     </section>
 
