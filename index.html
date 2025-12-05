@@ -903,35 +903,79 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
 
     function renderCompanyListDisplay() {
     const container = document.getElementById("companyListDisplay");
-    const searchValue = document.getElementById("companySearch").value.toLowerCase();
-    const companies = loadCompanyList();
+    const searchValue = document.getElementById("companySearch")?.value.toLowerCase() || "";
+    let companies = loadCompanyList();
 
     if (!companies.length) {
         container.innerHTML = "<p>No companies added yet.</p>";
         return;
     }
 
+    // FILTER LIST
     const filtered = companies.filter(c => c.toLowerCase().includes(searchValue));
 
+    // BUILD HTML LIST
     container.innerHTML = filtered
         .map(c => `
-            <div class="company-item" style="margin: 4px 0; display:flex; justify-content:space-between; align-items:center;">
+            <div class="company-item" 
+                 style="margin: 4px 0; display:flex; justify-content:space-between; align-items:center;">
+                
                 <span>${c}</span>
 
                 <div>
-                    <button class="editCompanyBtn" data-company="${c}" style="margin-right:6px;">Edit</button>
-                    <button class="deleteCompanyBtn" data-company="${c}" style="background:#c00; color:white;">Delete</button>
+                    <button class="editCompanyBtn" data-name="${c}" 
+                        style="margin-right:6px;">Edit</button>
+                    
+                    <button class="deleteCompanyBtn" data-name="${c}" 
+                        style="background:#d9534f; color:white;">Delete</button>
                 </div>
             </div>
         `)
         .join("");
-}
-    // LIVE SEARCH
-const searchInput = document.getElementById("companySearch");
 
-if (searchInput) {
-    searchInput.addEventListener("input", () => {
-        renderCompanyListDisplay();
+    // -----------------------------
+    // ADD EVENT LISTENERS HERE
+    // -----------------------------
+
+    // EDIT BUTTONS
+    document.querySelectorAll(".editCompanyBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const oldName = btn.dataset.name;
+            const newName = prompt("Edit company name:", oldName);
+
+            if (!newName || newName.trim() === "") return;
+
+            const clean = newName.trim();
+
+            // Prevent duplicates
+            if (companies.includes(clean) && clean !== oldName) {
+                alert("This company already exists.");
+                return;
+            }
+
+            const idx = companies.indexOf(oldName);
+            if (idx !== -1) {
+                companies[idx] = clean;
+                companies.sort((a, b) => a.localeCompare(b));
+                saveCompanyList(companies);
+                renderCompanySelect();
+                renderCompanyListDisplay();
+            }
+        });
+    });
+
+    // DELETE BUTTONS
+    document.querySelectorAll(".deleteCompanyBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const name = btn.dataset.name;
+
+            if (!confirm(`Remove "${name}" from the company list?`)) return;
+
+            companies = companies.filter(c => c !== name);
+            saveCompanyList(companies);
+            renderCompanySelect();
+            renderCompanyListDisplay();
+        });
     });
 }
 
