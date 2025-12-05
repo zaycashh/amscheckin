@@ -775,7 +775,7 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
 
     function buildTableHtmlFromRecords(records, includeSignature) {
       let html = '<table border="1" cellspacing="0" cellpadding="4"><thead><tr>';
-      html += '<th>Date</th><th>Time In</th><th>First</th><th>Last</th><th>Company</th><th>Reason</th>';
+      html += '<th>Date</th><th>Time In</th><th>First</th><th>Last</th><th>Company</th><th>Reason</th><th>Services</th>';
       if (includeSignature) html += '<th>Signature</th>';
       html += '</tr></thead><tbody>';
       records.forEach(rec => {
@@ -787,6 +787,7 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
         html += '<td>' + htmlEscape(rec.lastName) + '</td>';
         html += '<td>' + htmlEscape(rec.company) + '</td>';
         html += '<td>' + htmlEscape(rec.reason || '') + '</td>';
+        html += `<td>${formatServices(rec.serviceTypes)}</td>`;
         if (includeSignature) {
           html += '<td>' + (rec.signatureDataUrl ? 'Yes' : 'No') + '</td>';
         }
