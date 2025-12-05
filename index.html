@@ -293,6 +293,42 @@
           <select id="companySelect">
           </select>
         </div>
+        </div>  <!-- END of Company Row -->
+
+<!-- PASTE SERVICE CHECKBOXES HERE -->
+<div class="service-options" style="margin-top:15px;">
+    <label style="font-weight:bold;">Service Type</label>
+
+    <!-- Row 1 -->
+<div style="display:flex; gap:25px; margin-top:10px; align-items:center;">
+    <label><input type="checkbox" name="service_drug"> Drug</label>
+    <label><input type="checkbox" name="service_dna"> DNA</label>
+    <label><input type="checkbox" name="service_vision"> Vision</label>
+</div>
+
+<!-- Row 2 -->
+<div style="display:flex; gap:25px; margin-top:10px; align-items:center;">
+
+    <label><input type="checkbox" name="service_alcohol"> Alcohol</label>
+    <label><input type="checkbox" name="service_dot"> DOT Physical</label>
+
+    <label>
+        <input type="checkbox" id="service_other" onclick="toggleOtherInput()"> Other
+    </label>
+    <input
+        type="text"
+        id="other_reason"
+        placeholder="Enter reason..."
+        style="display:none; padding:4px; border:1px solid #ccc; border-radius:5px;"
+    />
+
+</div>
+
+<!-- END OF SERVICE CHECKBOXES -->
+
+<label for="reasonSelect">Reason for Testing</label>
+<select id="reasonSelect">
+
         <div class="col-6" id="otherCompanyWrapper" style="display:none;">
           <label for="otherCompany">Other Company (type in)</label>
           <input id="otherCompany" type="text" autocomplete="off" />
@@ -544,9 +580,22 @@
   </main>
 
   <script>
-    const STORAGE_KEY = 'drug_test_checkins_v2';
-    const COMPANY_LIST_KEY = 'drug_test_company_list_v1';
-    const OTHER_COMPANY_VALUE = '__OTHER__';
+
+function toggleOtherInput() {
+  const checkbox = document.getElementById("service_other");
+  const input = document.getElementById("other_reason");
+
+  if (checkbox.checked) {
+    input.style.display = "block";
+  } else {
+    input.style.display = "none";
+    input.value = "";
+  }
+}
+
+const STORAGE_KEY = 'drug_test_checkins_v2';
+const COMPANY_LIST_KEY = 'drug_test_company_list_v1';
+const OTHER_COMPANY_VALUE = '__OTHER__';
 
     // CHANGE THIS PIN IF YOU WANT A DIFFERENT ADMIN CODE
     const ADMIN_PIN = '2468';
