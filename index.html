@@ -1289,6 +1289,8 @@ const services = {
     signatureDataUrl,
     timestamp: new Date().toISOString()
 };
+addRecord(record);
+          
 document.querySelectorAll('.service-options input[type="checkbox"]').forEach(cb => {
     cb.checked = false;
 });
