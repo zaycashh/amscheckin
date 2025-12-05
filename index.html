@@ -241,10 +241,25 @@
     
     function resetForm() {
     // Clear all text inputs
-    document.querySelectorAll("input[type='text']").forEach(i => i.value = "");
+    document.querySelectorAll('input[type="text"]').forEach(i => i.value = "");
 
     // Reset dropdowns
     document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+
+    // Clear ALL checkboxes (service checkboxes + "other")
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+
+    // Hide "Other Company" field
+    const otherCompanyWrapper = document.getElementById("otherCompanyWrapper");
+    const otherCompanyInput = document.getElementById("otherCompany");
+    if (otherCompanyWrapper) otherCompanyWrapper.style.display = "none";
+    if (otherCompanyInput) otherCompanyInput.value = "";
+
+    // Hide "Other Reason" field
+    const otherReasonWrapper = document.getElementById("otherReasonWrapper");
+    const otherReasonInput = document.getElementById("otherReasonInput");
+    if (otherReasonWrapper) otherReasonWrapper.style.display = "none";
+    if (otherReasonInput) otherReasonInput.value = "";
 
     // Clear signature pad
     const clearBtn = document.getElementById("clearSigBtn");
@@ -252,7 +267,7 @@
 
     // Clear status message
     const msg = document.getElementById("submitMessage");
-    if (msg) msg.innerText = "";
+    if (msg) msg.textContent = "";
 
     alert("Form has been reset.");
 }
