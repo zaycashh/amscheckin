@@ -1249,18 +1249,31 @@ if (!reason) {
           }
 
           const signatureDataUrl = sigPad.getDataUrl();
+          // Collect service checkboxes
+const services = {
+  drug: document.querySelector('input[name="service_drug"]').checked,
+  dna: document.querySelector('input[name="service_dna"]').checked,
+  vision: document.querySelector('input[name="service_vision"]').checked,
+  alcohol: document.querySelector('input[name="service_alcohol"]').checked,
+  dot: document.querySelector('input[name="service_dot"]').checked,
+  other: document.getElementById("service_other").checked,
+  otherText: document.getElementById("other_reason").value.trim()
+};
 
           const record = {
-            id: Date.now().toString(),
-            firstName,
-            lastName,
-            company,
-            reason,
-            signatureDataUrl,
-            timestamp: new Date().toISOString()
-          };
-          addRecord(record);
-          signatureStore[record.id] = record.signatureDataUrl || '';
+    id: Date.now().toString(),
+    firstName,
+    lastName,
+    company,
+    reason,
+
+    // SAVE SERVICES
+    serviceTypes: services,
+
+    signatureDataUrl,
+    timestamp: new Date().toISOString()
+};
+
 
           playSubmitSound();
 
