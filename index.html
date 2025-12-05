@@ -592,16 +592,18 @@ function toggleOtherInput() {
 }
 
 function toggleOtherReason() {
-    const select = document.getElementById("reasonSelect");
-    const wrapper = document.getElementById("otherReasonWrapper");
-    const input = document.getElementById("otherReasonInput");
+  const select = document.getElementById("reasonSelect");
+  const wrapper = document.getElementById("otherReasonWrapper");
+  const input = document.getElementById("otherReasonInput");
 
-    if (select.value.includes("Other")) {
-        wrapper.style.display = "block";
-    } else {
-        wrapper.style.display = "none";
-        input.value = "";
-    }
+  if (select.value.includes("Other")) {
+    wrapper.style.display = "block";
+    input.required = true;   // Require when visible
+  } else {
+    wrapper.style.display = "none";
+    input.required = false;
+    input.value = "";        // Clear field when not in use
+  }
 }
 
 const STORAGE_KEY = 'drug_test_checkins_v2';
@@ -1205,11 +1207,25 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
             }
             company = otherCompany;
           }
-          if (!reason) {
-            msg.textContent = 'Please select a reason for testing.';
-            msg.style.color = 'red';
-            return;
-          }
+          // Handle manual "Other Reason"
+const otherReasonInput = document.getElementById("otherReasonInput");
+if (reason && reason.includes("Other")) {
+    if (!otherReasonInput || otherReasonInput.value.trim() === "") {
+        msg.textContent = "Please enter the reason for testing.";
+        msg.style.color = "red";
+        return;
+    }
+
+    // Override dropdown value with the typed reason
+    reason = otherReasonInput.value.trim();
+}
+
+// Normal reason validation
+if (!reason) {
+    msg.textContent = 'Please select a reason for testing.';
+    msg.style.color = 'red';
+    return;
+}
 
           if (!sigPad || !sigPad.hasSignature()) {
             msg.textContent = 'Please capture donor signature before submitting.';
