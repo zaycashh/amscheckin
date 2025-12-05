@@ -669,6 +669,19 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
       const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       return { date, time };
     }
+    
+    function formatServices(services) {
+  if (!services) return "";
+  const list = [];
+  if (services.drug) list.push("Drug");
+  if (services.dna) list.push("DNA");
+  if (services.vision) list.push("Vision");
+  if (services.alcohol) list.push("Alcohol");
+  if (services.dot) list.push("DOT Physical");
+  if (services.other) list.push("Other");
+  if (services.otherText) list.push(services.otherText);
+  return list.join(", ");
+}
 
     function refreshRecentTable() {
       const tbody = document.querySelector('#recentTable tbody');
