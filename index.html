@@ -330,7 +330,7 @@
 <!-- END OF SERVICE CHECKBOXES -->
 
       <label for="reasonSelect">Reason for Testing</label>
-      <select id="reasonSelect">
+      <select id="reasonSelect" onchange="toggleOtherReason()">
         <option value="">-- Select reason --</option>
         <option value="Pre-employment">Pre-employment</option>
         <option value="Random">Random</option>
@@ -340,6 +340,10 @@
         <option value="Follow up">Follow up</option>
         <option value="Other (personal)">Other (personal)</option>
       </select>
+      <div id="otherReasonWrapper" style="display:none; margin-top:10px;">
+          <label for="otherReasonInput">Other Reason (type manually)</label>
+          <input id="otherReasonInput" type="text" placeholder="Enter other reason..." autocomplete="off" />
+      </div>
 
       <label for="signaturePad">Donor Signature</label>
       <div id="signatureWrapper">
@@ -585,6 +589,19 @@ function toggleOtherInput() {
     input.style.display = "none";
     input.value = "";
   }
+}
+
+function toggleOtherReason() {
+    const select = document.getElementById("reasonSelect");
+    const wrapper = document.getElementById("otherReasonWrapper");
+    const input = document.getElementById("otherReasonInput");
+
+    if (select.value.includes("Other")) {
+        wrapper.style.display = "block";
+    } else {
+        wrapper.style.display = "none";
+        input.value = "";
+    }
 }
 
 const STORAGE_KEY = 'drug_test_checkins_v2';
