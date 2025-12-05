@@ -1201,7 +1201,7 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
           const lastName = document.getElementById('lastName').value.trim();
           const companyValue = companySelect.value;
           const otherCompany = document.getElementById('otherCompany').value.trim();
-          const reason = document.getElementById('reasonSelect').value;
+          let reason = document.getElementById('reasonSelect').value;
 
           if (!firstName || !lastName) {
             msg.textContent = 'Please fill in first and last name.';
