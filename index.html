@@ -247,7 +247,7 @@
     document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
 
     // Clear ALL checkboxes (service checkboxes + "other")
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.service-options input[type="checkbox"]').forEach(cb => cb.checked = false);
 
     // Hide "Other Company" field
     const otherCompanyWrapper = document.getElementById("otherCompanyWrapper");
