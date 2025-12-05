@@ -1273,7 +1273,20 @@ const services = {
     signatureDataUrl,
     timestamp: new Date().toISOString()
 };
+// CLEAR SERVICE CHECKBOXES ON SUBMIT
+document.querySelectorAll('.service-type input[type="checkbox"]').forEach(cb => {
 
+// CLEAR OTHER REASON INPUT
+document.getElementById('otherReasonInput').value = '';
+document.getElementById('otherReasonWrapper').style.display = 'none';
+
+// CLEAR SERVICE "OTHER" TEXT INPUT
+document.getElementById('other_reason').value = '';
+document.getElementById('other_reason').style.display = 'none';
+document.getElementById('service_other').checked = false;
+
+// CLEAR SIGNATURE
+if (sigPad) sigPad.clear();
 
           playSubmitSound();
 
