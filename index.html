@@ -290,10 +290,14 @@
       <div class="row">
         <div class="col-6">
           <label for="companySelect">Company (Employer)</label>
-          <select id="companySelect">
+          <select id="companySelect" onchange="toggleOtherCompany()">
           </select>
-        </div>
-        </div>  <!-- END of Company Row -->
+          <div class="col-6" id="otherCompanyWrapper" style="display:none; margin-top:10px;">
+    <label for="otherCompany">Other Company (type manually)</label>
+    <input id="otherCompany" type="text" placeholder="Enter company name..." autocomplete="off" />
+</div>
+        
+          <!-- END of Company Row -->
 
 <!-- PASTE SERVICE CHECKBOXES HERE -->
 <div class="service-options" style="margin-top:15px;">
