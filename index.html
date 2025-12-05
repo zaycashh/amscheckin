@@ -586,11 +586,20 @@
           </div>
         </div>
         <p class="small-text">
-          These companies appear in the dropdown for donors. There is also an "Other" option for new companies.
-        </p>
-        <div class="tag-list" id="companyListDisplay"></div>
-      </section>
-    </div>
+    These companies appear in the dropdown for donors. You can add, edit, delete, or search companies below.
+</p>
+
+<!-- 🔍 Search bar -->
+<input 
+    type="text" 
+    id="companySearch" 
+    placeholder="Search company..." 
+    style="width: 100%; padding: 6px; margin-bottom: 10px;"
+/>
+
+<!-- Company List Display -->
+<div id="companyListDisplay" class="tag-list"></div>
+
   </main>
 
   <script>
@@ -893,82 +902,31 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
     }
 
     function renderCompanyListDisplay() {
-    const container = document.getElementById('companyListDisplay');
+    const container = document.getElementById("companyListDisplay");
+    const searchValue = document.getElementById("companySearch").value.toLowerCase();
     const companies = loadCompanyList();
 
     if (!companies.length) {
-        container.textContent = "No companies added yet.";
+        container.innerHTML = "<p>No companies added yet.</p>";
         return;
     }
 
-    container.innerHTML = "";
+    const filtered = companies.filter(c => c.toLowerCase().includes(searchValue));
 
-    companies.forEach((name, index) => {
-        const row = document.createElement("div");
-        row.style.display = "flex";
-        row.style.alignItems = "center";
-        row.style.marginBottom = "6px";
-        row.style.gap = "8px";
+    container.innerHTML = filtered
+        .map(c => `
+            <div class="company-item" style="margin: 4px 0; display:flex; justify-content:space-between; align-items:center;">
+                <span>${c}</span>
 
-        // Company name badge
-        const badge = document.createElement("span");
-        badge.textContent = name;
-        badge.style.padding = "4px 10px";
-        badge.style.borderRadius = "999px";
-        badge.style.background = "#e3f2fd";
-        badge.style.color = "#1E3A59";
-        badge.style.fontSize = "0.85rem";
-        badge.style.flex = "1";
-
-        // EDIT button
-        const editBtn = document.createElement("button");
-        editBtn.textContent = "Edit";
-        editBtn.style.padding = "4px 8px";
-        editBtn.style.fontSize = "0.75rem";
-        editBtn.style.background = "#D9A441";
-        editBtn.style.color = "white";
-        editBtn.style.border = "none";
-        editBtn.style.borderRadius = "6px";
-        editBtn.style.cursor = "pointer";
-
-        editBtn.onclick = () => {
-            const newName = prompt("Edit company name:", name);
-            if (newName && newName.trim() !== "") {
-                companies[index] = newName.trim();
-                companies.sort((a, b) => a.localeCompare(b));
-                saveCompanyList(companies);
-                renderCompanySelect();
-                renderCompanyListDisplay();
-            }
-        };
-
-        // DELETE button
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Delete";
-        deleteBtn.style.padding = "4px 8px";
-        deleteBtn.style.fontSize = "0.75rem";
-        deleteBtn.style.background = "#d9534f";
-        deleteBtn.style.color = "white";
-        deleteBtn.style.border = "none";
-        deleteBtn.style.borderRadius = "6px";
-        deleteBtn.style.cursor = "pointer";
-
-        deleteBtn.onclick = () => {
-            if (confirm(`Remove "${name}" from company list?`)) {
-                companies.splice(index, 1);
-                saveCompanyList(companies);
-                renderCompanySelect();
-                renderCompanyListDisplay();
-            }
-        };
-
-        row.appendChild(badge);
-        row.appendChild(editBtn);
-        row.appendChild(deleteBtn);
-
-        container.appendChild(row);
-    });
+                <div>
+                    <button class="editCompanyBtn" data-company="${c}" style="margin-right:6px;">Edit</button>
+                    <button class="deleteCompanyBtn" data-company="${c}" style="background:#c00; color:white;">Delete</button>
+                </div>
+            </div>
+        `)
+        .join("");
 }
+    
     function setDateRangePreset(preset) {
       const startInput = document.getElementById('reportStart');
       const endInput = document.getElementById('reportEnd');
@@ -1417,19 +1375,28 @@ if (sigPad) sigPad.clear();
       if (clearReportBtn) clearReportBtn.addEventListener('click', clearReport);
 
       if (addCompanyBtn) addCompanyBtn.addEventListener('click', () => {
-        const input = document.getElementById('newCompany');
-        const name = input.value.trim();
-        if (!name) return;
-        const list = loadCompanyList();
-        if (!list.includes(name)) {
-          list.push(name);
-          list.sort((a, b) => a.localeCompare(b));
-          saveCompanyList(list);
-          renderCompanySelect();
-          renderCompanyListDisplay();
-        }
-        input.value = '';
-      });
+    const input = document.getElementById('newCompany');
+    const name = input.value.trim();
+    if (!name) return;
+
+    const list = loadCompanyList();
+
+    // Prevent duplicates
+    if (list.includes(name)) {
+        alert("This company already exists in the list.");
+        return;
+    }
+
+    // Add new company
+    list.push(name);
+    list.sort((a, b) => a.localeCompare(b));
+
+    saveCompanyList(list);
+    renderCompanySelect();
+    renderCompanyListDisplay();
+
+    input.value = "";
+});
 
       // Delegate click for signature View buttons
       document.body.addEventListener('click', (e) => {
