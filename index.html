@@ -926,7 +926,15 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
         `)
         .join("");
 }
-    
+    // LIVE SEARCH
+const searchInput = document.getElementById("companySearch");
+
+if (searchInput) {
+    searchInput.addEventListener("input", () => {
+        renderCompanyListDisplay();
+    });
+}
+
     function setDateRangePreset(preset) {
       const startInput = document.getElementById('reportStart');
       const endInput = document.getElementById('reportEnd');
