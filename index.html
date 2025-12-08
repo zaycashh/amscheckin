@@ -771,6 +771,8 @@ input:focus, select:focus {
   </section>
 
 </div>
+  
+  <script>
 /* ============================================================
    PART 3A — CORE SYSTEM ENGINE
    Handles:
@@ -1305,25 +1307,10 @@ function drawLineChart(canvasId, labels, values) {
 ============================================================ */
 function refreshCharts() {
   /* ---- 30 DAY HISTORY ---- */
-  const last30 = build30DayData();
-  const labels30 = last30.map(x => ""); // clean minimal labels
-  const values30 = last30.map(x => x[1]);
+drawLineChart("chart_daily", labels30, values30);
+drawBarChart("chart_companies", labelsTop, valuesTop, "#D9A441");
+drawBarChart("chart_services", labelsSvc, valuesSvc, "#4F8C47");
 
-  drawLineChart("chart30day", labels30, values30);
-
-  /* ---- TOP 5 COMPANIES ---- */
-  const top5 = buildTopCompanies();
-  const labelsTop = top5.map(x => x[0]);
-  const valuesTop = top5.map(x => x[1]);
-
-  drawBarChart("chartCompanies", labelsTop, valuesTop, "#D9A441");
-
-  /* ---- SERVICE BREAKDOWN ---- */
-  const svc = buildServiceBreakdown();
-  const labelsSvc = Object.keys(svc);
-  const valuesSvc = Object.values(svc);
-
-  drawBarChart("chartServices", labelsSvc, valuesSvc, "#4F8C47");
 }
 
 /* ============================================================
@@ -1519,9 +1506,71 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+    /* -------------------------
+     DEFAULT TAB
+  -------------------------- */
+  showTab("dashboardTab");
+
+  /* -------------------------
+     ADMIN LOGIN BUTTON
+  -------------------------- */
+  const adminBtn = document.getElementById("toggleAdminBtn");
+  if (adminBtn)
+    adminBtn.addEventListener("click", adminLogin);
+
+  /* -------------------------
+     SUBMIT CHECK-IN
+  -------------------------- */
+  const submitBtn = document.getElementById("submitBtn");
+  if (submitBtn)
+    submitBtn.addEventListener("click", submitCheckin);
+
+  /* -------------------------
+     RESET BUTTON
+  -------------------------- */
+  const resetBtn = document.getElementById("resetBtn");
+  if (resetBtn)
+    resetBtn.addEventListener("click", resetFormUI);
+
+  /* -------------------------
+     SEARCH BUTTON
+  -------------------------- */
+  const searchBtn = document.getElementById("searchBtn");
+  if (searchBtn)
+    searchBtn.addEventListener("click", runSearch);
+
+  /* -------------------------
+     REPORT BUTTON
+  -------------------------- */
+  const reportBtn = document.getElementById("runReportBtn");
+  if (reportBtn)
+    reportBtn.addEventListener("click", runReport);
+
+  /* -------------------------
+     EXPORT ALL XLS
+  -------------------------- */
+  const exportAllBtn = document.getElementById("exportXlsBtn");
+  if (exportAllBtn)
+    exportAllBtn.addEventListener("click", exportAllAsXls);
+
+  /* -------------------------
+     EXPORT REPORT XLS
+  -------------------------- */
+  const exportReportBtn = document.getElementById("exportReportXlsBtn");
+  if (exportReportBtn)
+    exportReportBtn.addEventListener("click", exportReportAsXls);
+
+  /* -------------------------
+     INITIAL DASHBOARD LOAD
+  -------------------------- */
+  refreshDashboard();
+
+}); // END DOMContentLoaded
+
   /* -------------------------
      DEFAULT TAB
   -------------------------- */*
-
+</script>
+  
 </body>
 </html>
