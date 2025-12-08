@@ -319,27 +319,28 @@
     <label style="font-weight:bold;">Service Type</label>
 
     <!-- Row 1 -->
-<div style="display:flex; gap:25px; margin-top:10px; align-items:center;">
-    <label><input type="checkbox" name="service_drug"> Drug</label>
-    <label><input type="checkbox" name="service_dna"> DNA</label>
-    <label><input type="checkbox" name="service_vision"> Vision</label>
-</div>
+    <div style="display:flex; gap:25px; margin-top:10px; align-items:center;">
+        <label><input type="checkbox" name="service_drug"> Drug Test</label>
+        <label><input type="checkbox" name="service_dna"> DNA Paternity Test</label>
+        <label><input type="checkbox" name="service_vision"> Vision Test</label>
+    </div>
 
-<!-- Row 2 -->
-<div style="display:flex; gap:25px; margin-top:10px; align-items:center;">
-    <label><input type="checkbox" name="service_alcohol"> Alcohol</label>
-    <label><input type="checkbox" name="service_dot"> DOT Physical</label>
+    <!-- Row 2 -->
+    <div style="display:flex; gap:25px; margin-top:10px; align-items:center;">
+        <label><input type="checkbox" name="service_alcohol"> Alcohol Test</label>
+        <label><input type="checkbox" name="service_dot"> DOT Physical</label>
 
-    <label>
-        <input type="checkbox" id="service_other" onclick="toggleOtherInput()"> Other
-    </label>
-    <input
-        type="text"
-        id="other_reason"
-        placeholder="Enter reason..."
-        style="display:none; padding:4px; border:1px solid #ccc; border-radius:5px;"
-    />
+        <label>
+            <input type="checkbox" id="service_other" onclick="toggleOtherInput()"> Other
+        </label>
 
+        <input
+            type="text"
+            id="other_reason"
+            placeholder="Enter reason..."
+            style="display:none; padding:4px; border:1px solid #ccc; border-radius:5px;"
+        />
+    </div>
 </div> 
 
 <!-- END OF SERVICE CHECKBOXES -->
