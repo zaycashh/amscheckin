@@ -7,7 +7,7 @@
 
 <style>
 /* -------------------------------
-   GLOBAL STYLES + DARK MODE
+   GLOBAL STYLES
 --------------------------------*/
 :root {
   --bg: #f5f5f5;
@@ -17,13 +17,6 @@
   --accent-gold: #D9A441;
   --navy: #1E3A59;
   --border: #ddd;
-}
-
-body.dark {
-  --bg: #0f1215;
-  --card: #1b1f23;
-  --text: #e6e6e6;
-  --border: #333;
 }
 
 body {
@@ -71,16 +64,6 @@ header {
   color: var(--navy);
   font-size: 0.8rem;
   font-style: italic;
-}
-
-/* DARK MODE BUTTON */
-#darkToggle {
-  background: var(--navy);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  border: none;
 }
 
 /* -------------------------------
@@ -217,8 +200,6 @@ th {
   </div>
 
   <div class="tagline">Your One Stop Compliance Shop</div>
-
-  <button id="darkToggle">Dark Mode</button>
 </header>
 
 <!-- --------------------------------
@@ -329,26 +310,13 @@ th {
 <script>
 
 /* -------------------------------
-   DARK MODE TOGGLE
---------------------------------*/
-const darkToggle = document.getElementById("darkToggle");
-
-if (localStorage.getItem("ams_dark") === "1") {
-  document.body.classList.add("dark");
-}
-
-darkToggle.onclick = () => {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("ams_dark", document.body.classList.contains("dark") ? "1" : "0");
-};
-
-/* -------------------------------
    COLLAPSIBLE ADMIN SECTIONS
 --------------------------------*/
 document.querySelectorAll(".admin-header").forEach(header => {
   header.addEventListener("click", () => {
     const content = header.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
+    content.style.display =
+      content.style.display === "block" ? "none" : "block";
   });
 });
 
@@ -356,6 +324,7 @@ document.querySelectorAll(".admin-header").forEach(header => {
    ADMIN LOGIN
 --------------------------------*/
 const ADMIN_PIN = "2468";
+
 document.getElementById("adminLogin").onclick = () => {
   const pin = prompt("Enter admin PIN:");
   if (pin === ADMIN_PIN) {
