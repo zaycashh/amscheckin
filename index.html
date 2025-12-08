@@ -1,1473 +1,1527 @@
-<!DOCTYPE html>
+  <!-- ===========================
+     AMS CHECK-IN SYSTEM (A-3)
+     PREMIUM STYLE 2 (NAVY + GOLD)
+     TOP TAB NAVIGATION (STYLE A)
+     =========================== -->
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-      color: #222;
-    }
-    header {
-      background: #ffffff;
-      border-bottom: 4px solid #4F8C47;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .header-logo {
-      height: 52px;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
-    .header-logo img {
-      height: 100%;
-      width: auto;
-      display: block;
-    }
-    .header-text-main {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #D9A441;
-      line-height: 1.2;
-    }
-    .header-text-sub {
-      font-size: 0.85rem;
-      color: #4F8C47;
-    }
-    .header-tagline {
-      font-size: 0.75rem;
-      color: #1E3A59;
-      font-style: italic;
-      text-align: right;
-      max-width: 180px;
-    }
-    main {
-      padding: 12px;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-      padding: 14px;
-      margin-bottom: 14px;
-      border-top: 3px solid #D9A441;
-    }
-    h2 {
-      font-size: 1.05rem;
-      margin-top: 0;
-      color: #1E3A59;
-    }
-    label {
-      display: block;
-      margin-top: 8px;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-    input, button, select {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px;
-      margin-top: 4px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    button {
-      background: #4F8C47;
-      color: white;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button.secondary {
-      background: #1E3A59;
-    }
-    button:active {
-      opacity: 0.85;
-    }
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .col-4 {
-      flex: 1 1 30%;
-    }
-    .col-6 {
-      flex: 1 1 48%;
-    }
-    .col-12 {
-      flex: 1 1 100%;
-    }
-    @media (max-width: 600px) {
-      .col-4, .col-6 {
-        flex: 1 1 100%;
-      }
-      .header-tagline {
-        display: none;
-      }
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 0.9rem;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 6px;
-      text-align: left;
-      white-space: nowrap;
-    }
-    th {
-      background: #f0f0f0;
-    }
-    .badge {
-      display: inline-block;
-      padding: 2px 6px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      background: #e3f2fd;
-      color: #1E3A59;
-      margin-left: 4px;
-    }
-    .small-text {
-      font-size: 0.8rem;
-      color: #666;
-    }
-    .actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
-    }
-    .actions-row button {
-      flex: 1 1 48%;
-    }
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    .pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid #4F8C47;
-      background: #eaf5ec;
-      font-size: 0.8rem;
-      cursor: pointer;
-      color: #1E3A59;
-    }
-    .summary-box {
-      margin-top: 8px;
-      padding: 8px;
-      border-radius: 8px;
-      background: #f7f9fc;
-      border: 1px solid #dde4f2;
-      font-size: 0.9rem;
-    }
-    .tag-list {
-      font-size: 0.8rem;
-      margin-top: 6px;
-      color: #555;
-    }
-    .admin-toggle-row {
-      text-align: right;
-      margin-bottom: 6px;
-    }
-    .admin-toggle-btn {
-      width: auto;
-      padding: 6px 10px;
-      font-size: 0.75rem;
-      background: #1E3A59;
-    }
-    #signatureWrapper {
-      position: relative;
-      margin-top: 6px;
-    }
-    #signaturePad {
-      width: 100%;
-      height: 140px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      background: #ffffff;
-      touch-action: none;
-      display: block;
-    }
-    #sigPlaceholder {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #888;
-      font-size: 16px;
-      pointer-events: none;
-    }
-    .sig-btn {
-      width: auto;
-      padding: 4px 8px;
-      font-size: 0.75rem;
-      background: #4F8C47;
-      color: #fff;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
-
-  <script>
-    // Soft clinic-style ding on submit
-    function playSubmitSound() {
-      var audio = new Audio("data:audio/wav;base64,UklGRoQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQwAAACAgICAgICAgICAgICAhISEhISEhISEhICAhISEhISEhISEhICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg");
-      audio.volume = 0.35;
-      audio.play().catch(e=>console.log(e));
-    }
-    
-    function resetForm() {
-    // Clear all text inputs
-    document.querySelectorAll('input[type="text"]').forEach(i => i.value = "");
-
-    // Reset dropdowns
-    document.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
-
-    // Clear ALL checkboxes (service checkboxes + "other")
-    document.querySelectorAll('.service-options input[type="checkbox"]').forEach(cb => cb.checked = false);
-
-    // Hide "Other Company" field
-    const otherCompanyWrapper = document.getElementById("otherCompanyWrapper");
-    const otherCompanyInput = document.getElementById("otherCompany");
-    if (otherCompanyWrapper) otherCompanyWrapper.style.display = "none";
-    if (otherCompanyInput) otherCompanyInput.value = "";
-
-    // Hide "Other Reason" field
-    const otherReasonWrapper = document.getElementById("otherReasonWrapper");
-    const otherReasonInput = document.getElementById("otherReasonInput");
-    if (otherReasonWrapper) otherReasonWrapper.style.display = "none";
-    if (otherReasonInput) otherReasonInput.value = "";
-
-    // Clear signature pad
-    const clearBtn = document.getElementById("clearSigBtn");
-    if (clearBtn) clearBtn.click();
-
-    // Clear status message
-    const msg = document.getElementById("submitMessage");
-    if (msg) msg.textContent = "";
-
-    alert("Form has been reset.");
-}
-
-  </script>
+  <title>AMS Check-In System</title>
+  
 </head>
+/* ================================
+   AMS PREMIUM STYLE 2 (NAVY + GOLD)
+   ================================ */
+
+/* COLOR PALETTE */
+:root {
+  --ams-navy: #1E3A59;
+  --ams-gold: #D9A441;
+  --ams-green: #4F8C47;
+  --ams-gray-light: #f5f5f5;
+  --ams-gray-mid: #ddd;
+  --ams-border: #e0e0e0;
+  --ams-text: #222;
+  --ams-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  --ams-radius: 10px;
+  --ams-transition: 0.25s ease;
+}
+
+/* ================================
+   BODY + GLOBAL
+================================ */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--ams-gray-light);
+  color: var(--ams-text);
+}
+
+/* Utility */
+.hidden { display: none !important; }
+.visible { display: block !important; }
+.bold { font-weight: 600; }
+
+/* ================================
+   HEADER
+================================ */
+.ams-header {
+  background: #ffffff;
+  padding: 12px 20px;
+  border-bottom: 4px solid var(--ams-green);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ams-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ams-logo {
+  height: 54px;
+  border-radius: 6px;
+  box-shadow: var(--ams-shadow);
+}
+
+.ams-header-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ams-gold);
+}
+
+.ams-header-sub {
+  font-size: 0.85rem;
+  color: var(--ams-green);
+}
+
+.ams-header-tag {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--ams-navy);
+}
+
+/* ================================
+   CARDS
+================================ */
+.ams-card {
+  background: #fff;
+  margin: 16px auto;
+  padding: 20px;
+  border-radius: var(--ams-radius);
+  box-shadow: var(--ams-shadow);
+  max-width: 960px;
+}
+
+/* ================================
+   FORM ELEMENTS
+================================ */
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--ams-navy);
+}
+
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--ams-border);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  outline: 2px solid var(--ams-gold);
+}
+
+.note {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+.btn-primary {
+  background: var(--ams-green);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--ams-transition);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: var(--ams-navy);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-secondary-small {
+  width: auto;
+  padding: 6px 12px;
+  margin-top: 6px;
+  background: var(--ams-navy);
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background: #d9534f;
+  color: white;
+  font-weight: 700;
+}
+
+.btn-admin {
+  background: var(--ams-navy);
+  color: white;
+  padding: 6px 12px;
+  width: auto;
+  border-radius: 6px;
+}
+
+/* ================================
+   GRID LAYOUT
+================================ */
+.row {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.col-4 { flex: 1 1 30%; }
+.col-6 { flex: 1 1 48%; }
+.col-12 { flex: 1 1 100%; }
+
+@media (max-width: 640px) {
+  .col-4, .col-6 { flex: 1 1 100%; }
+}
+
+/* ================================
+   SERVICE BLOCK
+================================ */
+.service-block {
+  background: #fafafa;
+  padding: 12px;
+  border-radius: var(--ams-radius);
+  margin-top: 12px;
+  border: 1px solid var(--ams-border);
+}
+
+.service-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* ================================
+   SIGNATURE PAD
+================================ */
+#signatureWrapper {
+  position: relative;
+  border: 1px solid var(--ams-border);
+  border-radius: var(--ams-radius);
+  height: 150px;
+  margin-top: 10px;
+  background: white;
+}
+
+#signaturePad {
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+#sigPlaceholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #888;
+  pointer-events: none;
+  font-size: 1rem;
+}
+
+/* ================================
+   ADMIN LOGIN
+================================ */
+.admin-login-row {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+}
+
+/* ================================
+   TABS (STYLE A)
+================================ */
+.tab-bar {
+  display: flex;
+  gap: 10px;
+  border-bottom: 3px solid var(--ams-gold);
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  background: #fff;
+  border: 1px solid var(--ams-border);
+  padding: 10px 18px;
+  border-radius: var(--ams-radius) var(--ams-radius) 0 0;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--ams-navy);
+  transition: var(--ams-transition);
+}
+
+.tab-btn.active {
+  background: var(--ams-gold);
+  color: white;
+  border-color: var(--ams-gold);
+}
+
+/* ================================
+   KPI BOXES (AMS GOLD)
+================================ */
+.kpi-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.kpi-box {
+  flex: 1 1 22%;
+  background: white;
+  border: 2px solid var(--ams-gold);
+  border-radius: var(--ams-radius);
+  padding: 18px;
+  text-align: center;
+  box-shadow: var(--ams-shadow);
+}
+
+.kpi-title {
+  color: var(--ams-gold);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.kpi-value {
+  color: var(--ams-navy);
+  font-size: 2rem;
+  font-weight: 900;
+  margin-top: 8px;
+}
+
+/* ================================
+   CHART BLOCKS
+================================ */
+.chart-block {
+  background: white;
+  padding: 18px;
+  border-radius: var(--ams-radius);
+  box-shadow: var(--ams-shadow);
+  margin-bottom: 30px;
+}
+
+.chart-block h3 {
+  color: var(--ams-navy);
+  margin-bottom: 12px;
+}
+
+/* ================================
+   TABLES
+================================ */
+.ams-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  box-shadow: var(--ams-shadow);
+  overflow-x: auto;
+}
+
+.ams-table th {
+  background: var(--ams-navy);
+  color: white;
+  padding: 10px;
+  font-size: 0.85rem;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.ams-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--ams-gray-mid);
+}
+
+.ams-table tr:nth-child(even) {
+  background: #f7f7f7;
+}
+
+.badge {
+  background: var(--ams-gold);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+/* ================================
+   MESSAGE TEXT
+================================ */
+.msg {
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+/* ================================
+   COMPANY MANAGER
+================================ */
+.search-bar {
+  margin-top: 12px;
+}
+
+.company-item {
+  background: #fff;
+  padding: 10px;
+  border: 1px solid var(--ams-border);
+  border-radius: var(--ams-radius);
+  box-shadow: var(--ams-shadow);
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.company-actions button {
+  margin-left: 8px;
+}
+
+/* ================================
+   REPORT BOX
+================================ */
+.report-box {
+  background: #f7f9fc;
+  padding: 12px;
+  border-radius: var(--ams-radius);
+  border: 1px solid var(--ams-border);
+  margin-top: 12px;
+}
+
 <body>
-  <header>
-    <div class="header-left">
-      <div class="header-logo">
-        <img src="ams_logo_cropped.jpg" alt="AMS logo" />
-      </div>
-      <div>
-        <div class="header-text-main">AMS Check-In</div>
-        <div class="header-text-sub">airport medical solutions</div>
-      </div>
+
+<!-- ---------------------------
+     HEADER BAR
+---------------------------- -->
+<header class="ams-header">
+  <div class="ams-header-left">
+    <img src="ams_logo_cropped.jpg" class="ams-logo" />
+    <div>
+      <div class="ams-header-title">AMS Check-In</div>
+      <div class="ams-header-sub">airport medical solutions</div>
     </div>
-    <div class="header-tagline">Your One Stop Compliance Shop</div>
-  </header>
-  <main>
-    <!-- Public: New Check-In (donors/employees see this only) -->
-    <section class="card">
-      <h2>Check-In</h2>
-      <div class="row">
-        <div class="col-6">
-          <label for="firstName">First Name</label>
-          <input id="firstName" type="text" autocomplete="off" required />
-        </div>
-        <div class="col-6">
-          <label for="lastName">Last Name</label>
-          <input id="lastName" type="text" autocomplete="off" required />
-        </div>
-      </div>
+  </div>
 
-      <div class="row">
-        <div class="col-6">
-          <label for="companySelect">Company (Employer)</label>
-          <select id="companySelect" onchange="toggleOtherCompany()">
-          </select>
-          <div class="col-6" id="otherCompanyWrapper" style="display:none; margin-top:10px;">
-    <label for="otherCompany">Other Company (type manually)</label>
-    <input id="otherCompany" type="text" placeholder="Enter company name..." autocomplete="off" />
-</div>
-        
-          <!-- END of Company Row -->
+  <div class="ams-header-tag">Your One Stop Compliance Shop</div>
+</header>
 
-<!-- PASTE SERVICE CHECKBOXES HERE -->
-<div class="service-options" style="margin-top:15px;">
-    <label style="font-weight:bold;">Service Type</label>
+<!-- ---------------------------
+     PUBLIC CHECK-IN SECTION
+---------------------------- -->
+<section id="publicCheckin" class="ams-card">
 
-    <!-- Row 1 -->
-<div style="display:flex; gap:25px; margin-top:10px; align-items:center;">
-    <label><input type="checkbox" name="service_drug"> Drug</label>
-    <label><input type="checkbox" name="service_dna"> DNA</label>
-    <label><input type="checkbox" name="service_vision"> Vision</label>
-</div>
+  <h2>Check-In</h2>
 
-<!-- Row 2 -->
-<div style="display:flex; gap:25px; margin-top:10px; align-items:center;">
-    <label><input type="checkbox" name="service_alcohol"> Alcohol</label>
-    <label><input type="checkbox" name="service_dot"> DOT Physical</label>
-
-    <label>
-        <input type="checkbox" id="service_other" onclick="toggleOtherInput()"> Other
-    </label>
-    <input
-        type="text"
-        id="other_reason"
-        placeholder="Enter reason..."
-        style="display:none; padding:4px; border:1px solid #ccc; border-radius:5px;"
-    />
-
-</div> 
-
-<!-- END OF SERVICE CHECKBOXES -->
-
-      <label for="reasonSelect">Reason for Testing</label>
-      <select id="reasonSelect" onchange="toggleOtherReason()">
-        <option value="">-- Select reason --</option>
-        <option value="Pre-employment">Pre-employment</option>
-        <option value="Random">Random</option>
-        <option value="Reasonable suspicion">Reasonable suspicion</option>
-        <option value="Post-accident">Post-accident</option>
-        <option value="Return to duty">Return to duty</option>
-        <option value="Follow up">Follow up</option>
-        <option value="Other (personal)">Other (personal)</option>
-      </select>
-      <div id="otherReasonWrapper" style="display:none; margin-top:10px;">
-          <label for="otherReasonInput">Other Reason (type manually)</label>
-          <input id="otherReasonInput" type="text" placeholder="Enter other reason..." autocomplete="off" />
-      </div>
-
-      <label for="signaturePad">Donor Signature</label>
-      <div id="signatureWrapper">
-        <canvas id="signaturePad"></canvas>
-        <div id="sigPlaceholder">Sign here</div>
-      </div>
-      <button type="button" id="clearSigBtn" class="secondary" style="width:auto; padding:6px 10px; font-size:0.8rem; margin-top:6px;">Clear Signature</button>
-
-      <p class="small-text">
-        Donor must sign above. Date &amp; time in are recorded automatically when you tap "Submit Check-In".
-      </p>
-
-      <div style="display:flex; gap:10px; margin-top:10px;">
-
-    <!-- Submit Button (unchanged) -->
-    <button id="submitBtn" style="flex:1;">
-        Submit Check-In
-    </button>
-
-    <!-- Reset Button (RED) -->
-    <button type="button"
-            onclick="resetForm()"
-            style="
-                flex:1;
-                background:#d9534f;
-                color:white;
-                padding:12px;
-                border:none;
-                border-radius:6px;
-                font-size:1rem;
-                cursor:pointer;">
-        Reset Form
-    </button>
-
-</div>
-
-      <p id="submitMessage" class="small-text"></p>
-    </section>
-
-    <!-- Small admin login control -->
-    <div class="admin-toggle-row">
-      <button id="toggleAdminBtn" class="admin-toggle-btn">Admin Login</button>
-      <span class="small-text" id="adminStatusText"></span>
+  <div class="row">
+    <div class="col-6">
+      <label>First Name</label>
+      <input id="firstName" type="text" autocomplete="off" />
     </div>
 
-    <!-- ADMIN-ONLY AREA (hidden until PIN is entered) -->
-    <div id="adminArea" style="display:none;">
-      <!-- Search Log -->
-      <section class="card">
-        <h2>Search Log</h2>
-        <div class="row">
-          <div class="col-4">
-            <label for="searchName">Donor Name</label>
-            <input id="searchName" type="text" placeholder="first or last name" />
-          </div>
-          <div class="col-4">
-            <label for="searchCompany">Company Name</label>
-            <input id="searchCompany" type="text" placeholder="e.g. ABC Logistics" />
-          </div>
-          <div class="col-4">
-            <label for="searchDate">Date</label>
-            <input id="searchDate" type="date" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <label for="searchReason">Reason for Test</label>
-            <select id="searchReason">
-              <option value="">Any reason</option>
-              <option value="Pre-employment">Pre-employment</option>
-              <option value="Random">Random</option>
-              <option value="Reasonable suspicion">Reasonable suspicion</option>
-              <option value="Post-accident">Post-accident</option>
-              <option value="Return to duty">Return to duty</option>
-              <option value="Follow up">Follow up</option>
-              <option value="Other (personal)">Other (personal)</option>
-            </select>
-          </div>
-        </div>
-        <div class="actions-row">
-          <button id="searchBtn">Search</button>
-          <button id="clearFilterBtn" class="secondary">Clear Filters</button>
-        </div>
-        <p class="small-text">For AMS internal use only (billing, audits, etc.).</p>
-        <div style="overflow-x:auto;">
-          <table id="resultsTable">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time In</th>
-                <th>First</th>
-                <th>Last</th>
-                <th>Company</th>
-                <th>Reason</th>
-                <th>Services</th>
-                <th>Signature</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-        <div class="actions-row">
-          <button id="exportXlsBtn" class="secondary">Export ALL as Excel (.xls)</button>
-          <button id="printAllBtn" class="secondary">Print ALL (PDF)</button>
-        </div>
-      </section>
+    <div class="col-6">
+      <label>Last Name</label>
+      <input id="lastName" type="text" autocomplete="off" />
+    </div>
+  </div>
 
-      <!-- Reports -->
-      <section class="card">
-        <h2>Reports (Date Range &amp; Time In)</h2>
-        <div class="pill-row">
-          <span class="pill" data-range="yesterday">Yesterday</span>
-          <span class="pill" data-range="thisWeek">This Week</span>
-          <span class="pill" data-range="thisMonth">This Month</span>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <label for="reportStart">Start Date</label>
-            <input id="reportStart" type="date" />
-          </div>
-          <div class="col-6">
-            <label for="reportEnd">End Date</label>
-            <input id="reportEnd" type="date" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <label for="reportTimeFrom">Time In From (optional)</label>
-            <input id="reportTimeFrom" type="time" />
-          </div>
-          <div class="col-6">
-            <label for="reportTimeTo">Time In To (optional)</label>
-            <input id="reportTimeTo" type="time" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <label for="reportCompany">Company (optional)</label>
-            <input id="reportCompany" type="text" placeholder="filter to one company" />
-          </div>
-          <div class="col-6">
-            <label for="reportName">Donor Name (optional)</label>
-            <input id="reportName" type="text" placeholder="first or last name" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <label for="reportReason">Reason (optional)</label>
-            <select id="reportReason">
-              <option value="">Any reason</option>
-              <option value="Pre-employment">Pre-employment</option>
-              <option value="Random">Random</option>
-              <option value="Reasonable suspicion">Reasonable suspicion</option>
-              <option value="Post-accident">Post-accident</option>
-              <option value="Return to duty">Return to duty</option>
-              <option value="Follow up">Follow up</option>
-              <option value="Other (personal)">Other (personal)</option>
-            </select>
-          </div>
-        </div>
-        <div class="actions-row">
-          <button id="runReportBtn">Run Report</button>
-          <button id="clearReportBtn" class="secondary">Clear Report Filters</button>
-        </div>
+  <label>Company (Employer)</label>
+  <select id="companySelect"></select>
 
-        <div id="reportSummary" class="summary-box" style="display:none;"></div>
+  <div id="otherCompanyWrapper" class="hidden">
+    <label>Other Company</label>
+    <input id="otherCompany" type="text" placeholder="Enter company name..." />
+  </div>
 
-        <div style="overflow-x:auto; margin-top:8px;">
-          <table id="reportTable">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time In</th>
-                <th>First</th>
-                <th>Last</th>
-                <th>Company</th>
-                <th>Reason</th>
-                <th>Signature</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
+  <!-- SERVICES -->
+  <div class="service-block">
+    <label class="bold">Service Type</label>
 
-        <div class="actions-row">
-          <button id="exportReportXlsBtn" class="secondary">Export REPORT as Excel (.xls)</button>
-          <button id="printReportBtn" class="secondary">Print REPORT (PDF)</button>
-        </div>
-      </section>
+    <div class="service-row">
+      <label><input type="checkbox" id="svc_drug"> Drug</label>
+      <label><input type="checkbox" id="svc_dna"> DNA</label>
+      <label><input type="checkbox" id="svc_vision"> Vision</label>
+    </div>
 
-      <!-- Recent Check-Ins -->
-      <section class="card">
-        <h2>Recent Check-Ins <span class="badge" id="countBadge">0</span></h2>
-        <div style="overflow-x:auto;">
-          <table id="recentTable">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Time In</th>
-                <th>First</th>
-                <th>Last</th>
-                <th>Company</th>
-                <th>Reason</th>
-                <th>Signature</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-      </section>
+    <div class="service-row">
+      <label><input type="checkbox" id="svc_alcohol"> Alcohol</label>
+      <label><input type="checkbox" id="svc_dot"> DOT Physical</label>
 
-      <!-- Admin: Manage Companies -->
-      <section class="card">
-        <h2>Manage Company List (Admin)</h2>
-        <div class="row">
-          <div class="col-6">
-            <label for="newCompany">Add Company Name</label>
-            <input id="newCompany" type="text" placeholder="e.g. ABC Logistics" />
-          </div>
-          <div class="col-6" style="display:flex; align-items:flex-end;">
-            <button id="addCompanyBtn">Add to List</button>
-          </div>
-        </div>
-        <p class="small-text">
-    These companies appear in the dropdown for donors. You can add, edit, delete, or search companies below.
-</p>
+      <label><input type="checkbox" id="svc_other"> Other</label>
+      <input id="svc_other_text" type="text" placeholder="Enter reason..." class="hidden" />
+    </div>
+  </div>
 
-<!-- 🔍 Search bar -->
-<input 
-    type="text" 
-    id="companySearch" 
-    placeholder="Search company..." 
-    style="width: 100%; padding: 6px; margin-bottom: 10px;"
-/>
+  <!-- REASON -->
+  <label>Reason for Testing</label>
+  <select id="reasonSelect">
+    <option value="">-- Select --</option>
+    <option value="Pre-employment">Pre-employment</option>
+    <option value="Random">Random</option>
+    <option value="Reasonable suspicion">Reasonable suspicion</option>
+    <option value="Post-accident">Post-accident</option>
+    <option value="Return to duty">Return to duty</option>
+    <option value="Follow up">Follow up</option>
+    <option value="Other (personal)">Other (personal)</option>
+  </select>
 
-<!-- Company List Display -->
-<div id="companyListDisplay" class="tag-list"></div>
+  <div id="otherReasonWrapper" class="hidden">
+    <label>Other Reason</label>
+    <input id="otherReasonInput" type="text" placeholder="Type reason..." />
+  </div>
 
-  </main>
+  <!-- SIGNATURE -->
+  <label>Donor Signature</label>
+  <div id="signatureWrapper">
+    <canvas id="signaturePad"></canvas>
+    <div id="sigPlaceholder">Sign here</div>
+  </div>
 
-  <script>
+  <button id="clearSigBtn" class="btn-secondary-small">Clear Signature</button>
 
-function toggleOtherInput() {
-  const checkbox = document.getElementById("service_other");
-  const input = document.getElementById("other_reason");
+  <p class="note">Signature required. Date/time recorded automatically.</p>
 
-  if (checkbox.checked) {
-    input.style.display = "block";
-  } else {
-    input.style.display = "none";
-    input.value = "";
+  <div class="row">
+    <button id="submitBtn" class="btn-primary">Submit Check-In</button>
+    <button id="resetBtn" class="btn-danger">Reset</button>
+  </div>
+
+  <p id="submitMessage" class="msg"></p>
+
+</section>
+
+
+<!-- ---------------------------
+     ADMIN LOGIN BUTTON
+---------------------------- -->
+<div class="admin-login-row">
+  <button id="toggleAdminBtn" class="btn-admin">Admin Login</button>
+  <span id="adminStatusText"></span>
+</div>
+
+<!-- ---------------------------
+     ADMIN AREA (Hidden until PIN)
+---------------------------- -->
+<div id="adminArea" class="hidden">
+
+  <!-- TOP TAB NAVIGATION -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="dashboardTab">Dashboard</button>
+    <button class="tab-btn" data-tab="searchTab">Search Log</button>
+    <button class="tab-btn" data-tab="reportsTab">Reports</button>
+    <button class="tab-btn" data-tab="recentTab">Recent Check-Ins</button>
+    <button class="tab-btn" data-tab="companiesTab">Manage Companies</button>
+  </div>
+
+  <!-- ---------------------------
+       TAB: DASHBOARD
+  ---------------------------- -->
+  <section id="dashboardTab" class="tab-content visible">
+
+    <h2>Dashboard</h2>
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+
+      <div class="kpi-box">
+        <div class="kpi-title">TOTAL CHECK-INS</div>
+        <div class="kpi-value" id="kpi_total">0</div>
+      </div>
+
+      <div class="kpi-box">
+        <div class="kpi-title">TODAY</div>
+        <div class="kpi-value" id="kpi_today">0</div>
+      </div>
+
+      <div class="kpi-box">
+        <div class="kpi-title">THIS WEEK</div>
+        <div class="kpi-value" id="kpi_week">0</div>
+      </div>
+
+      <div class="kpi-box">
+        <div class="kpi-title">THIS MONTH</div>
+        <div class="kpi-value" id="kpi_month">0</div>
+      </div>
+
+    </div>
+
+    <!-- CHARTS -->
+    <div class="chart-block">
+      <h3>Daily Check-Ins (Last 30 Days)</h3>
+      <canvas id="chart_daily" height="220"></canvas>
+    </div>
+
+    <div class="chart-block">
+      <h3>Top 5 Companies</h3>
+      <canvas id="chart_companies" height="220"></canvas>
+    </div>
+
+    <div class="chart-block">
+      <h3>Service Type Breakdown</h3>
+      <canvas id="chart_services" height="220"></canvas>
+    </div>
+
+  </section>
+
+  <!-- ---------------------------
+       TAB: SEARCH LOG
+  ---------------------------- -->
+  <section id="searchTab" class="tab-content">
+
+    <h2>Search Log</h2>
+
+    <div class="row">
+      <div class="col-4">
+        <label>Donor Name</label>
+        <input id="searchName" type="text" />
+      </div>
+
+      <div class="col-4">
+        <label>Company</label>
+        <input id="searchCompany" type="text" />
+      </div>
+
+      <div class="col-4">
+        <label>Date</label>
+        <input id="searchDate" type="date" />
+      </div>
+    </div>
+
+    <label>Reason</label>
+    <select id="searchReason">
+      <option value="">Any</option>
+      <option value="Pre-employment">Pre-employment</option>
+      <option value="Random">Random</option>
+      <option value="Reasonable suspicion">Reasonable suspicion</option>
+      <option value="Post-accident">Post-accident</option>
+      <option value="Return to duty">Return to duty</option>
+      <option value="Follow up">Follow up</option>
+      <option value="Other (personal)">Other (personal)</option>
+    </select>
+
+    <div class="row">
+      <button id="searchBtn" class="btn-primary">Search</button>
+      <button id="clearFilterBtn" class="btn-secondary">Clear</button>
+    </div>
+
+    <table class="ams-table" id="resultsTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time In</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Company</th>
+          <th>Reason</th>
+          <th>Services</th>
+          <th>Signature</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="row">
+      <button id="exportXlsBtn" class="btn-secondary">Export ALL (.xls)</button>
+      <button id="printAllBtn" class="btn-secondary">Print ALL</button>
+    </div>
+
+  </section>
+
+
+  <!-- ---------------------------
+       TAB: REPORTS
+  ---------------------------- -->
+  <section id="reportsTab" class="tab-content">
+
+    <h2>Reports</h2>
+
+    <div class="row">
+      <div class="col-6">
+        <label>Start Date</label>
+        <input id="reportStart" type="date" />
+      </div>
+
+      <div class="col-6">
+        <label>End Date</label>
+        <input id="reportEnd" type="date" />
+      </div>
+    </div>
+
+    <label>Time In From</label>
+    <input id="reportTimeFrom" type="time" />
+
+    <label>Time In To</label>
+    <input id="reportTimeTo" type="time" />
+
+    <label>Company</label>
+    <input id="reportCompany" type="text" />
+
+    <label>Donor Name</label>
+    <input id="reportName" type="text" />
+
+    <label>Reason</label>
+    <select id="reportReason">
+      <option value="">Any</option>
+      <option value="Pre-employment">Pre-employment</option>
+      <option value="Random">Random</option>
+      <option value="Reasonable suspicion">Reasonable suspicion</option>
+      <option value="Post-accident">Post-accident</option>
+      <option value="Return to duty">Return to duty</option>
+      <option value="Follow up">Follow up</option>
+      <option value="Other (personal)">Other (personal)</option>
+    </select>
+
+    <div class="row">
+      <button id="runReportBtn" class="btn-primary">Run Report</button>
+      <button id="clearReportBtn" class="btn-secondary">Clear</button>
+    </div>
+
+    <div id="reportSummary" class="report-box hidden"></div>
+
+    <table class="ams-table" id="reportTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time In</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Company</th>
+          <th>Reason</th>
+          <th>Services</th>
+          <th>Signature</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="row">
+      <button id="exportReportXlsBtn" class="btn-secondary">Export REPORT (.xls)</button>
+      <button id="printReportBtn" class="btn-secondary">Print REPORT</button>
+    </div>
+
+  </section>
+
+
+  <!-- ---------------------------
+       TAB: RECENT CHECK-INS
+  ---------------------------- -->
+  <section id="recentTab" class="tab-content">
+
+    <h2>
+      Recent Check-Ins
+      <span class="badge" id="countBadge">0</span>
+    </h2>
+
+    <table class="ams-table" id="recentTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time In</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Company</th>
+          <th>Reason</th>
+          <th>Services</th>
+          <th>Signature</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+  </section>
+
+
+  <!-- ---------------------------
+       TAB: MANAGE COMPANIES
+  ---------------------------- -->
+  <section id="companiesTab" class="tab-content">
+
+    <h2>Manage Company List</h2>
+
+    <div class="row">
+      <div class="col-6">
+        <label>Add Company</label>
+        <input id="newCompany" type="text" />
+      </div>
+
+      <div class="col-6">
+        <button id="addCompanyBtn" class="btn-primary">Add</button>
+      </div>
+    </div>
+
+    <input id="companySearch" type="text" placeholder="Search companies..." class="search-bar" />
+
+    <div id="companyListDisplay"></div>
+
+  </section>
+
+</div>
+/* ============================================================
+   PART 3A — CORE SYSTEM ENGINE
+   Handles:
+   - LocalStorage record saving/loading
+   - Validation logic
+   - Service + reason handling
+   - Reset handling
+   - Company list save/load/render
+   ============================================================ */
+
+/* -----------------------------
+   STORAGE KEYS
+----------------------------- */
+const STORAGE_KEY = "ams_records_v3";
+const COMPANY_KEY = "ams_companies_v2";
+
+/* -----------------------------
+   LOAD EXISTING RECORDS
+----------------------------- */
+function loadRecords() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return [];
+  try {
+    const data = JSON.parse(raw);
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
   }
 }
 
-function toggleOtherReason() {
-  const select = document.getElementById("reasonSelect");
-  const wrapper = document.getElementById("otherReasonWrapper");
-  const input = document.getElementById("otherReasonInput");
+/* -----------------------------
+   SAVE ALL RECORDS BACK
+----------------------------- */
+function saveRecords(records) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+}
 
-  if (select.value.includes("Other")) {
-    wrapper.style.display = "block";
-    input.required = true;   // Require when visible
-  } else {
-    wrapper.style.display = "none";
-    input.required = false;
-    input.value = "";        // Clear field when not in use
+/* -----------------------------
+   ADD A SINGLE NEW RECORD
+----------------------------- */
+function addRecord(rec) {
+  const all = loadRecords();
+  all.push(rec);
+  saveRecords(all);
+}
+
+/* -----------------------------
+   COMPANY LIST LOADING/SAVING
+----------------------------- */
+function loadCompanyList() {
+  const raw = localStorage.getItem(COMPANY_KEY);
+  if (!raw) return [];
+  try {
+    const data = JSON.parse(raw);
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
   }
 }
 
-const STORAGE_KEY = 'drug_test_checkins_v2';
-const COMPANY_LIST_KEY = 'drug_test_company_list_v1';
-const OTHER_COMPANY_VALUE = '__OTHER__';
-
-    // CHANGE THIS PIN IF YOU WANT A DIFFERENT ADMIN CODE
-    const ADMIN_PIN = '2468';
-
-    let lastReportRecords = [];
-    let lastReportSummaryText = '';
-    let adminUnlocked = false;
-    let signatureStore = {};
-
-    function loadRecords() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return [];
-      try {
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function saveRecords(records) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
-    }
-
-    function addRecord(record) {
-      const records = loadRecords();
-      records.push(record);
-      saveRecords(records);
-    }
-
-    function getLocalDateString(d) {
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-
-    function formatDateTime(isoString) {
-      const d = new Date(isoString);
-      if (isNaN(d.getTime())) return { date: '', time: '' };
-      const date = d.toLocaleDateString();
-      const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      return { date, time };
-    }
-    
-    function formatServices(services) {
-  if (!services) return "";
-  const list = [];
-  if (services.drug) list.push("Drug");
-  if (services.dna) list.push("DNA");
-  if (services.vision) list.push("Vision");
-  if (services.alcohol) list.push("Alcohol");
-  if (services.dot) list.push("DOT Physical");
-  if (services.other) list.push("Other");
-  if (services.otherText) list.push(services.otherText);
-  return list.join(", ");
+function saveCompanyList(list) {
+  localStorage.setItem(COMPANY_KEY, JSON.stringify(list));
 }
 
-    function refreshRecentTable() {
-      const tbody = document.querySelector('#recentTable tbody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-      const records = loadRecords().slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-      const badge = document.getElementById('countBadge');
-      if (badge) badge.innerText = records.length;
-      const recent = records.slice(0, 20);
-      for (const rec of recent) {
-        const { date, time } = formatDateTime(rec.timestamp);
-        signatureStore[rec.id] = rec.signatureDataUrl || '';
-        const sigCell = rec.signatureDataUrl
-          ? `<button type="button" class="sig-btn" data-sigid="${rec.id}">View</button>`
-          : '';
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${date}</td>
-          <td>${time}</td>
-          <td>${rec.firstName}</td>
-          <td>${rec.lastName}</td>
-          <td>${rec.company}</td>
-          <td>${rec.reason || ''}</td>
-          <td>${formatServices(rec.serviceTypes)}</td>
-          <td>${sigCell}</td>
-        `;
-        tbody.appendChild(tr);
-      }
-    }
+/* -----------------------------
+   RENDER SELECT DROPDOWN
+----------------------------- */
+function renderCompanySelect() {
+  const list = loadCompanyList();
+  const sel = document.getElementById("companySelect");
 
-    function runSearch() {
-      const nameFilter = document.getElementById('searchName').value.trim().toLowerCase();
-      const companyFilter = document.getElementById('searchCompany').value.trim().toLowerCase();
-      const dateFilter = document.getElementById('searchDate').value;
-      const reasonFilter = document.getElementById('searchReason').value;
-      const tbody = document.querySelector('#resultsTable tbody');
-      tbody.innerHTML = '';
-      const records = loadRecords();
-      const filtered = records.filter(rec => {
-        let ok = true;
-        if (nameFilter) {
-          const fn = (rec.firstName || '').toLowerCase();
-          const ln = (rec.lastName || '').toLowerCase();
-          ok = ok && (fn.includes(nameFilter) || ln.includes(nameFilter));
-        }
-        if (companyFilter) {
-          ok = ok && (rec.company || '').toLowerCase().includes(companyFilter);
-        }
-        if (dateFilter) {
-          const d = new Date(rec.timestamp);
-          if (!isNaN(d.getTime())) {
-            const localDate = getLocalDateString(d);
-            ok = ok && (localDate === dateFilter);
-          } else {
-            ok = false;
-          }
-        }
-        if (reasonFilter) {
-          ok = ok && rec.reason === reasonFilter;
-        }
-        return ok;
-      });
-      const sorted = filtered.slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-      for (const rec of sorted) {
-        const { date, time } = formatDateTime(rec.timestamp);
-        signatureStore[rec.id] = rec.signatureDataUrl || '';
-        const sigCell = rec.signatureDataUrl
-          ? `<button type="button" class="sig-btn" data-sigid="${rec.id}">View</button>`
-          : '';
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${date}</td>
-          <td>${time}</td>
-          <td>${rec.firstName}</td>
-          <td>${rec.lastName}</td>
-          <td>${rec.company}</td>
-          <td>${rec.reason || ''}</td>
-          <td>${sigCell}</td>
-        `;
-        tbody.appendChild(tr);
-      }
-    }
+  sel.innerHTML = "";
+  const opt0 = document.createElement("option");
+  opt0.value = "";
+  opt0.textContent = "-- Select company --";
+  sel.appendChild(opt0);
 
-    function htmlEscape(str) {
-      if (str == null) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
+  list.forEach(c => {
+    const o = document.createElement("option");
+    o.value = c;
+    o.textContent = c;
+    sel.appendChild(o);
+  });
 
-    function buildTableHtmlFromRecords(records, includeSignature) {
-      let html = '<table border="1" cellspacing="0" cellpadding="4"><thead><tr>';
-      html += '<th>Date</th><th>Time In</th><th>First</th><th>Last</th><th>Company</th><th>Reason</th><th>Services</th>';
-      if (includeSignature) html += '<th>Signature</th>';
-      html += '</tr></thead><tbody>';
-      records.forEach(rec => {
-        const dt = formatDateTime(rec.timestamp);
-        html += '<tr>';
-        html += '<td>' + htmlEscape(dt.date) + '</td>';
-        html += '<td>' + htmlEscape(dt.time) + '</td>';
-        html += '<td>' + htmlEscape(rec.firstName) + '</td>';
-        html += '<td>' + htmlEscape(rec.lastName) + '</td>';
-        html += '<td>' + htmlEscape(rec.company) + '</td>';
-        html += '<td>' + htmlEscape(rec.reason || '') + '</td>';
-        html += `<td>${formatServices(rec.serviceTypes)}</td>`;
-        if (includeSignature) {
-          html += '<td>' + (rec.signatureDataUrl ? 'Yes' : 'No') + '</td>';
-        }
-        html += '</tr>';
-      });
-      html += '</tbody></table>';
-      return html;
-    }
-
-    function exportRecordsToXls(records, filename, includeSignature) {
-      if (!records.length) {
-        alert('No records to export.');
-        return;
-      }
-      const tableHtml = buildTableHtmlFromRecords(records, includeSignature);
-      const blob = new Blob(['\ufeff' + tableHtml], {
-        type: 'application/vnd.ms-excel'
-      });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    function printRecordsAsPdf(records, title, summaryText, includeSignature) {
-      if (!records.length) {
-        alert('No records to print.');
-        return;
-      }
-      const tableHtml = buildTableHtmlFromRecords(records, includeSignature);
-      const w = window.open('', '_blank');
-      w.document.write('<html><head><meta charset="UTF-8"><title>' + htmlEscape(title) + '</title>');
-      w.document.write('<style>body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;padding:16px;}h2{margin-top:0;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #333;padding:4px;font-size:12px;}</style>');
-      w.document.write('</head><body>');
-      w.document.write('<h2>' + htmlEscape(title) + '</h2>');
-      if (summaryText) {
-        w.document.write('<p>' + htmlEscape(summaryText) + '</p>');
-      }
-      w.document.write(tableHtml);
-      w.document.write('</body></html>');
-      w.document.close();
-      w.focus();
-      w.print();
-    }
-
-    function exportAllAsXls() {
-      const records = loadRecords().slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-      exportRecordsToXls(records, 'ams_drug_test_full_log.xls', true);
-    }
-
-    function printAllAsPdf() {
-      const records = loadRecords().slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-      printRecordsAsPdf(records, 'AMS Full Check-In Log', '', true);
-    }
-
-    function exportReportAsXls() {
-      exportRecordsToXls(lastReportRecords, 'ams_drug_test_report.xls', true);
-    }
-
-    function printReportAsPdf() {
-      printRecordsAsPdf(lastReportRecords, 'AMS Drug Test Report', lastReportSummaryText, true);
-    }
-
-    function loadCompanyList() {
-      const raw = localStorage.getItem(COMPANY_LIST_KEY);
-      if (!raw) return [];
-      try {
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function saveCompanyList(list) {
-      localStorage.setItem(COMPANY_LIST_KEY, JSON.stringify(list));
-    }
-
-    function renderCompanySelect() {
-      const select = document.getElementById('companySelect');
-      const companies = loadCompanyList();
-      select.innerHTML = '';
-      const defaultOpt = document.createElement('option');
-      defaultOpt.value = '';
-      defaultOpt.textContent = '-- Select company --';
-      select.appendChild(defaultOpt);
-
-      companies.forEach(name => {
-        const opt = document.createElement('option');
-        opt.value = name;
-        opt.textContent = name;
-        select.appendChild(opt);
-      });
-
-      const otherOpt = document.createElement('option');
-      otherOpt.value = OTHER_COMPANY_VALUE;
-      otherOpt.textContent = 'Other (type manually)';
-      select.appendChild(otherOpt);
-    }
-
-    function renderCompanyListDisplay() {
-    const container = document.getElementById("companyListDisplay");
-    const searchValue = document.getElementById("companySearch")?.value.toLowerCase() || "";
-    let companies = loadCompanyList();
-
-    if (!companies.length) {
-        container.innerHTML = "<p>No companies added yet.</p>";
-        return;
-    }
-
-    // FILTER LIST
-    const filtered = companies.filter(c => c.toLowerCase().includes(searchValue));
-
-    // BUILD HTML LIST
-    container.innerHTML = filtered
-        .map(c => `
-            <div class="company-item" 
-                 style="margin: 4px 0; display:flex; justify-content:space-between; align-items:center;">
-                
-                <span>${c}</span>
-
-                <div>
-                    <button class="editCompanyBtn" data-name="${c}" 
-                        style="margin-right:6px;">Edit</button>
-                    
-                    <button class="deleteCompanyBtn" data-name="${c}" 
-                        style="background:#d9534f; color:white;">Delete</button>
-                </div>
-            </div>
-        `)
-        .join("");
-
-    // -----------------------------
-    // ADD EVENT LISTENERS HERE
-    // -----------------------------
-
-    // EDIT BUTTONS
-    document.querySelectorAll(".editCompanyBtn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const oldName = btn.dataset.name;
-            const newName = prompt("Edit company name:", oldName);
-
-            if (!newName || newName.trim() === "") return;
-
-            const clean = newName.trim();
-
-            // Prevent duplicates
-            if (companies.includes(clean) && clean !== oldName) {
-                alert("This company already exists.");
-                return;
-            }
-
-            const idx = companies.indexOf(oldName);
-            if (idx !== -1) {
-                companies[idx] = clean;
-                companies.sort((a, b) => a.localeCompare(b));
-                saveCompanyList(companies);
-                renderCompanySelect();
-                renderCompanyListDisplay();
-            }
-        });
-    });
-
-    // DELETE BUTTONS
-    document.querySelectorAll(".deleteCompanyBtn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const name = btn.dataset.name;
-
-            if (!confirm(`Remove "${name}" from the company list?`)) return;
-
-            companies = companies.filter(c => c !== name);
-            saveCompanyList(companies);
-            renderCompanySelect();
-            renderCompanyListDisplay();
-        });
-    });
+  // last option "Other"
+  const o2 = document.createElement("option");
+  o2.value = "__OTHER__";
+  o2.textContent = "Other (type manually)";
+  sel.appendChild(o2);
 }
 
-    function setDateRangePreset(preset) {
-      const startInput = document.getElementById('reportStart');
-      const endInput = document.getElementById('reportEnd');
-      const now = new Date();
-      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      let startDate = today;
-      let endDate = today;
+/* -----------------------------
+   RENDER COMPANY LIST ON ADMIN PAGE
+----------------------------- */
+function renderCompanyListDisplay() {
+  const list = loadCompanyList();
+  const search = document.getElementById("companySearch").value.toLowerCase();
+  const box = document.getElementById("companyListDisplay");
 
-      if (preset === 'yesterday') {
-        startDate = new Date(today);
-        startDate.setDate(startDate.getDate() - 1);
-        endDate = new Date(startDate);
-      } else if (preset === 'thisWeek') {
-        const dayOfWeek = today.getDay();
-        const diffToMonday = (dayOfWeek + 6) % 7;
-        startDate = new Date(today);
-        startDate.setDate(startDate.getDate() - diffToMonday);
-        endDate = today;
-      } else if (preset === 'thisMonth') {
-        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
-        endDate = today;
-      }
+  if (!list.length) {
+    box.innerHTML = "<p>No companies added yet.</p>";
+    return;
+  }
 
-      const toStr = (d) => {
-        const y = d.getFullYear();
-        const m = String(d.getMonth() + 1).padStart(2, '0');
-        const da = String(d.getDate()).padStart(2, '0');
-        return `${y}-${m}-${da}`;
-      };
+  const filtered = list.filter(c => c.toLowerCase().includes(search));
 
-      startInput.value = toStr(startDate);
-      endInput.value = toStr(endDate);
-    }
+  box.innerHTML = filtered
+    .map(c => `
+      <div class="company-item">
+        <span>${c}</span>
+        <div class="company-actions">
+          <button class="btn-secondary-small editCompany" data-name="${c}">Edit</button>
+          <button class="btn-danger deleteCompany" data-name="${c}">Delete</button>
+        </div>
+      </div>
+    `)
+    .join("");
 
-    function timeToMinutes(timeStr) {
-      if (!timeStr) return null;
-      const parts = timeStr.split(':');
-      if (parts.length < 2) return null;
-      const hh = parseInt(parts[0], 10);
-      const mm = parseInt(parts[1], 10);
-      if (isNaN(hh) || isNaN(mm)) return null;
-      return hh * 60 + mm;
-    }
+  // Attach edit/delete handlers
+  document.querySelectorAll(".editCompany").forEach(btn => {
+    btn.onclick = () => {
+      const old = btn.dataset.name;
+      const newName = prompt("Edit company name:", old);
+      if (!newName || !newName.trim()) return;
 
-    function runReport() {
-      const startDateStr = document.getElementById('reportStart').value;
-      const endDateStr = document.getElementById('reportEnd').value;
-      const timeFromStr = document.getElementById('reportTimeFrom').value;
-      const timeToStr = document.getElementById('reportTimeTo').value;
-      const companyFilter = document.getElementById('reportCompany').value.trim().toLowerCase();
-      const nameFilter = document.getElementById('reportName').value.trim().toLowerCase();
-      const reasonFilter = document.getElementById('reportReason').value;
+      const list2 = loadCompanyList();
+      const clean = newName.trim();
 
-      const tbody = document.querySelector('#reportTable tbody');
-      tbody.innerHTML = '';
-      const summaryBox = document.getElementById('reportSummary');
-
-      if (!startDateStr || !endDateStr) {
-        summaryBox.style.display = 'block';
-        summaryBox.textContent = 'Please select a start date and end date for the report.';
-        lastReportRecords = [];
-        lastReportSummaryText = '';
+      // prevent duplicates
+      if (list2.includes(clean) && clean !== old) {
+        alert("This company already exists.");
         return;
       }
 
-      const startDate = new Date(startDateStr + 'T00:00:00');
-      const endDate = new Date(endDateStr + 'T23:59:59');
-      const minMinutes = timeToMinutes(timeFromStr);
-      const maxMinutes = timeToMinutes(timeToStr);
-
-      const records = loadRecords();
-      const results = records.filter(rec => {
-        const d = new Date(rec.timestamp);
-        if (isNaN(d.getTime())) return false;
-        if (d < startDate || d > endDate) return false;
-
-        const mins = d.getHours() * 60 + d.getMinutes();
-        if (minMinutes !== null && mins < minMinutes) return false;
-        if (maxMinutes !== null && mins > maxMinutes) return false;
-
-        if (companyFilter) {
-          if (!(rec.company || '').toLowerCase().includes(companyFilter)) return false;
-        }
-        if (nameFilter) {
-          const fn = (rec.firstName || '').toLowerCase();
-          const ln = (rec.lastName || '').toLowerCase();
-          if (!fn.includes(nameFilter) && !ln.includes(nameFilter)) return false;
-        }
-        if (reasonFilter) {
-          if (rec.reason !== reasonFilter) return false;
-        }
-        return true;
-      });
-
-      const sorted = results.slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-      for (const rec of sorted) {
-        const { date, time } = formatDateTime(rec.timestamp);
-        signatureStore[rec.id] = rec.signatureDataUrl || '';
-        const sigCell = rec.signatureDataUrl
-          ? `<button type="button" class="sig-btn" data-sigid="${rec.id}">View</button>`
-          : '';
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${date}</td>
-          <td>${time}</td>
-          <td>${rec.firstName}</td>
-          <td>${rec.lastName}</td>
-          <td>${rec.company}</td>
-          <td>${rec.reason || ''}</td>
-          <td>${sigCell}</td>
-        `;
-        tbody.appendChild(tr);
+      const idx = list2.indexOf(old);
+      if (idx !== -1) {
+        list2[idx] = clean;
+        list2.sort();
+        saveCompanyList(list2);
+        renderCompanySelect();
+        renderCompanyListDisplay();
       }
+    };
+  });
 
-      summaryBox.style.display = 'block';
-      const count = results.length;
-      let text = `Total donors in report: ${count}`;
-      if (startDateStr && endDateStr) {
-        text += ` | Date range: ${startDateStr} to ${endDateStr}`;
-      }
-      if (timeFromStr || timeToStr) {
-        text += ` | Time in: ${timeFromStr || 'any'} to ${timeToStr || 'any'}`;
-      }
-      if (companyFilter) {
-        text += ` | Company contains: "${document.getElementById('reportCompany').value.trim()}"`;
-      }
-      if (nameFilter) {
-        text += ` | Name contains: "${document.getElementById('reportName').value.trim()}"`;
-      }
-      if (reasonFilter) {
-        text += ` | Reason: ${reasonFilter}`;
-      }
-      summaryBox.textContent = text;
-
-      lastReportRecords = sorted;
-      lastReportSummaryText = text;
-    }
-
-    function clearReport() {
-      document.getElementById('reportStart').value = '';
-      document.getElementById('reportEnd').value = '';
-      document.getElementById('reportTimeFrom').value = '';
-      document.getElementById('reportTimeTo').value = '';
-      document.getElementById('reportCompany').value = '';
-      document.getElementById('reportName').value = '';
-      document.getElementById('reportReason').value = '';
-      document.querySelector('#reportTable tbody').innerHTML = '';
-      const summaryBox = document.getElementById('reportSummary');
-      summaryBox.style.display = 'none';
-      summaryBox.textContent = '';
-      lastReportRecords = [];
-      lastReportSummaryText = '';
-    }
-
-    function toggleAdmin() {
-      if (adminUnlocked) {
-        adminUnlocked = false;
-        document.getElementById('adminArea').style.display = 'none';
-        document.getElementById('toggleAdminBtn').textContent = 'Admin Login';
-        document.getElementById('adminStatusText').textContent = '';
-        return;
-      }
-      const pin = prompt('Enter AMS admin PIN:');
-      if (pin === ADMIN_PIN) {
-        adminUnlocked = true;
-        document.getElementById('adminArea').style.display = 'block';
-        document.getElementById('toggleAdminBtn').textContent = 'Hide Admin Area';
-        document.getElementById('adminStatusText').textContent = 'Admin mode: ON';
-        refreshRecentTable();
-      } else if (pin !== null) {
-        alert('Incorrect PIN.');
-      }
-    }
-
-    function setupSignaturePad() {
-      const canvas = document.getElementById('signaturePad');
-      const placeholder = document.getElementById('sigPlaceholder');
-      if (!canvas) return null;
-      const ctx = canvas.getContext('2d');
-      let isDrawing = false;
-      let lastX = 0;
-      let lastY = 0;
-      let hasSignature = false;
-
-      // Resize canvas to match CSS size
-      function resizeCanvas() {
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-      }
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
-
-      function getPos(e) {
-        const rect = canvas.getBoundingClientRect();
-        let clientX, clientY;
-        if (e.touches && e.touches[0]) {
-          clientX = e.touches[0].clientX;
-          clientY = e.touches[0].clientY;
-        } else {
-          clientX = e.clientX;
-          clientY = e.clientY;
-        }
-        return {
-          x: clientX - rect.left,
-          y: clientY - rect.top
-        };
-      }
-
-      function startDrawing(e) {
-        e.preventDefault();
-        isDrawing = true;
-        const pos = getPos(e);
-        lastX = pos.x;
-        lastY = pos.y;
-        if (placeholder) placeholder.style.display = 'none';
-      }
-
-      function draw(e) {
-        if (!isDrawing) return;
-        e.preventDefault();
-        const pos = getPos(e);
-        ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-        lastX = pos.x;
-        lastY = pos.y;
-        hasSignature = true;
-      }
-
-      function endDrawing(e) {
-        if (!isDrawing) return;
-        e.preventDefault();
-        isDrawing = false;
-      }
-
-      canvas.addEventListener('mousedown', startDrawing);
-      canvas.addEventListener('mousemove', draw);
-      window.addEventListener('mouseup', endDrawing);
-
-      canvas.addEventListener('touchstart', startDrawing, { passive: false });
-      canvas.addEventListener('touchmove', draw, { passive: false });
-      canvas.addEventListener('touchend', endDrawing);
-      canvas.addEventListener('touchcancel', endDrawing);
-
-      const clearBtn = document.getElementById('clearSigBtn');
-      if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          hasSignature = false;
-          if (placeholder) placeholder.style.display = 'block';
-        });
-      }
-
-      return {
-        hasSignature: () => hasSignature,
-        getDataUrl: () => hasSignature ? canvas.toDataURL('image/png') : '',
-        clear: () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          hasSignature = false;
-          if (placeholder) placeholder.style.display = 'block';
-        }
-      };
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      if (!localStorage.getItem(COMPANY_LIST_KEY)) {
-        saveCompanyList([]);
-      }
+  document.querySelectorAll(".deleteCompany").forEach(btn => {
+    btn.onclick = () => {
+      const name = btn.dataset.name;
+      if (!confirm(`Delete "${name}" from company list?`)) return;
+      let list2 = loadCompanyList();
+      list2 = list2.filter(x => x !== name);
+      saveCompanyList(list2);
       renderCompanySelect();
       renderCompanyListDisplay();
-
-      const sigPad = setupSignaturePad();
-
-      const submitBtn = document.getElementById('submitBtn');
-      const searchBtn = document.getElementById('searchBtn');
-      const clearFilterBtn = document.getElementById('clearFilterBtn');
-      const exportXlsBtn = document.getElementById('exportXlsBtn');
-      const printAllBtn = document.getElementById('printAllBtn');
-      const exportReportXlsBtn = document.getElementById('exportReportXlsBtn');
-      const printReportBtn = document.getElementById('printReportBtn');
-      const msg = document.getElementById('submitMessage');
-      const companySelect = document.getElementById('companySelect');
-      const otherCompanyWrapper = document.getElementById('otherCompanyWrapper');
-      const pills = document.querySelectorAll('.pill');
-      const runReportBtn = document.getElementById('runReportBtn');
-      const clearReportBtn = document.getElementById('clearReportBtn');
-      const addCompanyBtn = document.getElementById('addCompanyBtn');
-      const toggleAdminBtn = document.getElementById('toggleAdminBtn');
-
-      if (toggleAdminBtn) {
-        toggleAdminBtn.addEventListener('click', toggleAdmin);
-      }
-
-      if (companySelect) {
-        companySelect.addEventListener('change', () => {
-          if (companySelect.value === OTHER_COMPANY_VALUE) {
-            otherCompanyWrapper.style.display = 'block';
-          } else {
-            otherCompanyWrapper.style.display = 'none';
-            document.getElementById('otherCompany').value = '';
-          }
-        });
-      }
-
-      if (submitBtn) {
-        submitBtn.addEventListener('click', () => {
-          const firstName = document.getElementById('firstName').value.trim();
-          const lastName = document.getElementById('lastName').value.trim();
-          const companyValue = companySelect.value;
-          const otherCompany = document.getElementById('otherCompany').value.trim();
-          let reason = document.getElementById('reasonSelect').value;
-
-          if (!firstName || !lastName) {
-            msg.textContent = 'Please fill in first and last name.';
-            msg.style.color = 'red';
-            return;
-          }
-          if (!companyValue) {
-            msg.textContent = 'Please select a company or choose "Other".';
-            msg.style.color = 'red';
-            return;
-          }
-          let company = companyValue;
-          if (companyValue === OTHER_COMPANY_VALUE) {
-            if (!otherCompany) {
-              msg.textContent = 'Please type the other company name.';
-              msg.style.color = 'red';
-              return;
-            }
-            company = otherCompany;
-          }
-          // Handle manual "Other Reason"
-const otherReasonInput = document.getElementById("otherReasonInput");
-if (reason && reason.includes("Other")) {
-    if (!otherReasonInput || otherReasonInput.value.trim() === "") {
-        msg.textContent = "Please enter the reason for testing.";
-        msg.style.color = "red";
-        return;
-    }
-
-    // Override dropdown value with the typed reason
-    reason = otherReasonInput.value.trim();
+    };
+  });
 }
 
-// Normal reason validation
-if (!reason) {
-    msg.textContent = 'Please select a reason for testing.';
-    msg.style.color = 'red';
+/* -----------------------------
+   UTILITY — DATE HELPERS
+----------------------------- */
+function formatDate(d) {
+  return d.toLocaleDateString();
+}
+function formatTime(d) {
+  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+/* Convert ISO → readable */
+function convertTimestamp(ts) {
+  const d = new Date(ts);
+  if (isNaN(d)) return { date: "", time: "" };
+  return {
+    date: formatDate(d),
+    time: formatTime(d)
+  };
+}
+
+/* -----------------------------
+   VALIDATE + SUBMIT RECORD
+----------------------------- */
+function submitCheckin() {
+  const msg = document.getElementById("submitMessage");
+
+  const first = document.getElementById("firstName").value.trim();
+  const last = document.getElementById("lastName").value.trim();
+  const companySel = document.getElementById("companySelect").value;
+  let company = companySel;
+  const otherCompany = document.getElementById("otherCompany").value.trim();
+  let reason = document.getElementById("reasonSelect").value;
+  const otherReason = document.getElementById("otherReasonInput").value.trim();
+
+  // Required: first/last
+  if (!first || !last) {
+    msg.textContent = "Please enter first and last name.";
+    msg.style.color = "red";
     return;
-}
+  }
 
-          if (!sigPad || !sigPad.hasSignature()) {
-            msg.textContent = 'Please capture donor signature before submitting.';
-            msg.style.color = 'red';
-            return;
-          }
+  // Company logic
+  if (!companySel) {
+    msg.textContent = "Please select a company.";
+    msg.style.color = "red";
+    return;
+  }
+  if (companySel === "__OTHER__") {
+    if (!otherCompany) {
+      msg.textContent = "Please type the company name.";
+      msg.style.color = "red";
+      return;
+    }
+    company = otherCompany;
+  }
 
-          const signatureDataUrl = sigPad.getDataUrl();
-          // Collect service checkboxes
-const services = {
-  drug: document.querySelector('input[name="service_drug"]').checked,
-  dna: document.querySelector('input[name="service_dna"]').checked,
-  vision: document.querySelector('input[name="service_vision"]').checked,
-  alcohol: document.querySelector('input[name="service_alcohol"]').checked,
-  dot: document.querySelector('input[name="service_dot"]').checked,
-  other: document.getElementById("service_other").checked,
-  otherText: document.getElementById("other_reason").value.trim()
-};
+  // Reason logic
+  if (!reason) {
+    msg.textContent = "Please select a reason for testing.";
+    msg.style.color = "red";
+    return;
+  }
 
-          const record = {
-    id: Date.now().toString(),
-    firstName,
-    lastName,
+  if (reason.includes("Other")) {
+    if (!otherReason) {
+      msg.textContent = "Please provide the other reason.";
+      msg.style.color = "red";
+      return;
+    }
+    reason = otherReason;
+  }
+
+  // Service selection validation
+  const services = {
+    drug: document.getElementById("svc_drug").checked,
+    dna: document.getElementById("svc_dna").checked,
+    vision: document.getElementById("svc_vision").checked,
+    alcohol: document.getElementById("svc_alcohol").checked,
+    dot: document.getElementById("svc_dot").checked,
+    other: document.getElementById("svc_other").checked,
+    otherText: document.getElementById("svc_other_text").value.trim()
+  };
+
+  // At least one service must be selected
+  const anyService = Object.values(services).some(v => v === true) || (services.otherText.length > 0);
+  if (!anyService) {
+    msg.textContent = "Please select at least one service.";
+    msg.style.color = "red";
+    return;
+  }
+
+  // If “other service” but no text
+  if (services.other && !services.otherText) {
+    msg.textContent = "Please describe the 'Other' service.";
+    msg.style.color = "red";
+    return;
+  }
+
+  // Signature required
+  if (!signaturePad || !signaturePad.hasSignature()) {
+    msg.textContent = "Please capture signature before submitting.";
+    msg.style.color = "red";
+    document.getElementById("signatureWrapper").scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+
+  const signatureDataUrl = signaturePad.getDataURL();
+
+  // Build record object
+  const rec = {
+    id: crypto.randomUUID(),
+    firstName: first,
+    lastName: last,
     company,
     reason,
-
-    // SAVE SERVICES
-    serviceTypes: services,
-
+    services,
     signatureDataUrl,
     timestamp: new Date().toISOString()
-};
-addRecord(record);
-          
-document.querySelectorAll('.service-options input[type="checkbox"]').forEach(cb => {
-    cb.checked = false;
-});
+  };
 
-// CLEAR OTHER REASON INPUT
-document.getElementById('otherReasonInput').value = '';
-document.getElementById('otherReasonWrapper').style.display = 'none';
+  addRecord(rec);
 
-// CLEAR SERVICE "OTHER" TEXT INPUT
-document.getElementById('other_reason').value = '';
-document.getElementById('other_reason').style.display = 'none';
-document.getElementById('service_other').checked = false;
+  msg.textContent = "Check-in saved successfully.";
+  msg.style.color = "green";
 
-// CLEAR SIGNATURE
-if (sigPad) sigPad.clear();
+  // Reset UI
+  resetFormUI();
+}
 
-          playSubmitSound();
+/* -----------------------------
+   RESET ALL FIELDS
+----------------------------- */
+function resetFormUI() {
+  document.getElementById("firstName").value = "";
+  document.getElementById("lastName").value = "";
+  document.getElementById("companySelect").value = "";
+  document.getElementById("otherCompany").value = "";
+  document.getElementById("otherCompanyWrapper").classList.add("hidden");
 
-          document.getElementById('firstName').value = '';
-          document.getElementById('lastName').value = '';
-          companySelect.value = '';
-          document.getElementById('otherCompany').value = '';
-          otherCompanyWrapper.style.display = 'none';
-          document.getElementById('reasonSelect').value = '';
-          if (sigPad) sigPad.clear();
+  // Reason reset
+  document.getElementById("reasonSelect").value = "";
+  document.getElementById("otherReasonInput").value = "";
+  document.getElementById("otherReasonWrapper").classList.add("hidden");
 
-          msg.textContent = 'Check-in saved.';
-          msg.style.color = 'green';
-          setTimeout(() => { msg.textContent = ''; }, 3000);
-        });
-      }
+  // Services reset
+  ["svc_drug","svc_dna","svc_vision","svc_alcohol","svc_dot","svc_other"].forEach(id => {
+    document.getElementById(id).checked = false;
+  });
+  document.getElementById("svc_other_text").value = "";
+  document.getElementById("svc_other_text").classList.add("hidden");
 
-      if (searchBtn) searchBtn.addEventListener('click', runSearch);
-      if (clearFilterBtn) clearFilterBtn.addEventListener('click', () => {
-        document.getElementById('searchName').value = '';
-        document.getElementById('searchCompany').value = '';
-        document.getElementById('searchDate').value = '';
-        document.getElementById('searchReason').value = '';
-        document.querySelector('#resultsTable tbody').innerHTML = '';
-      });
+  // Signature reset
+  if (signaturePad) signaturePad.clear();
+}
+/* ============================================================
+   PART 3B — DASHBOARD ENGINE + CHARTS
+   ============================================================ */
 
-      if (exportXlsBtn) exportXlsBtn.addEventListener('click', exportAllAsXls);
-      if (printAllBtn) printAllBtn.addEventListener('click', printAllAsPdf);
-      if (exportReportXlsBtn) exportReportXlsBtn.addEventListener('click', exportReportAsXls);
-      if (printReportBtn) printReportBtn.addEventListener('click', printReportAsPdf);
+/* -------------------------
+   GET RECORDS SORTED
+-------------------------- */
+function getAllRecordsSorted() {
+  return loadRecords().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+}
 
-      if (pills && pills.length) {
-        pills.forEach(pill => {
-          pill.addEventListener('click', () => {
-            const preset = pill.getAttribute('data-range');
-            setDateRangePreset(preset);
-          });
-        });
-      }
+/* -------------------------
+   DASHBOARD KPI CALCULATIONS
+-------------------------- */
+function updateDashboardKPIs() {
+  const records = getAllRecordsSorted();
+  if (!records.length) {
+    document.getElementById("kpi_today").textContent = 0;
+    document.getElementById("kpi_week").textContent = 0;
+    document.getElementById("kpi_month").textContent = 0;
+    return;
+  }
 
-      if (runReportBtn) runReportBtn.addEventListener('click', runReport);
-      if (clearReportBtn) clearReportBtn.addEventListener('click', clearReport);
+  const now = new Date();
+  const todayStr = now.toLocaleDateString();
 
-      if (addCompanyBtn) addCompanyBtn.addEventListener('click', () => {
-    const input = document.getElementById('newCompany');
-    const name = input.value.trim();
-    if (!name) return;
+  // WEEK RANGE (Mon–Sun)
+  const dayOfWeek = now.getDay(); // 0 = Sun
+  const diffToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - diffToMonday);
+  monday.setHours(0, 0, 0, 0);
 
-    const list = loadCompanyList();
+  // MONTH RANGE
+  const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    // Prevent duplicates
-    if (list.includes(name)) {
-        alert("This company already exists in the list.");
-        return;
-    }
+  let todayCount = 0;
+  let weekCount = 0;
+  let monthCount = 0;
 
-    // Add new company
-    list.push(name);
-    list.sort((a, b) => a.localeCompare(b));
+  records.forEach(r => {
+    const d = new Date(r.timestamp);
+    const dStr = d.toLocaleDateString();
 
-    saveCompanyList(list);
-    renderCompanySelect();
-    renderCompanyListDisplay();
+    if (dStr === todayStr) todayCount++;
+    if (d >= monday) weekCount++;
+    if (d >= firstOfMonth) monthCount++;
+  });
 
-    input.value = "";
-});
+  document.getElementById("kpi_today").textContent = todayCount;
+  document.getElementById("kpi_week").textContent = weekCount;
+  document.getElementById("kpi_month").textContent = monthCount;
+}
 
-      // Delegate click for signature View buttons
-      document.body.addEventListener('click', (e) => {
-        const target = e.target;
-        if (target.classList && target.classList.contains('sig-btn')) {
-          const id = target.getAttribute('data-sigid');
-          const url = signatureStore[id];
-          if (url) {
-            const w = window.open('', '_blank');
-            w.document.write('<html><head><meta charset="UTF-8"><title>Signature</title></head><body style="margin:0;padding:0;background:#f5f5f5;display:flex;align-items:center;justify-content:center;">');
-            w.document.write('<img src="' + url + '" style="max-width:100%;max-height:100vh;border:1px solid #ccc;background:#fff;" />');
-            w.document.write('</body></html>');
-            w.document.close();
-          } else {
-            alert('No signature image found for this record.');
-          }
-        }
-      });
+/* ============================================================
+   DAILY 30-DAY CHECK-IN CHART
+============================================================ */
+function build30DayData() {
+  const records = loadRecords();
+  const today = new Date();
+  const map = {};
+
+  // Initialize map with 30 days back
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(today.getDate() - i);
+    const key = d.toLocaleDateString();
+    map[key] = 0;
+  }
+
+  // Count
+  records.forEach(r => {
+    const d = new Date(r.timestamp).toLocaleDateString();
+    if (map[d] !== undefined) map[d]++;
+  });
+
+  return Object.entries(map); // [ [dateString, count], ... ]
+}
+
+/* ============================================================
+   TOP 5 COMPANIES (COUNT OF CHECK-INS)
+============================================================ */
+function buildTopCompanies() {
+  const map = {};
+  const records = loadRecords();
+
+  records.forEach(r => {
+    const c = r.company || "Unknown";
+    map[c] = (map[c] || 0) + 1;
+  });
+
+  // Convert to list, sort
+  const arr = Object.entries(map); // [company, count]
+  arr.sort((a, b) => b[1] - a[1]);
+
+  return arr.slice(0, 5);
+}
+
+/* ============================================================
+   SERVICE BREAKDOWN
+============================================================ */
+function buildServiceBreakdown() {
+  const svcMap = {
+    Drug: 0,
+    DNA: 0,
+    Vision: 0,
+    Alcohol: 0,
+    "DOT Physical": 0,
+    Other: 0
+  };
+
+  const records = loadRecords();
+
+  records.forEach(r => {
+    if (!r.services) return;
+    if (r.services.drug) svcMap.Drug++;
+    if (r.services.dna) svcMap.DNA++;
+    if (r.services.vision) svcMap.Vision++;
+    if (r.services.alcohol) svcMap.Alcohol++;
+    if (r.services.dot) svcMap["DOT Physical"]++;
+    if (r.services.other || r.services.otherText) svcMap.Other++;
+  });
+
+  return svcMap;
+}
+
+/* ============================================================
+   GENERIC CANVAS BAR CHART DRAWER
+============================================================ */
+function drawBarChart(canvasId, labels, values, color = "#1E3A59") {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width;
+  const H = canvas.height;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const maxValue = Math.max(...values, 1);
+  const barWidth = W / values.length * 0.6;
+  const gap = W / values.length * 0.4;
+
+  // Animated bars
+  let progress = 0;
+
+  function animate() {
+    progress += 0.05;
+    if (progress > 1) progress = 1;
+
+    ctx.clearRect(0, 0, W, H);
+
+    values.forEach((v, i) => {
+      const barHeight = (v / maxValue) * (H - 20) * progress;
+      const x = i * (barWidth + gap) + gap / 2;
+      const y = H - barHeight - 10;
+
+      // Draw bar
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, barWidth, barHeight);
+
+      // Labels
+      ctx.fillStyle = "#000";
+      ctx.font = "12px sans-serif";
+      ctx.fillText(labels[i], x, H - 2);
     });
-  </script>
+
+    if (progress < 1) requestAnimationFrame(animate);
+  }
+
+  animate();
+}
+
+/* ============================================================
+   LINE CHART FOR 30-DAY HISTORY
+============================================================ */
+function drawLineChart(canvasId, labels, values) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width;
+  const H = canvas.height;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const maxValue = Math.max(...values, 1);
+  const stepX = W / (values.length - 1);
+
+  let progress = 0;
+
+  function animate() {
+    progress += 0.04;
+    if (progress > 1) progress = 1;
+
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "#1E3A59";
+    ctx.lineWidth = 2;
+
+    values.forEach((v, i) => {
+      const x = i * stepX;
+      const y = H - (v / maxValue) * (H - 20) * progress - 10;
+
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+
+    ctx.stroke();
+
+    if (progress < 1) requestAnimationFrame(animate);
+  }
+
+  animate();
+}
+
+/* ============================================================
+   REFRESH ALL CHARTS
+============================================================ */
+function refreshCharts() {
+  /* ---- 30 DAY HISTORY ---- */
+  const last30 = build30DayData();
+  const labels30 = last30.map(x => ""); // clean minimal labels
+  const values30 = last30.map(x => x[1]);
+
+  drawLineChart("chart30day", labels30, values30);
+
+  /* ---- TOP 5 COMPANIES ---- */
+  const top5 = buildTopCompanies();
+  const labelsTop = top5.map(x => x[0]);
+  const valuesTop = top5.map(x => x[1]);
+
+  drawBarChart("chartCompanies", labelsTop, valuesTop, "#D9A441");
+
+  /* ---- SERVICE BREAKDOWN ---- */
+  const svc = buildServiceBreakdown();
+  const labelsSvc = Object.keys(svc);
+  const valuesSvc = Object.values(svc);
+
+  drawBarChart("chartServices", labelsSvc, valuesSvc, "#4F8C47");
+}
+
+/* ============================================================
+   DASHBOARD REFRESH (KPIs + CHARTS)
+============================================================ */
+function refreshDashboard() {
+  updateDashboardKPIs();
+  refreshCharts();
+}
+/* ============================================================
+   PART 3C — SIGNATURE PAD + ADMIN LOGIN + TAB SYSTEM
+============================================================ */
+
+/* -------------------------
+   SIGNATURE PAD ENGINE
+-------------------------- */
+let signaturePad = null;
+
+function initSignaturePad() {
+  const canvas = document.getElementById("signaturePad");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  let drawing = false;
+  let last = { x: 0, y: 0 };
+  let signed = false;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const t = e.touches ? e.touches[0] : e;
+    return { x: t.clientX - r.left, y: t.clientY - r.top };
+  }
+
+  function start(e) {
+    drawing = true;
+    const p = getPos(e);
+    last = p;
+    signed = true;
+    document.getElementById("sigPlaceholder").style.display = "none";
+  }
+
+  function move(e) {
+    if (!drawing) return;
+    const p = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(last.x, last.y);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    last = p;
+  }
+
+  function end() {
+    drawing = false;
+  }
+
+  canvas.addEventListener("mousedown", start);
+  canvas.addEventListener("mousemove", move);
+  window.addEventListener("mouseup", end);
+
+  canvas.addEventListener("touchstart", start, { passive: false });
+  canvas.addEventListener("touchmove", move, { passive: false });
+  canvas.addEventListener("touchend", end);
+
+  document.getElementById("clearSigBtn").onclick = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    signed = false;
+    document.getElementById("sigPlaceholder").style.display = "block";
+  };
+
+  signaturePad = {
+    hasSignature: () => signed,
+    getDataURL: () => canvas.toDataURL("image/png"),
+    clear: () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      signed = false;
+      document.getElementById("sigPlaceholder").style.display = "block";
+    }
+  };
+}
+
+/* -------------------------
+   ADMIN LOGIN SYSTEM
+-------------------------- */
+let adminUnlocked = false;
+const ADMIN_PIN = "2468";
+
+function adminLogin() {
+  if (adminUnlocked) {
+    adminUnlocked = false;
+    document.getElementById("adminTabs").classList.add("hidden");
+    alert("Admin mode disabled.");
+    return;
+  }
+
+  const pin = prompt("Enter AMS Admin PIN:");
+  if (pin === ADMIN_PIN) {
+    adminUnlocked = true;
+    document.getElementById("adminTabs").classList.remove("hidden");
+    document.getElementById("adminStatus").textContent = "Admin Mode: ON";
+    refreshDashboard();
+  } else if (pin !== null) {
+    alert("Incorrect PIN.");
+  }
+}
+
+/* -------------------------
+   TAB NAVIGATION SYSTEM
+-------------------------- */
+function showTab(tabId) {
+  // Hide all tabs
+  document.querySelectorAll(".tab-content").forEach(c => c.classList.add("hidden"));
+
+  // Remove highlight from all tab buttons
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active-tab"));
+
+  // Show selected tab
+  document.getElementById(tabId).classList.remove("hidden");
+
+  // Highlight tab button
+  const btn = document.querySelector(`[data-tab="${tabId}"]`);
+  if (btn) btn.classList.add("active-tab");
+
+  // Refresh dashboard when opened
+  if (tabId === "dashboardTab") refreshDashboard();
+}
+
+/* -------------------------
+   OTHER COMPANY (Show/Hide)
+-------------------------- */
+document.getElementById("companySelect").addEventListener("change", () => {
+  const val = document.getElementById("companySelect").value;
+  const wrapper = document.getElementById("otherCompanyWrapper");
+
+  if (val === "__OTHER__") wrapper.classList.remove("hidden");
+  else wrapper.classList.add("hidden");
+});
+
+/* -------------------------
+   OTHER REASON (Show/Hide)
+-------------------------- */
+document.getElementById("reasonSelect").addEventListener("change", () => {
+  const val = document.getElementById("reasonSelect").value;
+  const wrap = document.getElementById("otherReasonWrapper");
+
+  if (val.includes("Other")) wrap.classList.remove("hidden");
+  else wrap.classList.add("hidden");
+});
+
+/* -------------------------
+   SERVICE "OTHER" TEXT FIELD
+-------------------------- */
+document.getElementById("svc_other").addEventListener("change", () => {
+  const box = document.getElementById("svc_other_text");
+  if (document.getElementById("svc_other").checked)
+    box.classList.remove("hidden");
+  else
+    box.classList.add("hidden");
+});
+/* ============================================================
+   PART 4 — INITIALIZATION (BOOT SEQUENCE)
+============================================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* -------------------------
+     INIT SIGNATURE PAD
+  -------------------------- */
+  initSignaturePad();
+
+  /* -------------------------
+     LOAD COMPANY LIST INTO SELECT
+  -------------------------- */
+  renderCompanySelect();
+  renderCompanyListDisplay();
+
+  /* -------------------------
+     TAB BUTTONS
+  -------------------------- */
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tab = btn.dataset.tab;
+      showTab(tab);
+    });
+  });
+
+  /* -------------------------
+     DEFAULT TAB
+  -------------------------- */*
+
 </body>
 </html>
