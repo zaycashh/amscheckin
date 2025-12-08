@@ -551,6 +551,70 @@
           <button id="printReportBtn" class="secondary">Print REPORT (PDF)</button>
         </div>
       </section>
+      
+<section class="card">
+    <h2>Company Report</h2>
+
+    <!-- DATE PRESETS -->
+    <div class="pill-row">
+        <span class="pill" data-companyrange="today">Today</span>
+        <span class="pill" data-companyrange="yesterday">Yesterday</span>
+        <span class="pill" data-companyrange="thisWeek">This Week</span>
+        <span class="pill" data-companyrange="lastWeek">Last Week</span>
+        <span class="pill" data-companyrange="thisMonth">This Month</span>
+        <span class="pill" data-companyrange="lastMonth">Last Month</span>
+        <span class="pill" data-companyrange="thisYear">This Year</span>
+        <span class="pill" data-companyrange="lastYear">Last Year</span>
+    </div>
+
+    <!-- COMPANY SELECTION -->
+    <label style="margin-top:10px;">Select Company (Dropdown)</label>
+    <select id="companyReportSelect"></select>
+
+    <label style="margin-top:10px;">Or Type Company Name</label>
+    <input id="companyReportManual" type="text" placeholder="Enter company name..." />
+
+    <!-- DATE RANGE -->
+    <div class="row" style="margin-top:10px;">
+        <div class="col-6">
+            <label for="companyReportStart">Start Date</label>
+            <input id="companyReportStart" type="date" />
+        </div>
+        <div class="col-6">
+            <label for="companyReportEnd">End Date</label>
+            <input id="companyReportEnd" type="date" />
+        </div>
+    </div>
+
+    <button id="runCompanyReportBtn" style="margin-top:12px;">Run Report</button>
+
+    <!-- SUMMARY -->
+    <div id="companyReportSummary" class="summary-box" style="display:none;"></div>
+
+    <!-- RESULTS TABLE -->
+    <div style="overflow-x:auto; margin-top:8px;">
+        <table id="companyReportTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time In</th>
+                    <th>First</th>
+                    <th>Last</th>
+                    <th>Reason</th>
+                    <th>Services</th>
+                    <th>Signature</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- EXPORT BUTTONS -->
+    <div class="actions-row">
+        <button id="exportCompanyXlsBtn" class="secondary">Export to Excel</button>
+        <button id="printCompanyPdfBtn" class="secondary">Print PDF</button>
+    </div>
+</section>
 
       <!-- Recent Check-Ins -->
       <section class="card">
@@ -1281,6 +1345,144 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
         }
       };
     }
+let lastCompanyReport = [];
+let lastCompanySummary = "";
+
+// Load company dropdown for company report
+function renderCompanyReportDropdown() {
+    const sel = document.getElementById("companyReportSelect");
+    if (!sel) return;
+
+    const list = loadCompanyList();
+    sel.innerHTML = `<option value="">-- Select company --</option>`;
+
+    list.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.textContent = c;
+        sel.appendChild(opt);
+    });
+}
+
+// COMPANY REPORT DATE PRESETS
+function setCompanyPreset(preset) {
+    const start = document.getElementById("companyReportStart");
+    const end = document.getElementById("companyReportEnd");
+
+    const now = new Date();
+    let s = new Date();
+    let e = new Date();
+
+    switch (preset) {
+        case "today":
+            break;
+        case "yesterday":
+            s.setDate(s.getDate() - 1);
+            e.setDate(e.getDate() - 1);
+            break;
+        case "thisWeek":
+            s.setDate(s.getDate() - s.getDay());
+            break;
+        case "lastWeek":
+            const d = s.getDay();
+            s.setDate(s.getDate() - d - 7);
+            e.setDate(s.getDate() + 6);
+            break;
+        case "thisMonth":
+            s = new Date(now.getFullYear(), now.getMonth(), 1);
+            break;
+        case "lastMonth":
+            s = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            e = new Date(now.getFullYear(), now.getMonth(), 0);
+            break;
+        case "thisYear":
+            s = new Date(now.getFullYear(), 0, 1);
+            break;
+        case "lastYear":
+            s = new Date(now.getFullYear() - 1, 0, 1);
+            e = new Date(now.getFullYear() - 1, 11, 31);
+            break;
+    }
+
+    start.value = s.toISOString().split("T")[0];
+    end.value = e.toISOString().split("T")[0];
+}
+
+// RUN COMPANY REPORT
+function runCompanyReport() {
+    const dropdownValue = document.getElementById("companyReportSelect").value.trim().toLowerCase();
+    const manualValue   = document.getElementById("companyReportManual").value.trim().toLowerCase();
+
+    const company = manualValue || dropdownValue;
+
+    if (!company) {
+        alert("Select or type a company name.");
+        return;
+    }
+
+    const start = document.getElementById("companyReportStart").value;
+    const end   = document.getElementById("companyReportEnd").value;
+
+    if (!start || !end) {
+        alert("Please select a start and end date.");
+        return;
+    }
+
+    const sDate = new Date(start + "T00:00:00");
+    const eDate = new Date(end + "T23:59:59");
+
+    const tbody = document.querySelector("#companyReportTable tbody");
+    tbody.innerHTML = "";
+
+    const records = loadRecords();
+
+    const results = records.filter(rec => {
+        const d = new Date(rec.timestamp);
+        if (d < sDate || d > eDate) return false;
+        return (rec.company || "").toLowerCase().includes(company);
+    });
+
+    results.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    results.forEach(rec => {
+        const dt = formatDateTime(rec.timestamp);
+        signatureStore[rec.id] = rec.signatureDataUrl || "";
+
+        const sigBtn = rec.signatureDataUrl
+            ? `<button class="sig-btn" data-sigid="${rec.id}">View</button>`
+            : "";
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${dt.date}</td>
+            <td>${dt.time}</td>
+            <td>${rec.firstName}</td>
+            <td>${rec.lastName}</td>
+            <td>${rec.reason}</td>
+            <td>${formatServices(rec.serviceTypes)}</td>
+            <td>${sigBtn}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    const summaryBox = document.getElementById("companyReportSummary");
+    summaryBox.style.display = "block";
+    summaryBox.textContent = 
+        `Company: ${manualValue || dropdownValue.toUpperCase()} | Total: ${results.length} | Range: ${start} → ${end}`;
+
+    lastCompanyReport = results;
+    lastCompanySummary = summaryBox.textContent;
+}
+
+// EXPORT COMPANY XLS
+document.getElementById("exportCompanyXlsBtn").addEventListener("click", () => {
+    exportRecordsToXls(lastCompanyReport, "company_report.xls", true);
+});
+
+// PRINT COMPANY PDF
+document.getElementById("printCompanyPdfBtn").addEventListener("click", () => {
+    printRecordsAsPdf(lastCompanyReport, "Company Report", lastCompanySummary, true);
+});
 
     document.addEventListener('DOMContentLoaded', () => {
       if (!localStorage.getItem(COMPANY_LIST_KEY)) {
