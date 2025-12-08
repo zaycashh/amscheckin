@@ -1290,116 +1290,125 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
       }
 
       if (submitBtn) {
-        submitBtn.addEventListener('click', () => {
-          const firstName = document.getElementById('firstName').value.trim();
-          const lastName = document.getElementById('lastName').value.trim();
-          const companyValue = companySelect.value;
-          const otherCompany = document.getElementById('otherCompany').value.trim();
-          let reason = document.getElementById('reasonSelect').value;
+    submitBtn.addEventListener('click', () => {
 
-          if (!firstName || !lastName) {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const companyValue = companySelect.value;
+        const otherCompany = document.getElementById('otherCompany').value.trim();
+        let reason = document.getElementById('reasonSelect').value;
+
+        // Missing first + last
+        if (!firstName || !lastName) {
             msg.textContent = 'Please fill in first and last name.';
             msg.style.color = 'red';
             return;
-          }
-          if (!companyValue) {
+        }
+
+        // Company required
+        if (!companyValue) {
             msg.textContent = 'Please select a company or choose "Other".';
             msg.style.color = 'red';
             return;
-          }
-          let company = companyValue;
-          if (companyValue === OTHER_COMPANY_VALUE) {
+        }
+
+        // "Other company"
+        let company = companyValue;
+        if (companyValue === OTHER_COMPANY_VALUE) {
             if (!otherCompany) {
-              msg.textContent = 'Please type the other company name.';
-              msg.style.color = 'red';
-              return;
+                msg.textContent = 'Please type the other company name.';
+                msg.style.color = 'red';
+                return;
             }
             company = otherCompany;
-          }
-          // Handle manual "Other Reason"
-const otherReasonInput = document.getElementById("otherReasonInput");
-if (reason && reason.includes("Other")) {
-    if (!otherReasonInput || otherReasonInput.value.trim() === "") {
-        msg.textContent = "Please enter the reason for testing.";
-        msg.style.color = "red";
-        return;
-    }
+        }
 
-    // Override dropdown value with the typed reason
-    reason = otherReasonInput.value.trim();
-}
+        // Handle manual "Other reason"
+        const otherReasonInput = document.getElementById("otherReasonInput");
+        if (reason && reason.includes("Other")) {
+            if (!otherReasonInput || otherReasonInput.value.trim() === "") {
+                msg.textContent = "Please enter the reason for testing.";
+                msg.style.color = "red";
+                return;
+            }
+            reason = otherReasonInput.value.trim();
+        }
 
-// Normal reason validation
-if (!reason) {
-    msg.textContent = 'Please select a reason for testing.';
-    msg.style.color = 'red';
-    return;
-}
+        // Normal reason must still be chosen
+        if (!reason) {
+            msg.textContent = 'Please select a reason for testing.';
+            msg.style.color = 'red';
+            return;
+        }
 
-          if (!sigPad || !sigPad.hasSignature()) {
+        // ⭐ SERVICE TYPE VALIDATION — NEW ⭐
+        const serviceOtherChecked = document.getElementById("service_other").checked;
+        const serviceOtherText = document.getElementById("other_reason").value.trim();
+
+        if (serviceOtherChecked && serviceOtherText === "") {
+            msg.textContent = "Please enter the service reason since 'Other' is selected.";
+            msg.style.color = "red";
+            return;
+        }
+
+        // Signature required
+        if (!sigPad || !sigPad.hasSignature()) {
             msg.textContent = 'Please capture donor signature before submitting.';
             msg.style.color = 'red';
             return;
-          }
+        }
 
-          const signatureDataUrl = sigPad.getDataUrl();
-          // Collect service checkboxes
-const services = {
-  drug: document.querySelector('input[name="service_drug"]').checked,
-  dna: document.querySelector('input[name="service_dna"]').checked,
-  vision: document.querySelector('input[name="service_vision"]').checked,
-  alcohol: document.querySelector('input[name="service_alcohol"]').checked,
-  dot: document.querySelector('input[name="service_dot"]').checked,
-  other: document.getElementById("service_other").checked,
-  otherText: document.getElementById("other_reason").value.trim()
-};
+        const signatureDataUrl = sigPad.getDataUrl();
 
-          const record = {
-    id: Date.now().toString(),
-    firstName,
-    lastName,
-    company,
-    reason,
+        // Collect services
+        const services = {
+            drug: document.querySelector('input[name="service_drug"]').checked,
+            dna: document.querySelector('input[name="service_dna"]').checked,
+            vision: document.querySelector('input[name="service_vision"]').checked,
+            alcohol: document.querySelector('input[name="service_alcohol"]').checked,
+            dot: document.querySelector('input[name="service_dot"]').checked,
+            other: serviceOtherChecked,
+            otherText: serviceOtherText
+        };
 
-    // SAVE SERVICES
-    serviceTypes: services,
+        // Create record
+        const record = {
+            id: Date.now().toString(),
+            firstName,
+            lastName,
+            company,
+            reason,
+            serviceTypes: services,
+            signatureDataUrl,
+            timestamp: new Date().toISOString()
+        };
 
-    signatureDataUrl,
-    timestamp: new Date().toISOString()
-};
-addRecord(record);
-          
-document.querySelectorAll('.service-options input[type="checkbox"]').forEach(cb => {
-    cb.checked = false;
-});
+        addRecord(record);
 
-// CLEAR OTHER REASON INPUT
-document.getElementById('otherReasonInput').value = '';
-document.getElementById('otherReasonWrapper').style.display = 'none';
+        // Reset checkboxes + fields
+        document.querySelectorAll('.service-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+        document.getElementById('otherReasonInput').value = '';
+        document.getElementById('otherReasonWrapper').style.display = 'none';
+        document.getElementById('other_reason').value = '';
+        document.getElementById('other_reason').style.display = 'none';
 
-// CLEAR SERVICE "OTHER" TEXT INPUT
-document.getElementById('other_reason').value = '';
-document.getElementById('other_reason').style.display = 'none';
-document.getElementById('service_other').checked = false;
+        if (sigPad) sigPad.clear();
 
-// CLEAR SIGNATURE
-if (sigPad) sigPad.clear();
+        playSubmitSound();
 
-          playSubmitSound();
+        // Reset main form fields
+        document.getElementById('firstName').value = '';
+        document.getElementById('lastName').value = '';
+        companySelect.value = '';
+        document.getElementById('otherCompany').value = '';
+        otherCompanyWrapper.style.display = 'none';
+        document.getElementById('reasonSelect').value = '';
 
-          document.getElementById('firstName').value = '';
-          document.getElementById('lastName').value = '';
-          companySelect.value = '';
-          document.getElementById('otherCompany').value = '';
-          otherCompanyWrapper.style.display = 'none';
-          document.getElementById('reasonSelect').value = '';
-          if (sigPad) sigPad.clear();
-
-          msg.textContent = 'Check-in saved.';
-          msg.style.color = 'green';
-          setTimeout(() => { msg.textContent = ''; }, 3000);
-        });
-      }
+        msg.textContent = 'Check-in saved.';
+        msg.style.color = 'green';
+        setTimeout(() => { msg.textContent = ''; }, 3000);
+    });
+}
 
       if (searchBtn) searchBtn.addEventListener('click', runSearch);
       if (clearFilterBtn) clearFilterBtn.addEventListener('click', () => {
