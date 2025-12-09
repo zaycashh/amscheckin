@@ -1625,65 +1625,6 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
       }
     }
 
-    function runSearch() {
-    const rawName = document.getElementById('searchName').value.trim().toLowerCase();
-    const nameParts = rawName.split(" ").filter(n => n);  // supports "John", "Doe", or "John Doe"
-
-    const companyFilter = document.getElementById('searchCompany').value.trim().toLowerCase();
-    const dateFilter = document.getElementById('searchDate').value;
-    const reasonFilter = document.getElementById('searchReason').value;
-
-    const tbody = document.querySelector('#resultsTable tbody');
-    tbody.innerHTML = '';
-
-    const records = loadRecords();
-
-    const filtered = records.filter(rec => {
-        let ok = true;
-
-        // -------------------------
-        // 🔍 INDIVIDUAL NAME SEARCH
-        // -------------------------
-        const fn = (rec.firstName || '').toLowerCase();
-        const ln = (rec.lastName || '').toLowerCase();
-
-        if (nameParts.length === 1 && rawName !== "") {
-            // Search by first OR last when only one word typed
-            ok = ok && (fn.includes(rawName) || ln.includes(rawName));
-        }
-
-        if (nameParts.length === 2) {
-            // Search for BOTH names when "John Doe" typed
-            ok = ok && (
-                fn.includes(nameParts[0]) && ln.includes(nameParts[1]) ||
-                fn.includes(nameParts[1]) && ln.includes(nameParts[0])
-            );
-        }
-
-        // Company search
-        if (companyFilter) {
-            ok = ok && (rec.company || '').toLowerCase().includes(companyFilter);
-        }
-
-        // Date search
-        if (dateFilter) {
-            const d = new Date(rec.timestamp);
-            if (!isNaN(d.getTime())) {
-                const localDate = getLocalDateString(d);
-                ok = ok && (localDate === dateFilter);
-            } else {
-                ok = false;
-            }
-        }
-
-        // Reason search
-        if (reasonFilter) {
-            ok = ok && rec.reason === reasonFilter;
-        }
-
-        return ok;
-    });
-
     // Sort oldest → newest
     const sorted = filtered.slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
