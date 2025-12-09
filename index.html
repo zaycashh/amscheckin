@@ -668,46 +668,26 @@ function renderCompanyListDisplay() {
     container.innerHTML = "";
 
     list
-        .filter(name => name.toLowerCase().includes(search))
-        .forEach((name, idx) => {
+  .filter(name => name.toLowerCase().includes(search))
+  .forEach((name, idx) => {
 
-            const row = document.createElement("div");
-            row.className = "tag";
+      const row = document.createElement("div");
+      row.className = "tag";
 
-            const label = document.createElement("span");
-            label.textContent = name;
+      const label = document.createElement("span");
+      label.textContent = name;
 
-            const editBtn = document.createElement("button");
-            editBtn.textContent = "Edit";
-            editBtn.style.marginLeft = "10px";
-            editBtn.onclick = () => {
-                const newName = prompt("Edit company name:", name);
-                if (newName && newName.trim()) {
-                    const companies = loadCompanyList();
-                    companies[idx] = newName.trim();
-                    saveCompanyList(companies);
-                    renderCompanySelect();
-                    renderCompanyListDisplay();
-                }
-            };
+      row.appendChild(label);
 
-            const delBtn = document.createElement("button");
-            delBtn.textContent = "Delete";
-            delBtn.style.marginLeft = "10px";
-            delBtn.onclick = () => {
-                if (confirm(`Delete "${name}"?`)) {
-                    const companies = loadCompanyList().filter((_, i) => i !== idx);
-                    saveCompanyList(companies);
-                    renderCompanySelect();
-                    renderCompanyListDisplay();
-                }
-            };
+      // CLICK TO SELECT COMPANY
+      row.addEventListener("click", () => {
+          document.getElementById("selectedCompany").textContent = name;
+          document.getElementById("editDeletePanel").style.display = "block";
+      });
 
-            row.appendChild(label);
-            row.appendChild(editBtn);
-            row.appendChild(delBtn);
-            container.appendChild(row);
-        });
+      container.appendChild(row);
+  });
+
 }
 
 // ===============================
