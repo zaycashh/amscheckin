@@ -1108,6 +1108,85 @@ function renderRecentTable() {
 
     document.getElementById("countBadge").textContent = log.length;
 }
-</script>  
+</script>
+        <script>
+// ===============================
+// SEARCH FUNCTION FOR INDIVIDUAL LOOKUP
+// ===============================
+document.getElementById("searchBtn").addEventListener("click", () => {
+    let nameSearch = document.getElementById("searchName").value.trim().toLowerCase();
+    let companySearch = document.getElementById("searchCompany").value.trim().toLowerCase();
+    let dateSearch = document.getElementById("searchDate").value;
+    let reasonSearch = document.getElementById("searchReason").value;
+
+    let log = JSON.parse(localStorage.getItem("amsLog") || "[]");
+
+    // Filter the stored logs
+    let results = log.filter(entry => {
+        let matchesName =
+            !nameSearch ||
+            entry.first.toLowerCase().includes(nameSearch) ||
+            entry.last.toLowerCase().includes(nameSearch);
+
+        let matchesCompany =
+            !companySearch ||
+            entry.company.toLowerCase().includes(companySearch);
+
+        let matchesDate =
+            !dateSearch ||
+            entry.date === new Date(dateSearch).toLocaleDateString();
+
+        let matchesReason =
+            !reasonSearch || entry.reason === reasonSearch;
+
+        return matchesName && matchesCompany && matchesDate && matchesReason;
+    });
+
+    renderSearchResults(results);
+});
+
+// ===============================
+// RENDER SEARCH TABLE RESULTS
+// ===============================
+function renderSearchResults(results) {
+    let tbody = document.querySelector("#resultsTable tbody");
+    tbody.innerHTML = "";
+
+    if (results.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8">No results found.</td></tr>`;
+        return;
+    }
+
+    results.forEach(entry => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${entry.date}</td>
+            <td>${entry.time}</td>
+            <td>${entry.first}</td>
+            <td>${entry.last}</td>
+            <td>${entry.company}</td>
+            <td>${entry.reason}</td>
+            <td>${entry.services ? entry.services.join(", ") : ""}</td>
+            <td><img src="${entry.signature}" style="width:70px;border:1px solid #ccc;"></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// ===============================
+// CLEAR SEARCH FILTERS
+// ===============================
+document.getElementById("clearFilterBtn").addEventListener("click", () => {
+    // Reset inputs
+    document.getElementById("searchName").value = "";
+    document.getElementById("searchCompany").value = "";
+    document.getElementById("searchDate").value = "";
+    document.getElementById("searchReason").value = "";
+
+    // Clear results table
+    document.querySelector("#resultsTable tbody").innerHTML = "";
+});
+</script>
+
 </body>
 </html>
