@@ -827,7 +827,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const runBtn = document.getElementById("runCompanyReportBtn");
     if (runBtn) runBtn.onclick = generateCompanyReport;
 });
-</script>
+// ===============================
+// ADMIN LOGIN SYSTEM
+// ===============================
+
+let ADMIN_UNLOCKED = false;
+const ADMIN_PIN = "4455";  // <-- Change this PIN if you want
+
+function toggleAdmin() {
+    if (!ADMIN_UNLOCKED) {
+        const pin = prompt("Enter Admin PIN:");
+        if (pin === ADMIN_PIN) {
+            ADMIN_UNLOCKED = true;
+            document.getElementById("adminArea").style.display = "block";
+            document.getElementById("adminStatusText").textContent = "Admin Mode Active";
+            alert("Admin Access Granted");
+        } else {
+            alert("Incorrect PIN");
+        }
+    } else {
+        // If already unlocked → hide admin
+        ADMIN_UNLOCKED = false;
+        document.getElementById("adminArea").style.display = "none";
+        document.getElementById("adminStatusText").textContent = "";
+        alert("Admin Logged Out");
+    }
+}
+
+// Bind the button
+document.getElementById("toggleAdminBtn").addEventListener("click", toggleAdmin);
+  
+</script> 
 
    
 </body>
