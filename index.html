@@ -1745,6 +1745,7 @@ function exportSearchResultsToExcel() {
       }
       renderCompanySelect();
       renderCompanyListDisplay();
+      renderCompanyReportSelect();
 
       const sigPad = setupSignaturePad();
 
@@ -1756,7 +1757,7 @@ function exportSearchResultsToExcel() {
       const exportReportXlsBtn = document.getElementById('exportReportXlsBtn');
       const printReportBtn = document.getElementById('printReportBtn');
       const msg = document.getElementById('submitMessage');
-      const companySelect = document.getElementById('companySelect');
+      const companySelect = document.getElementById("companyReportSelect");
       const otherCompanyWrapper = document.getElementById('otherCompanyWrapper');
       const pills = document.querySelectorAll('.pill');
       pills.forEach(pill => {
@@ -1964,6 +1965,22 @@ if (exportSearchPdfBtn) {
 
     saveCompanyList(list);
     renderCompanySelect();
+        function renderCompanyReportSelect() {
+    const list = getCompanyList(); 
+    const select = document.getElementById("companyReportSelect");
+
+    if (!select) return;
+
+    select.innerHTML = '<option value="">Select company</option>';
+
+    list.forEach(company => {
+        const option = document.createElement("option");
+        option.value = company;
+        option.textContent = company;
+        select.appendChild(option);
+    });
+}
+
     renderCompanyListDisplay();
 
     input.value = "";
