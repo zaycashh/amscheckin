@@ -374,7 +374,6 @@
       <div style="display:flex; gap:10px; margin-top:10px;">
 
     <!-- Submit Button (unchanged) -->
-    <button id="submitBtn">Submit Check-In</button>
         Submit Check-In
     </button>
 
@@ -1007,42 +1006,56 @@ document.getElementById("submitBtn").addEventListener("click", submitCheckIn);
     let reason = document.getElementById("reasonSelect").value;
     let manualReason = document.getElementById("otherReasonInput").value.trim();
 
-    // ------------------------------
-    // VALIDATION: NAME + COMPANY
-    // ------------------------------
+    // Validation checks
     if (!first || !last) return alert("Enter first and last name.");
     if (!company && !otherCompany) return alert("Select or enter a company.");
     if (company === "OTHER_COMPANY") company = otherCompany;
     if (!reason) return alert("Please select a Reason for Testing.");
-    if (reason === "Other (personal)" && !manualReason) {
-        return alert("Please enter the 'Other Reason' manually.");
-    if (reason === "Other (personal)" && manualReason) {
-        reason = manualReason;
-    }
+    if (reason === "Other (personal)" && !manualReason) return alert("Please enter the 'Other Reason' manually.");
 
+    // Collecting services
     let services = [];
     document.querySelectorAll(".service-options input[type='checkbox']").forEach(cb => {
         if (cb.checked) services.push(cb.name.replace("service_", ""));
     });
 
     let manualService = document.getElementById("other_reason").value.trim();
-
     if (manualService) services.push("other: " + manualService);
 
-    if (services.length === 0) {
-        return alert("Please select at least one Service Type.");
-    }
+    if (services.length === 0) return alert("Please select at least one Service Type.");
 
+    // Signature check
     let signatureData = sigCanvas.toDataURL();
-
     let blank = document.createElement("canvas");
     blank.width = sigCanvas.width;
     blank.height = sigCanvas.height;
 
-    if (signatureData === blank.toDataURL()) {
-        return alert("Please sign before submitting.");
-    }
+    if (signatureData === blank.toDataURL()) return alert("Please sign before submitting.");
 
+    // Create entry data
+    let now = new Date();
+    let entry = {
+        date: now.toLocaleDateString(),
+        time: now.toLocaleTimeString(),
+        first,
+        last,
+        company,
+        reason,
+        services,
+        signature: signatureData
+    };
+
+    // Save to localStorage
+    let log = JSON.parse(localStorage.getItem("amsLog") || "[]");
+    log.push(entry);
+    localStorage.setItem("amsLog", JSON.stringify(log));
+
+    // Play sound and reset form
+    playSubmitSound();
+    alert("Check-In Saved!");
+    resetForm();
+    renderRecentTable();
+}
     let now = new Date();
     let entry = {
         date: now.toLocaleDateString(),
