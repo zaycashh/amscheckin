@@ -1726,6 +1726,8 @@ document.getElementById("printCompanyPdfBtn").addEventListener("click", () => {
       const clearReportBtn = document.getElementById('clearReportBtn');
       const addCompanyBtn = document.getElementById('addCompanyBtn');
       const toggleAdminBtn = document.getElementById('toggleAdminBtn');
+      const exportSearchExcelBtn = document.getElementById("exportExcelBtn");
+      const exportSearchPdfBtn = document.getElementById("exportPdfBtn");
 
       if (toggleAdminBtn) {
         toggleAdminBtn.addEventListener('click', toggleAdmin);
@@ -1871,6 +1873,16 @@ document.getElementById("printCompanyPdfBtn").addEventListener("click", () => {
         document.getElementById('searchReason').value = '';
         document.querySelector('#resultsTable tbody').innerHTML = '';
       });
+      
+      // Export ONLY individual search results
+if (exportSearchExcelBtn) {
+    exportSearchExcelBtn.addEventListener("click", exportSearchResultsToExcel);
+}
+
+if (exportSearchPdfBtn) {
+    exportSearchPdfBtn.addEventListener("click", exportSearchResultsToPDF);
+}
+
 
       if (exportXlsBtn) exportXlsBtn.addEventListener('click', exportAllAsXls);
       if (printAllBtn) printAllBtn.addEventListener('click', printAllAsPdf);
@@ -1931,6 +1943,81 @@ document.getElementById("printCompanyPdfBtn").addEventListener("click", () => {
         }
       });
     });
+    function exportSearchResultsToPDF() {
+    const table = document.querySelector('#resultsTable');
+    const rows = [...table.querySelectorAll("tr")];
+
+    let pdfContent = `
+        <html>
+        <head>
+        <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #333; padding: 6px; font-size: 12px; }
+            th { background: #f2f2f2; }
+        </style>
+        </head>
+        <body>
+        <h2>Search Results Export</h2>
+        <table>
+    `;
+
+    rows.forEach(row => {
+        pdfContent += "<tr>";
+        const cols = [...row.querySelectorAll("td, th")];
+        cols.forEach(col => pdfContent += `<td>${col.innerText}</td>`);
+        pdfContent += "</tr>";
+    });
+
+    pdfContent += "</table></body></html>";
+
+    const blob = new Blob([pdfContent], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "search_results.pdf";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+    function exportSearchResultsToPDF() {
+    const table = document.querySelector('#resultsTable');
+    const rows = [...table.querySelectorAll("tr")];
+
+    let pdfContent = `
+        <html>
+        <head>
+        <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #333; padding: 6px; font-size: 12px; }
+            th { background: #f2f2f2; }
+        </style>
+        </head>
+        <body>
+        <h2>Search Results Export</h2>
+        <table>
+    `;
+
+    rows.forEach(row => {
+        pdfContent += "<tr>";
+        const cols = [...row.querySelectorAll("td, th")];
+        cols.forEach(col => pdfContent += `<td>${col.innerText}</td>`);
+        pdfContent += "</tr>";
+    });
+
+    pdfContent += "</table></body></html>";
+
+    const blob = new Blob([pdfContent], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "search_results.pdf";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
   </script>
+        
 </body>
 </html>
