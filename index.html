@@ -614,6 +614,74 @@
   </main>
 
 <script>
+  <script>
+  // ==============================
+  // Search Functionality Code
+  // ==============================
+
+  // Listen for the Search button click
+  document.getElementById("searchBtn").addEventListener("click", function() {
+    // Get the values from the search fields
+    const name = document.getElementById("searchName").value.trim(); // Donor Name
+    const company = document.getElementById("searchCompany").value.trim(); // Company Name
+    const date = document.getElementById("searchDate").value.trim(); // Date
+    const reason = document.getElementById("searchReason").value.trim(); // Reason for Test
+
+    // Filter through the check-ins (this example assumes data is in localStorage)
+    const log = JSON.parse(localStorage.getItem("amsLog") || "[]"); // Replace with actual data source if needed
+    const filteredResults = log.filter(entry => {
+        return (
+            (name === "" || entry.first.includes(name) || entry.last.includes(name)) &&
+            (company === "" || entry.company.includes(company)) &&
+            (date === "" || entry.date === date) &&
+            (reason === "" || entry.reason.includes(reason))
+        );
+    });
+
+    // Display filtered results in the table
+    updateResultsTable(filteredResults);
+});
+
+  function updateResultsTable(results) {
+      const tableBody = document.getElementById("resultsTable").getElementsByTagName("tbody")[0];
+      tableBody.innerHTML = ""; // Clear previous results
+
+      // Iterate through the filtered results and add each one to the table
+      results.forEach(entry => {
+          const row = tableBody.insertRow();
+          row.innerHTML = `
+              <td>${entry.date}</td>
+              <td>${entry.time}</td>
+              <td>${entry.first}</td>
+              <td>${entry.last}</td>
+              <td>${entry.company}</td>
+              <td>${entry.reason}</td>
+              <td>${entry.services.join(", ")}</td>
+              <td><img src="${entry.signature}" alt="Signature" width="50"></td>
+          `;
+      });
+  }
+
+  // ==============================
+  // Existing Company Storage Functions
+  // ==============================
+
+  const COMPANY_LIST_KEY = "companyListStorage";
+
+  function loadCompanyList() {
+      try {
+          const raw = localStorage.getItem(COMPANY_LIST_KEY);
+          return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+          return [];
+      }
+  }
+
+  function saveCompanyList(list) {
+      localStorage.setItem(COMPANY_LIST_KEY, JSON.stringify(list));
+  }
+</script>
+
 // ===============================
 // COMPANY STORAGE
 // ===============================
