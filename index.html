@@ -471,11 +471,21 @@
       <!-- Reports -->
       <section class="card">
         <h2>Detail Company Report</h2>
-        <div class="pill-row">
-          <span class="pill" data-range="yesterday">Yesterday</span>
-          <span class="pill" data-range="thisWeek">This Week</span>
-          <span class="pill" data-range="thisMonth">This Month</span>
-        </div>
+        <!-- DATE PRESETS -->
+<div class="pill-row" style="margin-top:10px;">
+    <span class="pill" data-companyrange="today">Today</span>
+    <span class="pill" data-companyrange="yesterday">Yesterday</span>
+
+    <span class="pill" data-companyrange="thisWeek">This Week</span>
+    <span class="pill" data-companyrange="lastWeek">Last Week</span>
+
+    <span class="pill" data-companyrange="thisMonth">This Month</span>
+    <span class="pill" data-companyrange="lastMonth">Last Month</span>
+
+    <span class="pill" data-companyrange="thisYear">This Year</span>
+    <span class="pill" data-companyrange="lastYear">Last Year</span>
+</div>
+
         <div class="row">
           <div class="col-6">
             <label for="reportStart">Start Date</label>
@@ -1398,6 +1408,7 @@ function applyCompanyDatePreset(preset) {
 
     switch (preset) {
         case "today":
+            // already correct: start = today, end = today
             break;
 
         case "yesterday":
@@ -1405,38 +1416,40 @@ function applyCompanyDatePreset(preset) {
             end.setDate(today.getDate() - 1);
             break;
 
-        case "thisweek":
-            const day = today.getDay();
+        case "thisWeek":
+            const day = today.getDay(); // Sunday = 0
             start.setDate(today.getDate() - day);
             break;
 
-        case "lastweek":
+        case "lastWeek":
             const d = today.getDay();
+            start = new Date(today);
             start.setDate(today.getDate() - d - 7);
-            end.setDate(today.getDate() - d - 1);
+            end = new Date(start);
+            end.setDate(start.getDate() + 6);
             break;
 
-        case "thismonth":
+        case "thisMonth":
             start = new Date(today.getFullYear(), today.getMonth(), 1);
             break;
 
-        case "lastmonth":
+        case "lastMonth":
             start = new Date(today.getFullYear(), today.getMonth() - 1, 1);
             end = new Date(today.getFullYear(), today.getMonth(), 0);
             break;
 
-        case "thisyear":
+        case "thisYear":
             start = new Date(today.getFullYear(), 0, 1);
             break;
 
-        case "lastyear":
+        case "lastYear":
             start = new Date(today.getFullYear() - 1, 0, 1);
             end = new Date(today.getFullYear() - 1, 11, 31);
             break;
     }
 
-    startInput.value = formatDateInput(start);
-    endInput.value = formatDateInput(end);
+    startInput.value = start.toISOString().split("T")[0];
+    endInput.value = end.toISOString().split("T")[0];
 }
 
 // Format to YYYY-MM-DD for inputs
