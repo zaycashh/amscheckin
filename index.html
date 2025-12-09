@@ -837,13 +837,32 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
             }
         }
 
-        // Reason search
-        if (reasonFilter) {
-            ok = ok && rec.reason === reasonFilter;
-        }
+        // Reason search — SUPPORT MANUAL "OTHER" TEXT
+if (reasonFilter) {
 
-        return ok;
-    });
+    if (reasonFilter.includes("Other")) {
+
+        const presetReasons = [
+            "Pre-employment",
+            "Random",
+            "Reasonable suspicion",
+            "Post-accident",
+            "Return to duty",
+            "Follow up"
+        ];
+
+        const isPreset = presetReasons.includes(rec.reason);
+
+        if (isPreset) return false;
+    }
+    else {
+        if (rec.reason !== reasonFilter) return false;
+    }
+}
+
+return ok;
+});
+
 
     // Sort oldest → newest
     const sorted = filtered.slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
