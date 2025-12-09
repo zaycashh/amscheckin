@@ -837,12 +837,17 @@ const OTHER_COMPANY_VALUE = '__OTHER__';
             }
         }
 
-        // Reason search
-        if (reasonFilter) {
-            ok = ok && rec.reason === reasonFilter;
-        }
+        // Reason search (supports manual typed reasons)
+if (reasonFilter) {
+    const recReason = (rec.reason || '').toLowerCase();
+    const filter = reasonFilter.toLowerCase();
 
-        return ok;
+    // Match exact preset OR manual typed reason text
+    if (!recReason.includes(filter)) {
+        ok = false;
+    }
+}
+
     });
 
     // Sort oldest → newest
