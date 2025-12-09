@@ -898,6 +898,7 @@ function toggleAdmin() {
             ADMIN_UNLOCKED = true;
             document.getElementById("adminArea").style.display = "block";
             document.getElementById("adminStatusText").textContent = "Admin Mode Active";
+            renderRecentTable();
             alert("Admin Access Granted");
         } else {
             alert("Incorrect PIN");
