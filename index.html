@@ -991,8 +991,96 @@ sigCanvas.addEventListener("touchmove", draw);
 sigCanvas.addEventListener("touchend", endDraw);
 sigCanvas.addEventListener("touchcancel", endDraw);
 </script>
- 
+ <script>
+// ===============================
+// SUBMIT CHECK-IN
+// ===============================
+document.getElementById("submitBtn").addEventListener("click", submitCheckIn);
 
-   
+function submitCheckIn() {
+    let first = document.getElementById("firstName").value.trim();
+    let last = document.getElementById("lastName").value.trim();
+    let company = document.getElementById("companySelect").value;
+    let otherCompany = document.getElementById("otherCompany").value.trim();
+
+    let reason = document.getElementById("reasonSelect").value;
+    let manualReason = document.getElementById("otherReasonInput").value.trim();
+
+    let services = [];
+    document.querySelectorAll(".service-options input[type='checkbox']").forEach(cb => {
+        if (cb.checked) services.push(cb.name.replace("service_", ""));
+    });
+
+    let manualService = document.getElementById("other_reason").value.trim();
+    if (manualService) services.push("other: " + manualService);
+
+    if (!first || !last) return alert("Enter first and last name.");
+    if (!company && !otherCompany) return alert("Select or enter a company.");
+
+    if (company === "OTHER_COMPANY") company = otherCompany;
+
+    if (reason === "Other (personal)" && manualReason) {
+        reason = manualReason;
+    }
+
+    let signatureData = sigCanvas.toDataURL();
+
+    let blank = document.createElement("canvas");
+    blank.width = sigCanvas.width;
+    blank.height = sigCanvas.height;
+
+    if (signatureData === blank.toDataURL()) {
+        return alert("Please sign before submitting.");
+    }
+
+    let now = new Date();
+    let entry = {
+        date: now.toLocaleDateString(),
+        time: now.toLocaleTimeString(),
+        first,
+        last,
+        company,
+        reason,
+        services,
+        signature: signatureData
+    };
+
+    let log = JSON.parse(localStorage.getItem("amsLog") || "[]");
+    log.push(entry);
+    localStorage.setItem("amsLog", JSON.stringify(log));
+
+    playSubmitSound();
+    alert("Check-In Saved!");
+
+    resetForm();
+    renderRecentTable();
+}
+
+
+// ===============================
+// RENDER RECENT TABLE
+// ===============================
+function renderRecentTable() {
+    let log = JSON.parse(localStorage.getItem("amsLog") || "[]");
+    let tbody = document.querySelector("#recentTable tbody");
+    tbody.innerHTML = "";
+
+    log.slice().reverse().forEach(entry => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${entry.date}</td>
+            <td>${entry.time}</td>
+            <td>${entry.first}</td>
+            <td>${entry.last}</td>
+            <td>${entry.company}</td>
+            <td>${entry.reason}</td>
+            <td><img src="${entry.signature}" style="width:80px; border:1px solid #ccc;"></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("countBadge").textContent = log.length;
+}
+</script>  
 </body>
 </html>
