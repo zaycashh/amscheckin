@@ -1080,7 +1080,10 @@ function submitCheckIn() {
     playSubmitSound();
     alert("Check-In Saved!");
 
+    // Call resetForm to clear the form after submission
     resetForm();
+
+    // Render the recent table with updated data
     renderRecentTable();
 }
 
