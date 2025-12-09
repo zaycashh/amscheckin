@@ -3,276 +3,231 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- For Export to Excel -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
-
-  <!-- For Export to PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
+  <style>
     body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5;
-  color: #222;
-}
-
-header {
-  background: #ffffff;
-  border-bottom: 4px solid #4F8C47;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.header-logo {
-  height: 52px;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-.header-logo img {
-  height: 100%;
-  width: auto;
-  display: block;
-}
-
-.header-text-main {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #D9A441;
-  line-height: 1.2;
-}
-
-.header-text-sub {
-  font-size: 0.85rem;
-  color: #4F8C47;
-}
-
-.header-tagline {
-  font-size: 0.75rem;
-  color: #1E3A59;
-  font-style: italic;
-  text-align: right;
-  max-width: 180px;
-}
-
-main {
-  padding: 12px;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  padding: 14px;
-  margin-bottom: 14px;
-  border-top: 3px solid #D9A441;
-}
-
-h2 {
-  font-size: 1.05rem;
-  margin-top: 0;
-  color: #1E3A59;
-}
-
-label {
-  display: block;
-  margin-top: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-input, button, select {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      color: #222;
+    }
+    header {
+      background: #ffffff;
+      border-bottom: 4px solid #4F8C47;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-logo {
+      height: 52px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .header-logo img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+    .header-text-main {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #D9A441;
+      line-height: 1.2;
+    }
+    .header-text-sub {
+      font-size: 0.85rem;
+      color: #4F8C47;
+    }
+    .header-tagline {
+      font-size: 0.75rem;
+      color: #1E3A59;
+      font-style: italic;
+      text-align: right;
+      max-width: 180px;
+    }
+    main {
+      padding: 12px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      padding: 14px;
+      margin-bottom: 14px;
+      border-top: 3px solid #D9A441;
+    }
+    h2 {
+      font-size: 1.05rem;
+      margin-top: 0;
+      color: #1E3A59;
+    }
+    label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    input, button, select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      margin-top: 4px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background: #4F8C47;
+      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button.secondary {
+      background: #1E3A59;
+    }
+    button:active {
+      opacity: 0.85;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .col-4 {
+      flex: 1 1 30%;
+    }
+    .col-6 {
+      flex: 1 1 48%;
+    }
+    .col-12 {
+      flex: 1 1 100%;
+    }
+    @media (max-width: 600px) {
+      .col-4, .col-6 {
+        flex: 1 1 100%;
+      }
+      .header-tagline {
+        display: none;
+      }
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 6px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    th {
+      background: #f0f0f0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: #e3f2fd;
+      color: #1E3A59;
+      margin-left: 4px;
+    }
+    .small-text {
+      font-size: 0.8rem;
+      color: #666;
+    }
+    .actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .actions-row button {
+      flex: 1 1 48%;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #4F8C47;
+      background: #eaf5ec;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #1E3A59;
+    }
+    .summary-box {
+      margin-top: 8px;
+      padding: 8px;
+      border-radius: 8px;
+      background: #f7f9fc;
+      border: 1px solid #dde4f2;
+      font-size: 0.9rem;
+    }
+    .tag-list {
+      font-size: 0.8rem;
+      margin-top: 6px;
+      color: #555;
+    }
+    .admin-toggle-row {
+      text-align: right;
+      margin-bottom: 6px;
+    }
+    .admin-toggle-btn {
+      width: auto;
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      background: #1E3A59;
+    }
+    #signatureWrapper {
+      position: relative;
+      margin-top: 6px;
+    }
+    #signaturePad {
   width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  margin-top: 4px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-button {
-  background: #4F8C47;
-  color: white;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-button.secondary {
-  background: #1E3A59;
-}
-
-button:active {
-  opacity: 0.85;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.col-4 {
-  flex: 1 1 30%;
-}
-
-.col-6 {
-  flex: 1 1 48%;
-}
-
-.col-12 {
-  flex: 1 1 100%;
-}
-
-@media (max-width: 600px) {
-  .col-4, .col-6 {
-    flex: 1 1 100%;
-  }
-
-  .header-tagline {
-    display: none;
-  }
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 0.9rem;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 6px;
-  text-align: left;
-  white-space: nowrap;
-}
-
-th {
-  background: #f0f0f0;
-}
-
-.badge {
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  background: #e3f2fd;
-  color: #1E3A59;
-  margin-left: 4px;
-}
-
-.small-text {
-  font-size: 0.8rem;
-  color: #666;
-}
-
-.actions-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.actions-row button {
-  flex: 1 1 48%;
-}
-
-.pill-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.pill {
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid #4F8C47;
-  background: #eaf5ec;
-  font-size: 0.8rem;
-  cursor: pointer;
-  color: #1E3A59;
-}
-
-.summary-box {
-  margin-top: 8px;
-  padding: 8px;
-  border-radius: 8px;
-  background: #f7f9fc;
-  border: 1px solid #dde4f2;
-  font-size: 0.9rem;
-}
-
-.tag-list {
-  font-size: 0.8rem;
-  margin-top: 6px;
-  color: #555;
-}
-
-.admin-toggle-row {
-  text-align: right;
-  margin-bottom: 6px;
-}
-
-.admin-toggle-btn {
-  width: auto;
-  padding: 6px 10px;
-  font-size: 0.75rem;
-  background: #1E3A59;
-}
-
-#signatureWrapper {
-  position: relative;
-  margin-top: 6px;
-}
-
-#signaturePad {
-  width: 100%;
-  height: 150px; /* Ensure fixed drawing height */
+  height: 150px;              /* Ensure fixed drawing height */
   border: 1px solid #ccc;
   background: #ffffff;
-  touch-action: none; /* MUST HAVE for mobile/tablet drawing */
+  touch-action: none;         /* MUST HAVE for mobile/tablet drawing */
   display: block;
 }
-
-#sigPlaceholder {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #888;
-  font-size: 16px;
-  pointer-events: none;
-}
-
-.sig-btn {
-  width: auto;
-  padding: 4px 8px;
-  font-size: 0.75rem;
-  background: #4F8C47;
-  color: #fff;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-}
-
+    #sigPlaceholder {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #888;
+      font-size: 16px;
+      pointer-events: none;
+    }
+    .sig-btn {
+      width: auto;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      background: #4F8C47;
+      color: #fff;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 
   <script>
@@ -313,9 +268,8 @@ th {
     const msg = document.getElementById("submitMessage");
     if (msg) msg.textContent = "";
 
-    // Removed confirmation message to avoid popup
+    alert("Form has been reset.");
 }
-
 
   </script>
 </head>
@@ -944,7 +898,6 @@ function toggleAdmin() {
             ADMIN_UNLOCKED = true;
             document.getElementById("adminArea").style.display = "block";
             document.getElementById("adminStatusText").textContent = "Admin Mode Active";
-            renderRecentTable();
             alert("Admin Access Granted");
         } else {
             alert("Incorrect PIN");
@@ -1126,10 +1079,7 @@ function submitCheckIn() {
     playSubmitSound();
     alert("Check-In Saved!");
 
-    // Call resetForm to clear the form after submission
     resetForm();
-
-    // Render the recent table with updated data
     renderRecentTable();
 }
 
@@ -1157,123 +1107,7 @@ function renderRecentTable() {
 
     document.getElementById("countBadge").textContent = log.length;
 }
-</script>
-        <script>
-// ===============================
-// SEARCH FUNCTION FOR INDIVIDUAL LOOKUP
-// ===============================
-document.getElementById("searchBtn").addEventListener("click", () => {
-    let nameSearch = document.getElementById("searchName").value.trim().toLowerCase();
-    let companySearch = document.getElementById("searchCompany").value.trim().toLowerCase();
-    let dateSearch = document.getElementById("searchDate").value;
-    let reasonSearch = document.getElementById("searchReason").value;
-
-    let log = JSON.parse(localStorage.getItem("amsLog") || "[]");
-
-    // Filter the stored logs
-    let results = log.filter(entry => {
-        let matchesName =
-            !nameSearch ||
-            entry.first.toLowerCase().includes(nameSearch) ||
-            entry.last.toLowerCase().includes(nameSearch);
-
-        let matchesCompany =
-            !companySearch ||
-            entry.company.toLowerCase().includes(companySearch);
-
-        let matchesDate =
-            !dateSearch ||
-            entry.date === new Date(dateSearch).toLocaleDateString();
-
-        let matchesReason =
-            !reasonSearch || entry.reason === reasonSearch;
-
-        return matchesName && matchesCompany && matchesDate && matchesReason;
-    });
-
-    renderSearchResults(results);
-});
-
-// ===============================
-// RENDER SEARCH TABLE RESULTS
-// ===============================
-function renderSearchResults(results) {
-    let tbody = document.querySelector("#resultsTable tbody");
-    tbody.innerHTML = "";
-
-    if (results.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8">No results found.</td></tr>`;
-        return;
-    }
-
-results.forEach(entry => {
-    let tr = document.createElement("tr");
-    tr.innerHTML = `
-        <td>${entry.date || "N/A"}</td>
-        <td>${entry.time || "N/A"}</td>
-        <td>${entry.first || "N/A"}</td>
-        <td>${entry.last || "N/A"}</td>
-        <td>${entry.company || "N/A"}</td>
-        <td>${entry.reason || "N/A"}</td>
-        <td>${entry.services ? entry.services.join(", ") : "N/A"}</td>
-        <td><img src="${entry.signature || ''}" style="width:70px;border:1px solid #ccc;"></td>
-    `;
-    tbody.appendChild(tr);
-});
-
-
-// ===============================
-// CLEAR SEARCH FILTERS
-// ===============================
-document.getElementById("clearFilterBtn").addEventListener("click", () => {
-  // ===============================
-// EXPORT TO EXCEL
-// ===============================
-document.getElementById("exportExcelBtn").addEventListener("click", function () {
-    let table = document.getElementById("resultsTable");
-    let wb = XLSX.utils.table_to_book(table, { sheet: "Search Results" });
-    XLSX.writeFile(wb, "search_results.xlsx");
-});
-
-// ===============================
-// EXPORT TO PDF
-// ===============================
-document.getElementById("exportPdfBtn").addEventListener("click", function () {
-    let doc = new jsPDF();
-    let table = document.getElementById("resultsTable");
-    let rows = [];
-
-    // Prepare data for the PDF
-    let trs = table.getElementsByTagName("tr");
-    for (let i = 1; i < trs.length; i++) {
-        let tds = trs[i].getElementsByTagName("td");
-        let row = [];
-        for (let j = 0; j < tds.length; j++) {
-            row.push(tds[j].innerText);
-        }
-        rows.push(row);
-    }
-
-    // Add table to PDF
-    doc.autoTable({
-        head: [['Date', 'Time In', 'First', 'Last', 'Company', 'Reason', 'Services', 'Signature']],
-        body: rows
-    });
-
-    // Save PDF
-    doc.save("search_results.pdf");
-});
-
-    // Reset inputs
-    document.getElementById("searchName").value = "";
-    document.getElementById("searchCompany").value = "";
-    document.getElementById("searchDate").value = "";
-    document.getElementById("searchReason").value = "";
-
-    // Clear results table
-    document.querySelector("#resultsTable tbody").innerHTML = "";
-});
-</script>
-
+</script>  
 </body>
 </html>
+
