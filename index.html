@@ -1121,3 +1121,86 @@ function exportGeneralReportXLS(list) {
 
     URL.revokeObjectURL(url);
 }
+/* ============================================================
+   EXPORT GENERAL REPORT — PDF (Version A — Browser Print Mode)
+   ============================================================ */
+
+function exportGeneralReportPDF(list) {
+    if (!list || list.length === 0) {
+        alert("No data to export.");
+        return;
+    }
+
+    // Create a popup window
+    const win = window.open("", "_blank");
+    win.document.write(`
+        <html>
+        <head>
+            <title>General Report PDF</title>
+            <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+                th, td {
+                    border: 1px solid #444;
+                    padding: 6px;
+                    font-size: 12px;
+                }
+                th { background: #eee; }
+            </style>
+        </head>
+        <body>
+            <h2>General Report</h2>
+            <p>Total Records: ${list.length}</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>First</th>
+                        <th>Last</th>
+                        <th>Company</th>
+                        <th>Reason</th>
+                        <th>Services</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `);
+
+    list.forEach(r => {
+        const { date, time } = formatDateTime(r.timestamp);
+        const svc = getServiceColumns(r.serviceTypes);
+        const services =
+            (svc.drug ? "Drug " : "") +
+            (svc.dna ? "DNA " : "") +
+            (svc.vision ? "Vision " : "") +
+            (svc.alcohol ? "Alcohol " : "") +
+            (svc.dot ? "DOT " : "") +
+            (svc.other ? "Other: " + svc.otherText : "");
+
+        win.document.write(`
+            <tr>
+                <td>${date}</td>
+                <td>${time}</td>
+                <td>${r.firstName}</td>
+                <td>${r.lastName}</td>
+                <td>${r.company}</td>
+                <td>${r.reason}</td>
+                <td>${services}</td>
+            </tr>
+        `);
+    });
+
+    win.document.write(`
+                </tbody>
+            </table>
+
+            <script>
+                window.onload = function() { window.print(); }
+            </script>
+        </body>
+        </html>
+    `);
+
+    win.document.close();
+}
