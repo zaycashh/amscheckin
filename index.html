@@ -662,10 +662,7 @@ function renderCompanySelect() {
     select.appendChild(otherOpt);
 }
 
-// ===============================
-// RENDER ADMIN LIST (EDIT + DELETE)
-// ===============================
-
+// Renders companies in the search admin area
 function renderCompanyListDisplay() {
     const container = document.getElementById("companyListDisplay");
     if (!container) return;
@@ -675,25 +672,19 @@ function renderCompanyListDisplay() {
 
     container.innerHTML = "";
 
-    list
-  .filter(name => name.toLowerCase().includes(search))
-  .forEach((name, idx) => {
-
-      const row = document.createElement("div");
-      row.className = "tag";
-
-      const label = document.createElement("span");
-      label.textContent = name;
-
-      row.appendChild(label);
-
-      row.addEventListener("click", () => {
-          document.getElementById("selectedCompany").textContent = name;
-          document.getElementById("editDeletePanel").style.display = "block";
-      });
-
-      container.appendChild(row);
-  });
+    list.filter(name => name.toLowerCase().includes(search)).forEach(name => {
+        const row = document.createElement("div");
+        row.className = "tag";
+        const label = document.createElement("span");
+        label.textContent = name;
+        row.appendChild(label);
+        row.addEventListener("click", () => {
+            document.getElementById("selectedCompany").textContent = name;
+            document.getElementById("editDeletePanel").style.display = "block";
+        });
+        container.appendChild(row);
+    });
+}
 
 }   // <-- THIS LINE WAS MISSING
 // ===============================
@@ -995,6 +986,7 @@ sigCanvas.addEventListener("touchcancel", endDraw);
 // ===============================
 // SUBMIT CHECK-IN
 // ===============================
+// Ensure this is in the same <script> section as your other form-handling functions
 document.getElementById("submitBtn").addEventListener("click", submitCheckIn);
 
 function submitCheckIn() {
@@ -1006,12 +998,13 @@ function submitCheckIn() {
     let reason = document.getElementById("reasonSelect").value;
     let manualReason = document.getElementById("otherReasonInput").value.trim();
 
-    // ------------------------------
-    // VALIDATION: NAME + COMPANY
-    // ------------------------------
+    // Validation logic as you already have
     if (!first || !last) return alert("Enter first and last name.");
     if (!company && !otherCompany) return alert("Select or enter a company.");
     if (company === "OTHER_COMPANY") company = otherCompany;
+
+    // More validation...
+}
 
     // ------------------------------
     // VALIDATION: REASON REQUIRED
