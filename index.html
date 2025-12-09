@@ -484,6 +484,7 @@
 
     <span class="pill" data-companyrange="thisYear">This Year</span>
     <span class="pill" data-companyrange="lastYear">Last Year</span>
+  <span class="pill" data-companyrange="custom">Custom Range</span>
 </div>
 
         <div class="row">
@@ -1446,6 +1447,10 @@ function applyCompanyDatePreset(preset) {
             start = new Date(today.getFullYear() - 1, 0, 1);
             end = new Date(today.getFullYear() - 1, 11, 31);
             break;
+        case "custom":
+            startInput.value = "";
+            endInput.value = "";
+            return;
     }
 
     startInput.value = start.toISOString().split("T")[0];
