@@ -1702,27 +1702,33 @@ document.getElementById("printCompanyPdfBtn").addEventListener("click", () => {
     printRecordsAsPdf(lastCompanyReport, "Company Report", lastCompanySummary, true);
 });
 function exportSearchResultsToExcel() {
-    const table = document.querySelector("#resultsTable");
+    const table = document.querySelector('#resultsTable');
     const rows = [...table.querySelectorAll("tr")];
 
-    let csv = "";
+    let records = [];
 
-    rows.forEach(row => {
-        const cols = [...row.querySelectorAll("td, th")];
-        const rowData = cols.map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
-        csv += rowData + "\n";
+    rows.forEach((row, index) => {
+        // Skip header row (index 0)
+        if (index === 0) return;
+
+        const cols = [...row.querySelectorAll("td")];
+
+        // Build a record object formatted the SAME way your XLS export expects
+        records.push({
+            timestamp: "", // search table doesn’t include timestamp
+            firstName: cols[2]?.innerText || "",
+            lastName: cols[3]?.innerText || "",
+            company: cols[4]?.innerText || "",
+            reason: cols[5]?.innerText || "",
+            serviceTypes: {}, // not captured in search results table
+            signatureDataUrl: "" // signatures not exported in search XLS
+        });
     });
 
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "search_results.csv";
-    a.click();
-
-    URL.revokeObjectURL(url);
+    // IMPORTANT — this actually generates the XLS download
+    exportRecordsToXls(records, "search_results.xls", false);
 }
+
 
     document.addEventListener('DOMContentLoaded', () => {
       if (!localStorage.getItem(COMPANY_LIST_KEY)) {
