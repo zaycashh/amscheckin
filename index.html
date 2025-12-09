@@ -1701,6 +1701,28 @@ document.getElementById("exportCompanyXlsBtn").addEventListener("click", () => {
 document.getElementById("printCompanyPdfBtn").addEventListener("click", () => {
     printRecordsAsPdf(lastCompanyReport, "Company Report", lastCompanySummary, true);
 });
+function exportSearchResultsToExcel() {
+    const table = document.querySelector("#resultsTable");
+    const rows = [...table.querySelectorAll("tr")];
+
+    let csv = "";
+
+    rows.forEach(row => {
+        const cols = [...row.querySelectorAll("td, th")];
+        const rowData = cols.map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
+        csv += rowData + "\n";
+    });
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "search_results.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
 
     document.addEventListener('DOMContentLoaded', () => {
       if (!localStorage.getItem(COMPANY_LIST_KEY)) {
@@ -1980,43 +2002,7 @@ if (exportSearchPdfBtn) {
 
     URL.revokeObjectURL(url);
 }
-    function exportSearchResultsToPDF() {
-    const table = document.querySelector('#resultsTable');
-    const rows = [...table.querySelectorAll("tr")];
 
-    let pdfContent = `
-        <html>
-        <head>
-        <style>
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid #333; padding: 6px; font-size: 12px; }
-            th { background: #f2f2f2; }
-        </style>
-        </head>
-        <body>
-        <h2>Search Results Export</h2>
-        <table>
-    `;
-
-    rows.forEach(row => {
-        pdfContent += "<tr>";
-        const cols = [...row.querySelectorAll("td, th")];
-        cols.forEach(col => pdfContent += `<td>${col.innerText}</td>`);
-        pdfContent += "</tr>";
-    });
-
-    pdfContent += "</table></body></html>";
-
-    const blob = new Blob([pdfContent], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "search_results.pdf";
-    a.click();
-
-    URL.revokeObjectURL(url);
-}
   </script>
         
 </body>
