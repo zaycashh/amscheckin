@@ -604,11 +604,11 @@
 <div id="companyListDisplay" class="tag-list"></div>
 
   </main>
-        
-<script>
-// =======================
-// LOAD + SAVE COMPANIES
-// =======================
+
+        <script>
+// ===============================
+// COMPANY STORAGE
+// ===============================
 
 const COMPANY_LIST_KEY = "companyListStorage";
 
@@ -625,10 +625,9 @@ function saveCompanyList(list) {
     localStorage.setItem(COMPANY_LIST_KEY, JSON.stringify(list));
 }
 
-
-// =======================
-// COMPANY SELECT + LIST DISPLAY
-// =======================
+// ===============================
+// RENDER COMPANY DROPDOWN
+// ===============================
 
 function renderCompanySelect() {
     const select = document.getElementById("companySelect");
@@ -639,7 +638,7 @@ function renderCompanySelect() {
 
     const defaultOpt = document.createElement("option");
     defaultOpt.value = "";
-    defaultOpt.textContent = "-- Select company --";
+    defaultOpt.textContent = "-- Select Company --";
     select.appendChild(defaultOpt);
 
     companies.forEach(name => {
@@ -650,118 +649,147 @@ function renderCompanySelect() {
     });
 
     const otherOpt = document.createElement("option");
-    otherOpt.value = "other_manual";
+    otherOpt.value = "OTHER_COMPANY";
     otherOpt.textContent = "Other (type manually)";
     select.appendChild(otherOpt);
 }
 
+// ===============================
+// RENDER ADMIN LIST (EDIT + DELETE)
+// ===============================
+
 function renderCompanyListDisplay() {
     const container = document.getElementById("companyListDisplay");
-    const searchValue = document.getElementById("companySearch").value.toLowerCase();
+    if (!container) return;
 
-    let companies = loadCompanyList();
-
-    if (!companies.length) {
-        container.innerHTML = "<p>No companies found.</p>";
-        return;
-    }
-
-    const filtered = companies.filter(name =>
-        name.toLowerCase().includes(searchValue)
-    );
+    const search = document.getElementById("companySearch").value.toLowerCase();
+    const list = loadCompanyList();
 
     container.innerHTML = "";
 
-    filtered.forEach((name, index) => {
-        const row = document.createElement("div");
-        row.style.display = "flex";
-        row.style.alignItems = "center";
-        row.style.marginBottom = "6px";
-        row.style.gap = "8px";
+    list
+        .filter(name => name.toLowerCase().includes(search))
+        .forEach((name, idx) => {
 
-        const badge = document.createElement("span");
-        badge.textContent = name;
-        badge.style.padding = "4px 10px";
-        badge.style.borderRadius = "999px";
-        badge.style.background = "#e3f2fd";
-        badge.style.color = "#1E3A59";
-        badge.style.fontSize = "0.85rem";
+            const row = document.createElement("div");
+            row.className = "tag";
 
-        const editBtn = document.createElement("button");
-        editBtn.textContent = "Edit";
-        editBtn.style.fontSize = "0.75rem";
-        editBtn.onclick = () => {
-            const updated = prompt("Edit company name:", name);
-            if (updated && updated.trim()) {
-                companies[index] = updated.trim();
-                saveCompanyList(companies);
-                renderCompanyListDisplay();
-                renderCompanySelect();
-            }
-        };
+            const label = document.createElement("span");
+            label.textContent = name;
 
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "Delete";
-        delBtn.style.fontSize = "0.75rem";
-        delBtn.onclick = () => {
-            if (confirm("Delete this company?")) {
-                companies.splice(index, 1);
-                saveCompanyList(companies);
-                renderCompanyListDisplay();
-                renderCompanySelect();
-            }
-        };
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.style.marginLeft = "10px";
+            editBtn.onclick = () => {
+                const newName = prompt("Edit company name:", name);
+                if (newName && newName.trim()) {
+                    const companies = loadCompanyList();
+                    companies[idx] = newName.trim();
+                    saveCompanyList(companies);
+                    renderCompanySelect();
+                    renderCompanyListDisplay();
+                }
+            };
 
-        row.appendChild(badge);
-        row.appendChild(editBtn);
-        row.appendChild(delBtn);
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "Delete";
+            delBtn.style.marginLeft = "10px";
+            delBtn.onclick = () => {
+                if (confirm(`Delete "${name}"?`)) {
+                    const companies = loadCompanyList().filter((_, i) => i !== idx);
+                    saveCompanyList(companies);
+                    renderCompanySelect();
+                    renderCompanyListDisplay();
+                }
+            };
 
-        container.appendChild(row);
-    });
+            row.appendChild(label);
+            row.appendChild(editBtn);
+            row.appendChild(delBtn);
+            container.appendChild(row);
+        });
 }
 
+// ===============================
+// DATE PRESETS FOR COMPANY REPORT
+// ===============================
 
-// =======================
-// COMPANY REPORT ENGINE (THE NEW ONE YOU WANT TO KEEP)
-// =======================
+function applyCompanyDatePreset(range) {
+    const from = document.getElementById("companyFrom");
+    const to = document.getElementById("companyTo");
 
-function generateCompanyReport() {
-    const companyName = document.getElementById("companySelect").value;
-    const otherCompany = document.getElementById("otherCompany").value.trim();
-    let finalCompany = companyName === "other_manual" ? otherCompany : companyName;
+    const today = new Date();
+    let start, end;
 
-    if (!finalCompany) {
-        alert("Please select or enter a company.");
-        return;
+    switch (range) {
+        case "today":
+            start = end = today;
+            break;
+
+        case "yesterday":
+            start = end = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+            break;
+
+        case "thisWeek":
+            start = new Date(today.setDate(today.getDate() - today.getDay()));
+            end = new Date();
+            break;
+
+        case "lastWeek":
+            const curr = today.getDay();
+            start = new Date(today.setDate(today.getDate() - curr - 7));
+            end = new Date(today.setDate(start.getDate() + 6));
+            break;
+
+        case "thisMonth":
+            start = new Date(today.getFullYear(), today.getMonth(), 1);
+            end = new Date();
+            break;
+
+        case "lastMonth":
+            start = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            end = new Date(today.getFullYear(), today.getMonth(), 0);
+            break;
+
+        case "thisYear":
+            start = new Date(today.getFullYear(), 0, 1);
+            end = new Date();
+            break;
+
+        case "lastYear":
+            start = new Date(today.getFullYear() - 1, 0, 1);
+            end = new Date(today.getFullYear() - 1, 11, 31);
+            break;
     }
 
-    const range = document.querySelector(".pill.active")
-        ? document.querySelector(".pill.active").dataset.companyrange
-        : "today";
-
-    const report = {
-        company: finalCompany,
-        range,
-        generated: new Date().toLocaleString(),
-        details: {
-            totalVisits: Math.floor(Math.random() * 50),
-            month: new Date().toLocaleString("default", { month: "long" }),
-            notes: "This is a placeholder detailed report."
-        }
-    };
-
-    alert(
-        `COMPANY REPORT\n\nCompany: ${report.company}\nDate Range: ${report.range}\nGenerated: ${report.generated}\n\nVisits: ${report.details.totalVisits}\nMonth: ${report.details.month}\nNotes: ${report.details.notes}`
-    );
+    from.value = start.toISOString().split("T")[0];
+    to.value = end.toISOString().split("T")[0];
 }
 
+// ===============================
+// GENERATE COMPANY REPORT
+// ===============================
 
-// =======================
-// EVENT LISTENERS ON LOAD
-// =======================
+function generateCompanyReport() {
+    const company = document.getElementById("companySelect").value;
+    const start = document.getElementById("companyFrom").value;
+    const end = document.getElementById("companyTo").value;
+
+    if (!company) return alert("Select a company first.");
+    if (!start || !end) return alert("Select date range.");
+
+    alert(`Report generated for:\n\nCompany: ${company}\nFrom: ${start}\nTo: ${end}`);
+
+    // Hook your real report logic here
+}
+
+// ===============================
+// EVENT LISTENERS ON PAGE LOAD
+// ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // INITIAL RENDER
     if (!localStorage.getItem(COMPANY_LIST_KEY)) {
         saveCompanyList([]);
     }
@@ -769,24 +797,38 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCompanySelect();
     renderCompanyListDisplay();
 
+    // ADD COMPANY
     document.getElementById("addCompanyBtn").addEventListener("click", () => {
-        const newName = prompt("Enter new company:");
-        if (newName && newName.trim()) {
-            const list = loadCompanyList();
-            list.push(newName.trim());
-            saveCompanyList(list);
-            renderCompanySelect();
-            renderCompanyListDisplay();
-        }
+        const newName = document.getElementById("newCompany").value.trim();
+        if (!newName) return alert("Enter company name.");
+
+        const list = loadCompanyList();
+        list.push(newName);
+        saveCompanyList(list);
+
+        document.getElementById("newCompany").value = "";
+        renderCompanySelect();
+        renderCompanyListDisplay();
     });
 
+    // SEARCH FILTER
     document.getElementById("companySearch").addEventListener("input", () => {
         renderCompanyListDisplay();
     });
 
-    document.getElementById("runCompanyReportBtn").onclick = generateCompanyReport;
+    // DATE PRESET BUTTONS
+    document.querySelectorAll("[data-companyrange]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            applyCompanyDatePreset(btn.dataset.companyrange);
+        });
+    });
+
+    // REPORT BUTTON
+    const runBtn = document.getElementById("runCompanyReportBtn");
+    if (runBtn) runBtn.onclick = generateCompanyReport;
 });
-<script>
+</script>
+
    
 </body>
 </html>
