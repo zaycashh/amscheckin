@@ -800,6 +800,41 @@ function generateCompanyReport() {
     alert(`Report generated for:\n\nCompany: ${company}\nFrom: ${start}\nTo: ${end}`);
 
     // Hook your real report logic here
+}// Show manual company field when "Other" is selected
+function toggleOtherCompany() {
+    const select = document.getElementById("companySelect");
+    const wrapper = document.getElementById("otherCompanyWrapper");
+
+    if (select.value === "OTHER_COMPANY") {
+        wrapper.style.display = "block";
+    } else {
+        wrapper.style.display = "none";
+    }
+}
+
+// Show manual Reason field
+function toggleOtherReason() {
+    const select = document.getElementById("reasonSelect");
+    const wrapper = document.getElementById("otherReasonWrapper");
+
+    if (select.value === "Other (personal)") {
+        wrapper.style.display = "block";
+    } else {
+        wrapper.style.display = "none";
+    }
+}
+
+// Show text field when Service = Other
+function toggleOtherInput() {
+    const cb = document.getElementById("service_other");
+    const input = document.getElementById("other_reason");
+
+    if (cb.checked) {
+        input.style.display = "inline-block";
+    } else {
+        input.style.display = "none";
+        input.value = "";
+    }
 }
 
 // ===============================
