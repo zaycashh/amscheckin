@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    <!-- For Export to Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
+<!-- For Export to PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       margin: 0;
@@ -1181,6 +1186,44 @@ function renderSearchResults(results) {
 // CLEAR SEARCH FILTERS
 // ===============================
 document.getElementById("clearFilterBtn").addEventListener("click", () => {
+  // ===============================
+// EXPORT TO EXCEL
+// ===============================
+document.getElementById("exportExcelBtn").addEventListener("click", function () {
+    let table = document.getElementById("resultsTable");
+    let wb = XLSX.utils.table_to_book(table, { sheet: "Search Results" });
+    XLSX.writeFile(wb, "search_results.xlsx");
+});
+
+// ===============================
+// EXPORT TO PDF
+// ===============================
+document.getElementById("exportPdfBtn").addEventListener("click", function () {
+    let doc = new jsPDF();
+    let table = document.getElementById("resultsTable");
+    let rows = [];
+
+    // Prepare data for the PDF
+    let trs = table.getElementsByTagName("tr");
+    for (let i = 1; i < trs.length; i++) {
+        let tds = trs[i].getElementsByTagName("td");
+        let row = [];
+        for (let j = 0; j < tds.length; j++) {
+            row.push(tds[j].innerText);
+        }
+        rows.push(row);
+    }
+
+    // Add table to PDF
+    doc.autoTable({
+        head: [['Date', 'Time In', 'First', 'Last', 'Company', 'Reason', 'Services', 'Signature']],
+        body: rows
+    });
+
+    // Save PDF
+    doc.save("search_results.pdf");
+});
+
     // Reset inputs
     document.getElementById("searchName").value = "";
     document.getElementById("searchCompany").value = "";
