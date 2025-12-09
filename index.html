@@ -1012,7 +1012,20 @@ return ok;
         opt.value = name;
         opt.textContent = name;
         select.appendChild(opt);
-      });
+      });function renderCompanyReportSelect() {
+    const sel = document.getElementById("companyReportSelect");
+    if (!sel) return;
+
+    const list = loadCompanyList();
+    sel.innerHTML = '<option value="">-- Select company --</option>';
+
+    list.forEach(company => {
+        const opt = document.createElement("option");
+        opt.value = company;
+        opt.textContent = company;
+        sel.appendChild(opt);
+    });
+    }
 
       const otherOpt = document.createElement('option');
       otherOpt.value = OTHER_COMPANY_VALUE;
@@ -1370,20 +1383,7 @@ let lastCompanyReport = [];
 let lastCompanySummary = "";
 
 // Load company dropdown for company report
-function renderCompanyReportDropdown() {
-    const sel = document.getElementById("companyReportSelect");
-    if (!sel) return;
 
-    const list = loadCompanyList();
-    sel.innerHTML = `<option value="">-- Select company --</option>`;
-
-    list.forEach(c => {
-        const opt = document.createElement("option");
-        opt.value = c;
-        opt.textContent = c;
-        sel.appendChild(opt);
-    });
-}
 /* ============================================================
    COMPANY REPORT ENGINE
    ============================================================ */
