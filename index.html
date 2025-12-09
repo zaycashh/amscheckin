@@ -603,6 +603,15 @@
 <!-- Company List Display -->
 <div id="companyListDisplay" class="tag-list"></div>
 
+<!-- Unified Edit/Delete Panel -->
+<div id="editDeletePanel" style="display:none; margin-top:15px; padding:12px; border:1px solid #ccc; border-radius:8px; background:#fafafa;">
+    <h4 style="margin:0 0 10px 0;">Selected Company: <span id="selectedCompany" style="color:#4F8C47; font-weight:bold;"></span></h4>
+
+    <button onclick="editCompany()" style="background:#1E3A59; margin-bottom:8px; width:100%;">Edit Company</button>
+    <button onclick="deleteCompany()" style="background:#d9534f; width:100%;">Delete Company</button>
+</div>
+
+        
   </main>
 
 <script>
