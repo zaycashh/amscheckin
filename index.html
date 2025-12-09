@@ -1759,6 +1759,13 @@ function exportSearchResultsToExcel() {
       const companySelect = document.getElementById('companySelect');
       const otherCompanyWrapper = document.getElementById('otherCompanyWrapper');
       const pills = document.querySelectorAll('.pill');
+      pills.forEach(pill => {
+    pill.addEventListener("click", () => {
+        const range = pill.dataset.companyrange;   // read the preset
+        applyCompanyDatePreset(range);             // update the inputs
+    });
+});
+
       const runReportBtn = document.getElementById('runReportBtn');
       const clearReportBtn = document.getElementById('clearReportBtn');
       const addCompanyBtn = document.getElementById('addCompanyBtn');
