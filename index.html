@@ -202,13 +202,14 @@
       margin-top: 6px;
     }
     #signaturePad {
-  width: 100%;
-  height: 150px;              /* Ensure fixed drawing height */
-  border: 1px solid #ccc;
-  background: #ffffff;
-  touch-action: none;         /* MUST HAVE for mobile/tablet drawing */
-  display: block;
-}
+      width: 100%;
+      height: 140px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #ffffff;
+      touch-action: none;
+      display: block;
+    }
     #sigPlaceholder {
       position: absolute;
       top: 50%;
@@ -374,6 +375,7 @@
       <div style="display:flex; gap:10px; margin-top:10px;">
 
     <!-- Submit Button (unchanged) -->
+    <button id="submitBtn" style="flex:1;">
         Submit Check-In
     </button>
 
@@ -394,7 +396,7 @@
 
 </div>
 
-    <button id="submitBtn">Submit Check-In</button>
+      <p id="submitMessage" class="small-text"></p>
     </section>
 
     <!-- Small admin login control -->
@@ -407,7 +409,7 @@
     <div id="adminArea" style="display:none;">
       <!-- Search Log -->
       <section class="card">
-        <h2>Search For Individual</h2>
+        <h2>Search Log</h2>
         <div class="row">
           <div class="col-4">
             <label for="searchName">Donor Name</label>
@@ -461,30 +463,19 @@
           </table>
         </div>
         <div class="actions-row">
-          <button id="exportExcelBtn">Export Results to Excel</button>
-          <button id="exportPdfBtn">Export Results to PDF</button>
+          <button id="exportXlsBtn" class="secondary">Export ALL as Excel (.xls)</button>
+          <button id="printAllBtn" class="secondary">Print ALL (PDF)</button>
         </div>
       </section>
 
       <!-- Reports -->
       <section class="card">
-        <h2>Detail Company Report</h2>
-        <!-- DATE PRESETS -->
-<div class="pill-row" style="margin-top:10px;">
-    <span class="pill" data-companyrange="today">Today</span>
-    <span class="pill" data-companyrange="yesterday">Yesterday</span>
-
-    <span class="pill" data-companyrange="thisWeek">This Week</span>
-    <span class="pill" data-companyrange="lastWeek">Last Week</span>
-
-    <span class="pill" data-companyrange="thisMonth">This Month</span>
-    <span class="pill" data-companyrange="lastMonth">Last Month</span>
-
-    <span class="pill" data-companyrange="thisYear">This Year</span>
-    <span class="pill" data-companyrange="lastYear">Last Year</span>
-  <span class="pill" data-companyrange="custom">Custom Range</span>
-</div>
-
+        <h2>Reports (Date Range &amp; Time In)</h2>
+        <div class="pill-row">
+          <span class="pill" data-range="yesterday">Yesterday</span>
+          <span class="pill" data-range="thisWeek">This Week</span>
+          <span class="pill" data-range="thisMonth">This Month</span>
+        </div>
         <div class="row">
           <div class="col-6">
             <label for="reportStart">Start Date</label>
@@ -495,7 +486,16 @@
             <input id="reportEnd" type="date" />
           </div>
         </div>
-        
+        <div class="row">
+          <div class="col-6">
+            <label for="reportTimeFrom">Time In From (optional)</label>
+            <input id="reportTimeFrom" type="time" />
+          </div>
+          <div class="col-6">
+            <label for="reportTimeTo">Time In To (optional)</label>
+            <input id="reportTimeTo" type="time" />
+          </div>
+        </div>
         <div class="row">
           <div class="col-6">
             <label for="reportCompany">Company (optional)</label>
@@ -551,7 +551,71 @@
           <button id="printReportBtn" class="secondary">Print REPORT (PDF)</button>
         </div>
       </section>
-    
+      
+<section class="card">
+    <h2>Company Report</h2>
+
+    <!-- DATE PRESETS -->
+    <div class="pill-row">
+        <span class="pill" data-companyrange="today">Today</span>
+        <span class="pill" data-companyrange="yesterday">Yesterday</span>
+        <span class="pill" data-companyrange="thisWeek">This Week</span>
+        <span class="pill" data-companyrange="lastWeek">Last Week</span>
+        <span class="pill" data-companyrange="thisMonth">This Month</span>
+        <span class="pill" data-companyrange="lastMonth">Last Month</span>
+        <span class="pill" data-companyrange="thisYear">This Year</span>
+        <span class="pill" data-companyrange="lastYear">Last Year</span>
+    </div>
+
+    <!-- COMPANY SELECTION -->
+    <label style="margin-top:10px;">Select Company (Dropdown)</label>
+    <select id="companyReportSelect"></select>
+
+    <label style="margin-top:10px;">Or Type Company Name</label>
+    <input id="companyReportManual" type="text" placeholder="Enter company name..." />
+
+    <!-- DATE RANGE -->
+    <div class="row" style="margin-top:10px;">
+        <div class="col-6">
+            <label for="companyReportStart">Start Date</label>
+            <input id="companyReportStart" type="date" />
+        </div>
+        <div class="col-6">
+            <label for="companyReportEnd">End Date</label>
+            <input id="companyReportEnd" type="date" />
+        </div>
+    </div>
+
+    <button id="runCompanyReportBtn" style="margin-top:12px;">Run Report</button>
+
+    <!-- SUMMARY -->
+    <div id="companyReportSummary" class="summary-box" style="display:none;"></div>
+
+    <!-- RESULTS TABLE -->
+    <div style="overflow-x:auto; margin-top:8px;">
+        <table id="companyReportTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time In</th>
+                    <th>First</th>
+                    <th>Last</th>
+                    <th>Reason</th>
+                    <th>Services</th>
+                    <th>Signature</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- EXPORT BUTTONS -->
+    <div class="actions-row">
+        <button id="exportCompanyXlsBtn" class="secondary">Export to Excel</button>
+        <button id="printCompanyPdfBtn" class="secondary">Print PDF</button>
+    </div>
+</section>
+
       <!-- Recent Check-Ins -->
       <section class="card">
         <h2>Recent Check-Ins <span class="badge" id="countBadge">0</span></h2>
@@ -601,505 +665,1252 @@
 <!-- Company List Display -->
 <div id="companyListDisplay" class="tag-list"></div>
 
-<!-- Unified Edit/Delete Panel -->
-<div id="editDeletePanel" style="display:none; margin-top:15px; padding:12px; border:1px solid #ccc; border-radius:8px; background:#fafafa;">
-    <h4 style="margin:0 0 10px 0;">Selected Company: <span id="selectedCompany" style="color:#4F8C47; font-weight:bold;"></span></h4>
-
-    <button onclick="editCompany()" style="background:#1E3A59; margin-bottom:8px; width:100%;">Edit Company</button>
-    <button onclick="deleteCompany()" style="background:#d9534f; width:100%;">Delete Company</button>
-</div>
-
-        
   </main>
 
-<script>
-// ===============================
-// COMPANY STORAGE
-// ===============================
+  <script>
 
-const COMPANY_LIST_KEY = "companyListStorage";
+function toggleOtherInput() {
+  const checkbox = document.getElementById("service_other");
+  const input = document.getElementById("other_reason");
 
-function loadCompanyList() {
-    try {
-        const raw = localStorage.getItem(COMPANY_LIST_KEY);
-        return raw ? JSON.parse(raw) : [];
-    } catch (e) {
+  if (checkbox.checked) {
+    input.style.display = "block";
+  } else {
+    input.style.display = "none";
+    input.value = "";
+  }
+}
+
+function toggleOtherReason() {
+  const select = document.getElementById("reasonSelect");
+  const wrapper = document.getElementById("otherReasonWrapper");
+  const input = document.getElementById("otherReasonInput");
+
+  if (select.value.includes("Other")) {
+    wrapper.style.display = "block";
+    input.required = true;   // Require when visible
+  } else {
+    wrapper.style.display = "none";
+    input.required = false;
+    input.value = "";        // Clear field when not in use
+  }
+}
+
+const STORAGE_KEY = 'drug_test_checkins_v2';
+const COMPANY_LIST_KEY = 'drug_test_company_list_v1';
+const OTHER_COMPANY_VALUE = '__OTHER__';
+
+    // CHANGE THIS PIN IF YOU WANT A DIFFERENT ADMIN CODE
+    const ADMIN_PIN = '2468';
+
+    let lastReportRecords = [];
+    let lastReportSummaryText = '';
+    let adminUnlocked = false;
+    let signatureStore = {};
+
+    function loadRecords() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
         return [];
+      }
+    }
+
+    function saveRecords(records) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    }
+
+    function addRecord(record) {
+      const records = loadRecords();
+      records.push(record);
+      saveRecords(records);
+    }
+
+    function getLocalDateString(d) {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function formatDateTime(isoString) {
+      const d = new Date(isoString);
+      if (isNaN(d.getTime())) return { date: '', time: '' };
+      const date = d.toLocaleDateString();
+      const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return { date, time };
+    }
+    
+    function formatServices(services) {
+  if (!services) return "";
+  const list = [];
+  if (services.drug) list.push("Drug");
+  if (services.dna) list.push("DNA");
+  if (services.vision) list.push("Vision");
+  if (services.alcohol) list.push("Alcohol");
+  if (services.dot) list.push("DOT Physical");
+  if (services.other) list.push("Other");
+  if (services.otherText) list.push(services.otherText);
+  return list.join(", ");
+}
+
+    function refreshRecentTable() {
+      const tbody = document.querySelector('#recentTable tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      const records = loadRecords().slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      const badge = document.getElementById('countBadge');
+      if (badge) badge.innerText = records.length;
+      const recent = records.slice(0, 20);
+      for (const rec of recent) {
+        const { date, time } = formatDateTime(rec.timestamp);
+        signatureStore[rec.id] = rec.signatureDataUrl || '';
+        const sigCell = rec.signatureDataUrl
+          ? `<button type="button" class="sig-btn" data-sigid="${rec.id}">View</button>`
+          : '';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${date}</td>
+          <td>${time}</td>
+          <td>${rec.firstName}</td>
+          <td>${rec.lastName}</td>
+          <td>${rec.company}</td>
+          <td>${rec.reason || ''}</td>
+          <td>${formatServices(rec.serviceTypes)}</td>
+          <td>${sigCell}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function runSearch() {
+    const rawName = document.getElementById('searchName').value.trim().toLowerCase();
+    const nameParts = rawName.split(" ").filter(n => n);  // supports "John", "Doe", or "John Doe"
+
+    const companyFilter = document.getElementById('searchCompany').value.trim().toLowerCase();
+    const dateFilter = document.getElementById('searchDate').value;
+    const reasonFilter = document.getElementById('searchReason').value;
+
+    const tbody = document.querySelector('#resultsTable tbody');
+    tbody.innerHTML = '';
+
+    const records = loadRecords();
+
+    const filtered = records.filter(rec => {
+        let ok = true;
+
+        // -------------------------
+        // 🔍 INDIVIDUAL NAME SEARCH
+        // -------------------------
+        const fn = (rec.firstName || '').toLowerCase();
+        const ln = (rec.lastName || '').toLowerCase();
+
+        if (nameParts.length === 1 && rawName !== "") {
+            // Search by first OR last when only one word typed
+            ok = ok && (fn.includes(rawName) || ln.includes(rawName));
+        }
+
+        if (nameParts.length === 2) {
+            // Search for BOTH names when "John Doe" typed
+            ok = ok && (
+                fn.includes(nameParts[0]) && ln.includes(nameParts[1]) ||
+                fn.includes(nameParts[1]) && ln.includes(nameParts[0])
+            );
+        }
+
+        // Company search
+        if (companyFilter) {
+            ok = ok && (rec.company || '').toLowerCase().includes(companyFilter);
+        }
+
+        // Date search
+        if (dateFilter) {
+            const d = new Date(rec.timestamp);
+            if (!isNaN(d.getTime())) {
+                const localDate = getLocalDateString(d);
+                ok = ok && (localDate === dateFilter);
+            } else {
+                ok = false;
+            }
+        }
+
+        // Reason search
+        if (reasonFilter) {
+            ok = ok && rec.reason === reasonFilter;
+        }
+
+        return ok;
+    });
+
+    // Sort oldest → newest
+    const sorted = filtered.slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    // Render results
+    for (const rec of sorted) {
+        const { date, time } = formatDateTime(rec.timestamp);
+
+        signatureStore[rec.id] = rec.signatureDataUrl || '';
+        const sigCell = rec.signatureDataUrl
+            ? `<button type="button" class="sig-btn" data-sigid="${rec.id}">View</button>`
+            : '';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${date}</td>
+          <td>${time}</td>
+          <td>${rec.firstName}</td>
+          <td>${rec.lastName}</td>
+          <td>${rec.company}</td>
+          <td>${rec.reason || ''}</td>
+          <td>${formatServices(rec.serviceTypes)}</td>
+          <td>${sigCell}</td>
+        `;
+        tbody.appendChild(tr);
     }
 }
 
-function saveCompanyList(list) {
-    localStorage.setItem(COMPANY_LIST_KEY, JSON.stringify(list));
-}
+    function htmlEscape(str) {
+      if (str == null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
 
-// ===============================
-// RENDER COMPANY DROPDOWN
-// ===============================
+    function buildTableHtmlFromRecords(records, includeSignature) {
+      let html = '<table border="1" cellspacing="0" cellpadding="4"><thead><tr>';
+      html += '<th>Date</th><th>Time In</th><th>First</th><th>Last</th><th>Company</th><th>Reason</th><th>Services</th>';
+      if (includeSignature) html += '<th>Signature</th>';
+      html += '</tr></thead><tbody>';
+      records.forEach(rec => {
+        const dt = formatDateTime(rec.timestamp);
+        html += '<tr>';
+        html += '<td>' + htmlEscape(dt.date) + '</td>';
+        html += '<td>' + htmlEscape(dt.time) + '</td>';
+        html += '<td>' + htmlEscape(rec.firstName) + '</td>';
+        html += '<td>' + htmlEscape(rec.lastName) + '</td>';
+        html += '<td>' + htmlEscape(rec.company) + '</td>';
+        html += '<td>' + htmlEscape(rec.reason || '') + '</td>';
+        html += `<td>${formatServices(rec.serviceTypes)}</td>`;
+        if (includeSignature) {
+          html += '<td>' + (rec.signatureDataUrl ? 'Yes' : 'No') + '</td>';
+        }
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      return html;
+    }
 
-function renderCompanySelect() {
-    const select = document.getElementById("companySelect");
-    if (!select) return;
+    function exportRecordsToXls(records, filename, includeSignature) {
+      if (!records.length) {
+        alert('No records to export.');
+        return;
+      }
+      const tableHtml = buildTableHtmlFromRecords(records, includeSignature);
+      const blob = new Blob(['\ufeff' + tableHtml], {
+        type: 'application/vnd.ms-excel'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
 
-    const companies = loadCompanyList();
-    select.innerHTML = "";
+    function printRecordsAsPdf(records, title, summaryText, includeSignature) {
+      if (!records.length) {
+        alert('No records to print.');
+        return;
+      }
+      const tableHtml = buildTableHtmlFromRecords(records, includeSignature);
+      const w = window.open('', '_blank');
+      w.document.write('<html><head><meta charset="UTF-8"><title>' + htmlEscape(title) + '</title>');
+      w.document.write('<style>body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;padding:16px;}h2{margin-top:0;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #333;padding:4px;font-size:12px;}</style>');
+      w.document.write('</head><body>');
+      w.document.write('<h2>' + htmlEscape(title) + '</h2>');
+      if (summaryText) {
+        w.document.write('<p>' + htmlEscape(summaryText) + '</p>');
+      }
+      w.document.write(tableHtml);
+      w.document.write('</body></html>');
+      w.document.close();
+      w.focus();
+      w.print();
+    }
 
-    const defaultOpt = document.createElement("option");
-    defaultOpt.value = "";
-    defaultOpt.textContent = "-- Select Company --";
-    select.appendChild(defaultOpt);
+    function exportAllAsXls() {
+      const records = loadRecords().slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      exportRecordsToXls(records, 'ams_drug_test_full_log.xls', true);
+    }
 
-    companies.forEach(name => {
-        const opt = document.createElement("option");
+    function printAllAsPdf() {
+      const records = loadRecords().slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      printRecordsAsPdf(records, 'AMS Full Check-In Log', '', true);
+    }
+
+    function exportReportAsXls() {
+      exportRecordsToXls(lastReportRecords, 'ams_drug_test_report.xls', true);
+    }
+
+    function printReportAsPdf() {
+      printRecordsAsPdf(lastReportRecords, 'AMS Drug Test Report', lastReportSummaryText, true);
+    }
+
+    function loadCompanyList() {
+      const raw = localStorage.getItem(COMPANY_LIST_KEY);
+      if (!raw) return [];
+      try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveCompanyList(list) {
+      localStorage.setItem(COMPANY_LIST_KEY, JSON.stringify(list));
+    }
+
+    function renderCompanySelect() {
+      const select = document.getElementById('companySelect');
+      const companies = loadCompanyList();
+      select.innerHTML = '';
+      const defaultOpt = document.createElement('option');
+      defaultOpt.value = '';
+      defaultOpt.textContent = '-- Select company --';
+      select.appendChild(defaultOpt);
+
+      companies.forEach(name => {
+        const opt = document.createElement('option');
         opt.value = name;
         opt.textContent = name;
         select.appendChild(opt);
-    });
-
-    const otherOpt = document.createElement("option");
-    otherOpt.value = "OTHER_COMPANY";
-    otherOpt.textContent = "Other (type manually)";
-    select.appendChild(otherOpt);
-}
-
-// ===============================
-// RENDER ADMIN LIST (EDIT + DELETE)
-// ===============================
-
-function renderCompanyListDisplay() {
-    const container = document.getElementById("companyListDisplay");
-    if (!container) return;
-
-    const search = document.getElementById("companySearch").value.toLowerCase();
-    const list = loadCompanyList();
-
-    container.innerHTML = "";
-
-    list
-  .filter(name => name.toLowerCase().includes(search))
-  .forEach((name, idx) => {
-
-      const row = document.createElement("div");
-      row.className = "tag";
-
-      const label = document.createElement("span");
-      label.textContent = name;
-
-      row.appendChild(label);
-
-      row.addEventListener("click", () => {
-          document.getElementById("selectedCompany").textContent = name;
-          document.getElementById("editDeletePanel").style.display = "block";
       });
 
-      container.appendChild(row);
-  });
-
-}   // <-- THIS LINE WAS MISSING
-// ===============================
-// UNIFIED EDIT / DELETE FUNCTIONS
-
-// ===============================
-// UNIFIED EDIT / DELETE FUNCTIONS
-// ===============================
-
-function editCompany() {
-    const selected = document.getElementById("selectedCompany").textContent;
-    if (!selected) return alert("No company selected.");
-
-    const newName = prompt("Enter new company name:", selected);
-
-    if (newName && newName.trim()) {
-        let companies = loadCompanyList();
-        const index = companies.indexOf(selected);
-        companies[index] = newName.trim();
-        saveCompanyList(companies);
-        renderCompanySelect();
-        renderCompanyListDisplay();
+      const otherOpt = document.createElement('option');
+      otherOpt.value = OTHER_COMPANY_VALUE;
+      otherOpt.textContent = 'Other (type manually)';
+      select.appendChild(otherOpt);
     }
+
+    function renderCompanyListDisplay() {
+    const container = document.getElementById("companyListDisplay");
+    const searchValue = document.getElementById("companySearch")?.value.toLowerCase() || "";
+    let companies = loadCompanyList();
+
+    if (!companies.length) {
+        container.innerHTML = "<p>No companies added yet.</p>";
+        return;
+    }
+
+    // FILTER LIST
+    const filtered = companies.filter(c => c.toLowerCase().includes(searchValue));
+
+    // BUILD HTML LIST
+    container.innerHTML = filtered
+        .map(c => `
+            <div class="company-item" 
+                 style="margin: 4px 0; display:flex; justify-content:space-between; align-items:center;">
+                
+                <span>${c}</span>
+
+                <div>
+                    <button class="editCompanyBtn" data-name="${c}" 
+                        style="margin-right:6px;">Edit</button>
+                    
+                    <button class="deleteCompanyBtn" data-name="${c}" 
+                        style="background:#d9534f; color:white;">Delete</button>
+                </div>
+            </div>
+        `)
+        .join("");
+
+    // -----------------------------
+    // ADD EVENT LISTENERS HERE
+    // -----------------------------
+
+    // EDIT BUTTONS
+    document.querySelectorAll(".editCompanyBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const oldName = btn.dataset.name;
+            const newName = prompt("Edit company name:", oldName);
+
+            if (!newName || newName.trim() === "") return;
+
+            const clean = newName.trim();
+
+            // Prevent duplicates
+            if (companies.includes(clean) && clean !== oldName) {
+                alert("This company already exists.");
+                return;
+            }
+
+            const idx = companies.indexOf(oldName);
+            if (idx !== -1) {
+                companies[idx] = clean;
+                companies.sort((a, b) => a.localeCompare(b));
+                saveCompanyList(companies);
+                renderCompanySelect();
+                renderCompanyListDisplay();
+            }
+        });
+    });
+
+    // DELETE BUTTONS
+    document.querySelectorAll(".deleteCompanyBtn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const name = btn.dataset.name;
+
+            if (!confirm(`Remove "${name}" from the company list?`)) return;
+
+            companies = companies.filter(c => c !== name);
+            saveCompanyList(companies);
+            renderCompanySelect();
+            renderCompanyListDisplay();
+        });
+    });
 }
 
-function deleteCompany() {
-    const selected = document.getElementById("selectedCompany").textContent;
-    if (!selected) return alert("No company selected.");
+    function setDateRangePreset(preset) {
+      const startInput = document.getElementById('reportStart');
+      const endInput = document.getElementById('reportEnd');
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      let startDate = today;
+      let endDate = today;
 
-    if (confirm("Delete " + selected + "?")) {
-        let companies = loadCompanyList().filter(c => c !== selected);
-        saveCompanyList(companies);
-        renderCompanySelect();
-        renderCompanyListDisplay();
-        document.getElementById("editDeletePanel").style.display = "none";
+      if (preset === 'yesterday') {
+        startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - 1);
+        endDate = new Date(startDate);
+      } else if (preset === 'thisWeek') {
+        const dayOfWeek = today.getDay();
+        const diffToMonday = (dayOfWeek + 6) % 7;
+        startDate = new Date(today);
+        startDate.setDate(startDate.getDate() - diffToMonday);
+        endDate = today;
+      } else if (preset === 'thisMonth') {
+        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        endDate = today;
+      }
+
+      const toStr = (d) => {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const da = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${da}`;
+      };
+
+      startInput.value = toStr(startDate);
+      endInput.value = toStr(endDate);
     }
+
+    function timeToMinutes(timeStr) {
+      if (!timeStr) return null;
+      const parts = timeStr.split(':');
+      if (parts.length < 2) return null;
+      const hh = parseInt(parts[0], 10);
+      const mm = parseInt(parts[1], 10);
+      if (isNaN(hh) || isNaN(mm)) return null;
+      return hh * 60 + mm;
+    }
+
+    function runReport() {
+      const startDateStr = document.getElementById('reportStart').value;
+      const endDateStr = document.getElementById('reportEnd').value;
+      const timeFromStr = document.getElementById('reportTimeFrom').value;
+      const timeToStr = document.getElementById('reportTimeTo').value;
+      const companyFilter = document.getElementById('reportCompany').value.trim().toLowerCase();
+      const nameFilter = document.getElementById('reportName').value.trim().toLowerCase();
+      const reasonFilter = document.getElementById('reportReason').value;
+
+      const tbody = document.querySelector('#reportTable tbody');
+      tbody.innerHTML = '';
+      const summaryBox = document.getElementById('reportSummary');
+
+      if (!startDateStr || !endDateStr) {
+        summaryBox.style.display = 'block';
+        summaryBox.textContent = 'Please select a start date and end date for the report.';
+        lastReportRecords = [];
+        lastReportSummaryText = '';
+        return;
+      }
+
+      const startDate = new Date(startDateStr + 'T00:00:00');
+      const endDate = new Date(endDateStr + 'T23:59:59');
+      const minMinutes = timeToMinutes(timeFromStr);
+      const maxMinutes = timeToMinutes(timeToStr);
+
+      const records = loadRecords();
+      const results = records.filter(rec => {
+        const d = new Date(rec.timestamp);
+        if (isNaN(d.getTime())) return false;
+        if (d < startDate || d > endDate) return false;
+
+        const mins = d.getHours() * 60 + d.getMinutes();
+        if (minMinutes !== null && mins < minMinutes) return false;
+        if (maxMinutes !== null && mins > maxMinutes) return false;
+
+        if (companyFilter) {
+          if (!(rec.company || '').toLowerCase().includes(companyFilter)) return false;
+        }
+        if (nameFilter) {
+          const fn = (rec.firstName || '').toLowerCase();
+          const ln = (rec.lastName || '').toLowerCase();
+          if (!fn.includes(nameFilter) && !ln.includes(nameFilter)) return false;
+        }
+        if (reasonFilter) {
+          if (rec.reason !== reasonFilter) return false;
+        }
+        return true;
+      });
+
+      const sorted = results.slice().sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      for (const rec of sorted) {
+        const { date, time } = formatDateTime(rec.timestamp);
+        signatureStore[rec.id] = rec.signatureDataUrl || '';
+        const sigCell = rec.signatureDataUrl
+          ? `<button type="button" class="sig-btn" data-sigid="${rec.id}">View</button>`
+          : '';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${date}</td>
+          <td>${time}</td>
+          <td>${rec.firstName}</td>
+          <td>${rec.lastName}</td>
+          <td>${rec.company}</td>
+          <td>${rec.reason || ''}</td>
+          <td>${sigCell}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+
+      summaryBox.style.display = 'block';
+      const count = results.length;
+      let text = `Total donors in report: ${count}`;
+      if (startDateStr && endDateStr) {
+        text += ` | Date range: ${startDateStr} to ${endDateStr}`;
+      }
+      if (timeFromStr || timeToStr) {
+        text += ` | Time in: ${timeFromStr || 'any'} to ${timeToStr || 'any'}`;
+      }
+      if (companyFilter) {
+        text += ` | Company contains: "${document.getElementById('reportCompany').value.trim()}"`;
+      }
+      if (nameFilter) {
+        text += ` | Name contains: "${document.getElementById('reportName').value.trim()}"`;
+      }
+      if (reasonFilter) {
+        text += ` | Reason: ${reasonFilter}`;
+      }
+      summaryBox.textContent = text;
+
+      lastReportRecords = sorted;
+      lastReportSummaryText = text;
+    }
+
+    function clearReport() {
+      document.getElementById('reportStart').value = '';
+      document.getElementById('reportEnd').value = '';
+      document.getElementById('reportTimeFrom').value = '';
+      document.getElementById('reportTimeTo').value = '';
+      document.getElementById('reportCompany').value = '';
+      document.getElementById('reportName').value = '';
+      document.getElementById('reportReason').value = '';
+      document.querySelector('#reportTable tbody').innerHTML = '';
+      const summaryBox = document.getElementById('reportSummary');
+      summaryBox.style.display = 'none';
+      summaryBox.textContent = '';
+      lastReportRecords = [];
+      lastReportSummaryText = '';
+    }
+
+    function toggleAdmin() {
+      if (adminUnlocked) {
+        adminUnlocked = false;
+        document.getElementById('adminArea').style.display = 'none';
+        document.getElementById('toggleAdminBtn').textContent = 'Admin Login';
+        document.getElementById('adminStatusText').textContent = '';
+        return;
+      }
+      const pin = prompt('Enter AMS admin PIN:');
+      if (pin === ADMIN_PIN) {
+        adminUnlocked = true;
+        document.getElementById('adminArea').style.display = 'block';
+        document.getElementById('toggleAdminBtn').textContent = 'Hide Admin Area';
+        document.getElementById('adminStatusText').textContent = 'Admin mode: ON';
+        refreshRecentTable();
+      } else if (pin !== null) {
+        alert('Incorrect PIN.');
+      }
+    }
+
+    function setupSignaturePad() {
+      const canvas = document.getElementById('signaturePad');
+      const placeholder = document.getElementById('sigPlaceholder');
+      if (!canvas) return null;
+      const ctx = canvas.getContext('2d');
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0;
+      let hasSignature = false;
+
+      // Resize canvas to match CSS size
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        let clientX, clientY;
+        if (e.touches && e.touches[0]) {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+        return {
+          x: clientX - rect.left,
+          y: clientY - rect.top
+        };
+      }
+
+      function startDrawing(e) {
+        e.preventDefault();
+        isDrawing = true;
+        const pos = getPos(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        if (placeholder) placeholder.style.display = 'none';
+      }
+
+      function draw(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+        hasSignature = true;
+      }
+
+      function endDrawing(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        isDrawing = false;
+      }
+
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      window.addEventListener('mouseup', endDrawing);
+
+      canvas.addEventListener('touchstart', startDrawing, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', endDrawing);
+      canvas.addEventListener('touchcancel', endDrawing);
+
+      const clearBtn = document.getElementById('clearSigBtn');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          hasSignature = false;
+          if (placeholder) placeholder.style.display = 'block';
+        });
+      }
+
+      return {
+        hasSignature: () => hasSignature,
+        getDataUrl: () => hasSignature ? canvas.toDataURL('image/png') : '',
+        clear: () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          hasSignature = false;
+          if (placeholder) placeholder.style.display = 'block';
+        }
+      };
+    }
+let lastCompanyReport = [];
+let lastCompanySummary = "";
+
+// Load company dropdown for company report
+function renderCompanyReportDropdown() {
+    const sel = document.getElementById("companyReportSelect");
+    if (!sel) return;
+
+    const list = loadCompanyList();
+    sel.innerHTML = `<option value="">-- Select company --</option>`;
+
+    list.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.textContent = c;
+        sel.appendChild(opt);
+    });
+}
+/* ============================================================
+   COMPANY REPORT ENGINE
+   ============================================================ */
+
+// Attach all company name pills ("Today", "Yesterday", etc.)
+function setupCompanyReportPills() {
+    document.querySelectorAll("[data-companyrange]").forEach(pill => {
+        pill.addEventListener("click", () => {
+            const range = pill.dataset.companyrange;
+            applyCompanyDatePreset(range);
+        });
+    });
 }
 
-// ===============================
-// DATE PRESETS FOR COMPANY REPORT
-// ===============================
-
-function applyCompanyDatePreset(range) {
-    const from = document.getElementById("companyFrom");
-    const to = document.getElementById("companyTo");
+// Apply date preset (today, thisWeek, lastMonth, etc.)
+function applyCompanyDatePreset(preset) {
+    const startInput = document.getElementById("companyReportStart");
+    const endInput = document.getElementById("companyReportEnd");
 
     const today = new Date();
-    let start, end;
+    let start = new Date();
+    let end = new Date();
 
-    switch (range) {
+    switch (preset) {
         case "today":
-            start = end = today;
             break;
 
         case "yesterday":
-            start = end = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+            start.setDate(today.getDate() - 1);
+            end.setDate(today.getDate() - 1);
             break;
 
-        case "thisWeek":
-            start = new Date(today.setDate(today.getDate() - today.getDay()));
-            end = new Date();
+        case "thisweek":
+            const day = today.getDay();
+            start.setDate(today.getDate() - day);
             break;
 
-        case "lastWeek":
-            const curr = today.getDay();
-            start = new Date(today.setDate(today.getDate() - curr - 7));
-            end = new Date(today.setDate(start.getDate() + 6));
+        case "lastweek":
+            const d = today.getDay();
+            start.setDate(today.getDate() - d - 7);
+            end.setDate(today.getDate() - d - 1);
             break;
 
-        case "thisMonth":
+        case "thismonth":
             start = new Date(today.getFullYear(), today.getMonth(), 1);
-            end = new Date();
             break;
 
-        case "lastMonth":
+        case "lastmonth":
             start = new Date(today.getFullYear(), today.getMonth() - 1, 1);
             end = new Date(today.getFullYear(), today.getMonth(), 0);
             break;
 
-        case "thisYear":
+        case "thisyear":
             start = new Date(today.getFullYear(), 0, 1);
-            end = new Date();
             break;
 
-        case "lastYear":
+        case "lastyear":
             start = new Date(today.getFullYear() - 1, 0, 1);
             end = new Date(today.getFullYear() - 1, 11, 31);
             break;
     }
 
-    from.value = start.toISOString().split("T")[0];
-    to.value = end.toISOString().split("T")[0];
+    startInput.value = formatDateInput(start);
+    endInput.value = formatDateInput(end);
 }
 
-// ===============================
-// GENERATE COMPANY REPORT
-// ===============================
-
-function generateCompanyReport() {
-    const company = document.getElementById("companySelect").value;
-    const start = document.getElementById("companyFrom").value;
-    const end = document.getElementById("companyTo").value;
-
-    if (!company) return alert("Select a company first.");
-    if (!start || !end) return alert("Select date range.");
-
-    alert(`Report generated for:\n\nCompany: ${company}\nFrom: ${start}\nTo: ${end}`);
-
-    // Hook your real report logic here
-}// Show manual company field when "Other" is selected
-function toggleOtherCompany() {
-    const select = document.getElementById("companySelect");
-    const wrapper = document.getElementById("otherCompanyWrapper");
-
-    if (select.value === "OTHER_COMPANY") {
-        wrapper.style.display = "block";
-    } else {
-        wrapper.style.display = "none";
-    }
+// Format to YYYY-MM-DD for inputs
+function formatDateInput(d) {
+    return d.toISOString().split("T")[0];
 }
 
-// Show manual Reason field
-function toggleOtherReason() {
-    const select = document.getElementById("reasonSelect");
-    const wrapper = document.getElementById("otherReasonWrapper");
+/* ============================================================
+   RUN COMPANY REPORT
+   ============================================================ */
+function runCompanyReport() {
+    const dropdown = document.getElementById("companyReportSelect");
+    const textInput = document.getElementById("companyReportManual");
 
-    if (select.value === "Other (personal)") {
-        wrapper.style.display = "block";
-    } else {
-        wrapper.style.display = "none";
-    }
-}
+    const selectedCompany = dropdown.value.trim();
+    const manualCompany = textInput.value.trim();
 
-// Show text field when Service = Other
-function toggleOtherInput() {
-    const cb = document.getElementById("service_other");
-    const input = document.getElementById("other_reason");
-
-    if (cb.checked) {
-        input.style.display = "inline-block";
-    } else {
-        input.style.display = "none";
-        input.value = "";
-    }
-}
-
-// ===============================
-// EVENT LISTENERS ON PAGE LOAD
-// ===============================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    // INITIAL RENDER
-    if (!localStorage.getItem(COMPANY_LIST_KEY)) {
-        saveCompanyList([]);
+    const companyName = manualCompany || selectedCompany;
+    if (!companyName) {
+        alert("Please select or enter a company name.");
+        return;
     }
 
-    renderCompanySelect();
-    renderCompanyListDisplay();
+    const startStr = document.getElementById("companyReportStart").value;
+    const endStr = document.getElementById("companyReportEnd").value;
 
-    // ADD COMPANY
-    document.getElementById("addCompanyBtn").addEventListener("click", () => {
-        const newName = document.getElementById("newCompany").value.trim();
-        if (!newName) return alert("Enter company name.");
+    if (!startStr || !endStr) {
+        alert("Please select a date range.");
+        return;
+    }
 
-        const list = loadCompanyList();
-        list.push(newName);
-        saveCompanyList(list);
+    const start = new Date(startStr);
+    const end = new Date(endStr);
+    end.setHours(23, 59, 59);
 
-        document.getElementById("newCompany").value = "";
-        renderCompanySelect();
-        renderCompanyListDisplay();
+    const records = loadRecords();
+    const filtered = records.filter(r => {
+        const rDate = new Date(r.timestamp);
+        const matchCompany = (r.company || "").toLowerCase() === companyName.toLowerCase();
+        const inRange = rDate >= start && rDate <= end;
+        return matchCompany && inRange;
     });
 
-    // SEARCH FILTER
-    document.getElementById("companySearch").addEventListener("input", () => {
-        renderCompanyListDisplay();
-    });
+    lastCompanyReport = filtered;
 
-    // DATE PRESET BUTTONS
-    document.querySelectorAll("[data-companyrange]").forEach(btn => {
-        btn.addEventListener("click", () => {
-            applyCompanyDatePreset(btn.dataset.companyrange);
-        });
-    });
+    renderCompanyReportTable(filtered, companyName, startStr, endStr);
+}
 
-    // REPORT BUTTON
-    const runBtn = document.getElementById("runCompanyReportBtn");
-    if (runBtn) runBtn.onclick = generateCompanyReport;
-});
-// ===============================
-// ADMIN LOGIN SYSTEM
-// ===============================
+/* ============================================================
+   COMPANY REPORT TABLE
+   ============================================================ */
+function renderCompanyReportTable(list, companyName, start, end) {
+    const container = document.getElementById("companyReportResults");
+    if (!container) return;
 
-let ADMIN_UNLOCKED = false;
-const ADMIN_PIN = "4455";  // <-- Change this PIN if you want
-
-function toggleAdmin() {
-    if (!ADMIN_UNLOCKED) {
-        const pin = prompt("Enter Admin PIN:");
-        if (pin === ADMIN_PIN) {
-            ADMIN_UNLOCKED = true;
-            document.getElementById("adminArea").style.display = "block";
-            document.getElementById("adminStatusText").textContent = "Admin Mode Active";
-            alert("Admin Access Granted");
-        } else {
-            alert("Incorrect PIN");
-        }
-    } else {
-        // If already unlocked → hide admin
-        ADMIN_UNLOCKED = false;
-        document.getElementById("adminArea").style.display = "none";
-        document.getElementById("adminStatusText").textContent = "";
-        alert("Admin Logged Out");
+    if (list.length === 0) {
+        container.innerHTML = `<p>No results found for <b>${companyName}</b> in this date range.</p>`;
+        return;
     }
-}
 
-// Bind the button
-document.getElementById("toggleAdminBtn").addEventListener("click", toggleAdmin);
+    let html = `
+        <h3>Report for: ${companyName}</h3>
+        <p>Date Range: <b>${start}</b> → <b>${end}</b></p>
+        <button id="exportCompanyXLS" class="secondary">Export to Excel</button>
+        <button id="exportCompanyPDF" class="secondary">Export PDF</button>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Test Type</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
-// ===============================
-// SIGNATURE PAD
-// ===============================
-let sigCanvas = document.getElementById("signaturePad");
-let sigCtx = sigCanvas.getContext("2d");
-// Fix for drawing visibility
-sigCtx.lineWidth = 2;
-sigCtx.lineJoin = "round";
-sigCtx.lineCap = "round";
-sigCtx.strokeStyle = "#000";
-
-let drawing = false;
-let lastX = 0;
-let lastY = 0;
-
-// Resize canvas to fit container
-function resizeSignaturePad() {
-    sigCanvas.width = sigCanvas.offsetWidth;
-    sigCanvas.height = sigCanvas.offsetHeight;
-}
-resizeSignaturePad();
-window.addEventListener("resize", resizeSignaturePad);
-
-// Start drawing
-function startDraw(e) {
-    drawing = true;
-    const rect = sigCanvas.getBoundingClientRect();
-    lastX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    lastY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-
-    document.getElementById("sigPlaceholder").style.display = "none";
-}
-
-// Draw lines
-function draw(e) {
-    if (!drawing) return;
-
-    const rect = sigCanvas.getBoundingClientRect();
-    let x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    let y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-
-    sigCtx.lineWidth = 2;
-    sigCtx.lineCap = "round";
-    sigCtx.strokeStyle = "#000";
-
-    sigCtx.beginPath();
-    sigCtx.moveTo(lastX, lastY);
-    sigCtx.lineTo(x, y);
-    sigCtx.stroke();
-
-    lastX = x;
-    lastY = y;
-}
-
-// Stop drawing
-function endDraw() {
-    drawing = false;
-}
-
-// Clear signature
-document.getElementById("clearSigBtn").addEventListener("click", () => {
-    sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
-    document.getElementById("sigPlaceholder").style.display = "block";
-});
-
-// Mouse events
-sigCanvas.addEventListener("mousedown", startDraw);
-sigCanvas.addEventListener("mousemove", draw);
-sigCanvas.addEventListener("mouseup", endDraw);
-sigCanvas.addEventListener("mouseleave", endDraw);
-
-// Touch events
-sigCanvas.addEventListener("touchstart", startDraw);
-sigCanvas.addEventListener("touchmove", draw);
-sigCanvas.addEventListener("touchend", endDraw);
-sigCanvas.addEventListener("touchcancel", endDraw);
-</script>
- 
-<script>
-   
-// ===============================
-// SUBMIT CHECK-IN
-// ===============================
-document.getElementById("submitBtn").addEventListener("click", submitCheckIn);
-    
-    function submitCheckIn() {
-    let first = document.getElementById("firstName").value.trim();
-    let last = document.getElementById("lastName").value.trim();
-    let company = document.getElementById("companySelect").value;
-    let otherCompany = document.getElementById("otherCompany").value.trim();
-    let reason = document.getElementById("reasonSelect").value;
-    let manualReason = document.getElementById("otherReasonInput").value.trim();
-
-    // Validation checks
-    if (!first || !last) return alert("Enter first and last name.");
-    if (!company && !otherCompany) return alert("Select or enter a company.");
-    if (company === "OTHER_COMPANY") company = otherCompany;
-    if (!reason) return alert("Please select a Reason for Testing.");
-    if (reason === "Other (personal)" && !manualReason) return alert("Please enter the 'Other Reason' manually.");
-
-    // Collecting services
-    let services = [];
-    document.querySelectorAll(".service-options input[type='checkbox']").forEach(cb => {
-        if (cb.checked) services.push(cb.name.replace("service_", ""));
+    list.forEach(r => {
+        const { date, time } = formatDateTime(r.timestamp);
+        html += `
+            <tr>
+                <td>${date}</td>
+                <td>${time}</td>
+                <td>${r.firstName}</td>
+                <td>${r.lastName}</td>
+                <td>${r.reason || ""}</td>
+            </tr>`;
     });
 
-    let manualService = document.getElementById("other_reason").value.trim();
-    if (manualService) services.push("other: " + manualService);
+    html += `
+            </tbody>
+        </table>
+    `;
 
-    if (services.length === 0) return alert("Please select at least one Service Type.");
+    container.innerHTML = html;
 
-    // Signature check
-    let signatureData = sigCanvas.toDataURL();
-    let blank = document.createElement("canvas");
-    blank.width = sigCanvas.width;
-    blank.height = sigCanvas.height;
-
-    if (signatureData === blank.toDataURL()) return alert("Please sign before submitting.");
-
-    // Create entry data
-    let now = new Date();
-    let entry = {
-        date: now.toLocaleDateString(),
-        time: now.toLocaleTimeString(),
-        first,
-        last,
-        company,
-        reason,
-        services,
-        signature: signatureData
-    };
-
-    // Save to localStorage
-    let log = JSON.parse(localStorage.getItem("amsLog") || "[]");
-    log.push(entry);
-    localStorage.setItem("amsLog", JSON.stringify(log));
-
-    // Play sound and reset form
-    playSubmitSound();
-    alert("Check-In Saved!");
-    resetForm();
-    renderRecentTable();
+    // Excel + PDF buttons
+    document.getElementById("exportCompanyXLS").addEventListener("click", exportCompanyReportXLS);
+    document.getElementById("exportCompanyPDF").addEventListener("click", exportCompanyReportPDF);
 }
-    let now = new Date();
-    let entry = {
-        date: now.toLocaleDateString(),
-        time: now.toLocaleTimeString(),
-        first,
-        last,
-        company,
-        reason,
-        services,
-        signature: signatureData
-    };
 
-    let log = JSON.parse(localStorage.getItem("amsLog") || "[]");
-    log.push(entry);
-    localStorage.setItem("amsLog", JSON.stringify(log));
+/* ============================================================
+   EXPORT EXCEL (XLS)
+   ============================================================ */
+function exportCompanyReportXLS() {
+    if (lastCompanyReport.length === 0) {
+        alert("No data to export.");
+        return;
+    }
 
-    playSubmitSound();
-    alert("Check-In Saved!");
+    let csv = "Date,Time,First Name,Last Name,Reason\n";
 
-    resetForm();
-    renderRecentTable();
+    lastCompanyReport.forEach(r => {
+        const { date, time } = formatDateTime(r.timestamp);
+        csv += `${date},${time},${r.firstName},${r.lastName},${r.reason || ""}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Company_Report.csv";
+    a.click();
+
+    URL.revokeObjectURL(url);
 }
-   
-function renderRecentTable() {
-    let log = JSON.parse(localStorage.getItem("amsLog") || "[]");
-    let tbody = document.querySelector("#recentTable tbody");
+
+/* ============================================================
+   EXPORT PDF
+   ============================================================ */
+function exportCompanyReportPDF() {
+    alert("PDF export will be added next — browser PDF rendering enabled.");
+}
+
+// COMPANY REPORT DATE PRESETS
+function setCompanyPreset(preset) {
+    const start = document.getElementById("companyReportStart");
+    const end = document.getElementById("companyReportEnd");
+
+    const now = new Date();
+    let s = new Date();
+    let e = new Date();
+
+    switch (preset) {
+        case "today":
+            break;
+        case "yesterday":
+            s.setDate(s.getDate() - 1);
+            e.setDate(e.getDate() - 1);
+            break;
+        case "thisWeek":
+            s.setDate(s.getDate() - s.getDay());
+            break;
+        case "lastWeek":
+            const d = s.getDay();
+            s.setDate(s.getDate() - d - 7);
+            e.setDate(s.getDate() + 6);
+            break;
+        case "thisMonth":
+            s = new Date(now.getFullYear(), now.getMonth(), 1);
+            break;
+        case "lastMonth":
+            s = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            e = new Date(now.getFullYear(), now.getMonth(), 0);
+            break;
+        case "thisYear":
+            s = new Date(now.getFullYear(), 0, 1);
+            break;
+        case "lastYear":
+            s = new Date(now.getFullYear() - 1, 0, 1);
+            e = new Date(now.getFullYear() - 1, 11, 31);
+            break;
+    }
+
+    start.value = s.toISOString().split("T")[0];
+    end.value = e.toISOString().split("T")[0];
+}
+
+// RUN COMPANY REPORT
+function runCompanyReport() {
+    const dropdownValue = document.getElementById("companyReportSelect").value.trim().toLowerCase();
+    const manualValue   = document.getElementById("companyReportManual").value.trim().toLowerCase();
+
+    const company = manualValue || dropdownValue;
+
+    if (!company) {
+        alert("Select or type a company name.");
+        return;
+    }
+
+    const start = document.getElementById("companyReportStart").value;
+    const end   = document.getElementById("companyReportEnd").value;
+
+    if (!start || !end) {
+        alert("Please select a start and end date.");
+        return;
+    }
+
+    const sDate = new Date(start + "T00:00:00");
+    const eDate = new Date(end + "T23:59:59");
+
+    const tbody = document.querySelector("#companyReportTable tbody");
     tbody.innerHTML = "";
 
-    log.slice().reverse().forEach(entry => {
-        let tr = document.createElement("tr");
+    const records = loadRecords();
+
+    const results = records.filter(rec => {
+        const d = new Date(rec.timestamp);
+        if (d < sDate || d > eDate) return false;
+        return (rec.company || "").toLowerCase().includes(company);
+    });
+
+    results.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    results.forEach(rec => {
+        const dt = formatDateTime(rec.timestamp);
+        signatureStore[rec.id] = rec.signatureDataUrl || "";
+
+        const sigBtn = rec.signatureDataUrl
+            ? `<button class="sig-btn" data-sigid="${rec.id}">View</button>`
+            : "";
+
+        const tr = document.createElement("tr");
         tr.innerHTML = `
-            <td>${entry.date}</td>
-            <td>${entry.time}</td>
-            <td>${entry.first}</td>
-            <td>${entry.last}</td>
-            <td>${entry.company}</td>
-            <td>${entry.reason}</td>
-            <td><img src="${entry.signature}" style="width:80px; border:1px solid #ccc;"></td>
+            <td>${dt.date}</td>
+            <td>${dt.time}</td>
+            <td>${rec.firstName}</td>
+            <td>${rec.lastName}</td>
+            <td>${rec.reason}</td>
+            <td>${formatServices(rec.serviceTypes)}</td>
+            <td>${sigBtn}</td>
         `;
         tbody.appendChild(tr);
     });
 
-    document.getElementById("countBadge").textContent = log.length;
+    const summaryBox = document.getElementById("companyReportSummary");
+    summaryBox.style.display = "block";
+    summaryBox.textContent = 
+        `Company: ${manualValue || dropdownValue.toUpperCase()} | Total: ${results.length} | Range: ${start} → ${end}`;
+
+    lastCompanyReport = results;
+    lastCompanySummary = summaryBox.textContent;
 }
-</script>  
+
+// EXPORT COMPANY XLS
+document.getElementById("exportCompanyXlsBtn").addEventListener("click", () => {
+    exportRecordsToXls(lastCompanyReport, "company_report.xls", true);
+});
+
+// PRINT COMPANY PDF
+document.getElementById("printCompanyPdfBtn").addEventListener("click", () => {
+    printRecordsAsPdf(lastCompanyReport, "Company Report", lastCompanySummary, true);
+});
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!localStorage.getItem(COMPANY_LIST_KEY)) {
+        saveCompanyList([]);
+      }
+      renderCompanySelect();
+      renderCompanyListDisplay();
+
+      const sigPad = setupSignaturePad();
+
+      const submitBtn = document.getElementById('submitBtn');
+      const searchBtn = document.getElementById('searchBtn');
+      const clearFilterBtn = document.getElementById('clearFilterBtn');
+      const exportXlsBtn = document.getElementById('exportXlsBtn');
+      const printAllBtn = document.getElementById('printAllBtn');
+      const exportReportXlsBtn = document.getElementById('exportReportXlsBtn');
+      const printReportBtn = document.getElementById('printReportBtn');
+      const msg = document.getElementById('submitMessage');
+      const companySelect = document.getElementById('companySelect');
+      const otherCompanyWrapper = document.getElementById('otherCompanyWrapper');
+      const pills = document.querySelectorAll('.pill');
+      const runReportBtn = document.getElementById('runReportBtn');
+      const clearReportBtn = document.getElementById('clearReportBtn');
+      const addCompanyBtn = document.getElementById('addCompanyBtn');
+      const toggleAdminBtn = document.getElementById('toggleAdminBtn');
+
+      if (toggleAdminBtn) {
+        toggleAdminBtn.addEventListener('click', toggleAdmin);
+      }
+
+      if (companySelect) {
+        companySelect.addEventListener('change', () => {
+          if (companySelect.value === OTHER_COMPANY_VALUE) {
+            otherCompanyWrapper.style.display = 'block';
+          } else {
+            otherCompanyWrapper.style.display = 'none';
+            document.getElementById('otherCompany').value = '';
+          }
+        });
+      }
+
+      if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const companyValue = companySelect.value;
+        const otherCompany = document.getElementById('otherCompany').value.trim();
+        let reason = document.getElementById('reasonSelect').value;
+
+        // Missing first + last
+        if (!firstName || !lastName) {
+            msg.textContent = 'Please fill in first and last name.';
+            msg.style.color = 'red';
+            return;
+        }
+
+        // Company required
+        if (!companyValue) {
+            msg.textContent = 'Please select a company or choose "Other".';
+            msg.style.color = 'red';
+            return;
+        }
+
+        // "Other company"
+        let company = companyValue;
+        if (companyValue === OTHER_COMPANY_VALUE) {
+            if (!otherCompany) {
+                msg.textContent = 'Please type the other company name.';
+                msg.style.color = 'red';
+                return;
+            }
+            company = otherCompany;
+        }
+
+        // Handle manual "Other reason"
+        const otherReasonInput = document.getElementById("otherReasonInput");
+        if (reason && reason.includes("Other")) {
+            if (!otherReasonInput || otherReasonInput.value.trim() === "") {
+                msg.textContent = "Please enter the reason for testing.";
+                msg.style.color = "red";
+                return;
+            }
+            reason = otherReasonInput.value.trim();
+        }
+
+        // Normal reason must still be chosen
+        if (!reason) {
+            msg.textContent = 'Please select a reason for testing.';
+            msg.style.color = 'red';
+            return;
+        }
+
+        // ⭐ SERVICE TYPE VALIDATION — NEW ⭐
+        const serviceOtherChecked = document.getElementById("service_other").checked;
+        const serviceOtherText = document.getElementById("other_reason").value.trim();
+
+        if (serviceOtherChecked && serviceOtherText === "") {
+            msg.textContent = "Please enter the service reason since 'Other' is selected.";
+            msg.style.color = "red";
+            return;
+        }
+
+        // Signature required
+        if (!sigPad || !sigPad.hasSignature()) {
+            msg.textContent = 'Please capture donor signature before submitting.';
+            msg.style.color = 'red';
+            return;
+        }
+
+        const signatureDataUrl = sigPad.getDataUrl();
+
+        // Collect services
+        const services = {
+            drug: document.querySelector('input[name="service_drug"]').checked,
+            dna: document.querySelector('input[name="service_dna"]').checked,
+            vision: document.querySelector('input[name="service_vision"]').checked,
+            alcohol: document.querySelector('input[name="service_alcohol"]').checked,
+            dot: document.querySelector('input[name="service_dot"]').checked,
+            other: serviceOtherChecked,
+            otherText: serviceOtherText
+        };
+
+        // Create record
+        const record = {
+            id: Date.now().toString(),
+            firstName,
+            lastName,
+            company,
+            reason,
+            serviceTypes: services,
+            signatureDataUrl,
+            timestamp: new Date().toISOString()
+        };
+
+        addRecord(record);
+
+        // Reset checkboxes + fields
+        document.querySelectorAll('.service-options input[type="checkbox"]').forEach(cb => cb.checked = false);
+        document.getElementById('otherReasonInput').value = '';
+        document.getElementById('otherReasonWrapper').style.display = 'none';
+        document.getElementById('other_reason').value = '';
+        document.getElementById('other_reason').style.display = 'none';
+
+        if (sigPad) sigPad.clear();
+
+        playSubmitSound();
+
+        // Reset main form fields
+        document.getElementById('firstName').value = '';
+        document.getElementById('lastName').value = '';
+        companySelect.value = '';
+        document.getElementById('otherCompany').value = '';
+        otherCompanyWrapper.style.display = 'none';
+        document.getElementById('reasonSelect').value = '';
+
+        msg.textContent = 'Check-in saved.';
+        msg.style.color = 'green';
+        setTimeout(() => { msg.textContent = ''; }, 3000);
+    });
+}
+
+      if (searchBtn) searchBtn.addEventListener('click', runSearch);
+      if (clearFilterBtn) clearFilterBtn.addEventListener('click', () => {
+        document.getElementById('searchName').value = '';
+        document.getElementById('searchCompany').value = '';
+        document.getElementById('searchDate').value = '';
+        document.getElementById('searchReason').value = '';
+        document.querySelector('#resultsTable tbody').innerHTML = '';
+      });
+
+      if (exportXlsBtn) exportXlsBtn.addEventListener('click', exportAllAsXls);
+      if (printAllBtn) printAllBtn.addEventListener('click', printAllAsPdf);
+      if (exportReportXlsBtn) exportReportXlsBtn.addEventListener('click', exportReportAsXls);
+      if (printReportBtn) printReportBtn.addEventListener('click', printReportAsPdf);
+
+      if (pills && pills.length) {
+        pills.forEach(pill => {
+          pill.addEventListener('click', () => {
+            const preset = pill.getAttribute('data-range');
+            setDateRangePreset(preset);
+          });
+        });
+      }
+
+      if (runReportBtn) runReportBtn.addEventListener('click', runReport);
+      if (clearReportBtn) clearReportBtn.addEventListener('click', clearReport);
+
+      if (addCompanyBtn) addCompanyBtn.addEventListener('click', () => {
+    const input = document.getElementById('newCompany');
+    const name = input.value.trim();
+    if (!name) return;
+
+    const list = loadCompanyList();
+
+    // Prevent duplicates
+    if (list.includes(name)) {
+        alert("This company already exists in the list.");
+        return;
+    }
+
+    // Add new company
+    list.push(name);
+    list.sort((a, b) => a.localeCompare(b));
+
+    saveCompanyList(list);
+    renderCompanySelect();
+    renderCompanyListDisplay();
+
+    input.value = "";
+});
+
+      // Delegate click for signature View buttons
+      document.body.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.classList && target.classList.contains('sig-btn')) {
+          const id = target.getAttribute('data-sigid');
+          const url = signatureStore[id];
+          if (url) {
+            const w = window.open('', '_blank');
+            w.document.write('<html><head><meta charset="UTF-8"><title>Signature</title></head><body style="margin:0;padding:0;background:#f5f5f5;display:flex;align-items:center;justify-content:center;">');
+            w.document.write('<img src="' + url + '" style="max-width:100%;max-height:100vh;border:1px solid #ccc;background:#fff;" />');
+            w.document.write('</body></html>');
+            w.document.close();
+          } else {
+            alert('No signature image found for this record.');
+          }
+        }
+      });
+  </script>
 </body>
 </html>
