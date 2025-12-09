@@ -3,13 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
 <title>AMS Check-In System</title>
 
 <style>
-/* -----------------------------------------------------
-   GLOBAL STYLES
------------------------------------------------------ */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   margin: 0;
@@ -17,7 +13,6 @@ body {
   background: #f5f5f5;
   color: #222;
 }
-
 header {
   background: #ffffff;
   border-bottom: 4px solid #4F8C47;
@@ -25,257 +20,37 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
 }
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.header-logo {
-  height: 52px;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-.header-logo img {
-  height: 100%;
-  width: auto;
-  display: block;
-}
-
-.header-text-main {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #D9A441;
-  line-height: 1.28;
-}
-
-.header-text-sub {
-  font-size: 0.85rem;
-  color: #4F8C47;
-}
-
-.header-tagline {
-  font-size: 0.75rem;
-  color: #1E3A59;
-  font-style: italic;
-  text-align: right;
-  max-width: 200px;
-}
-
-main {
-  padding: 12px;
-  max-width: 980px;
-  margin: 0 auto;
-}
-
+.header-left { display: flex; align-items: center; gap: 10px; }
+.header-logo img { height: 52px; border-radius: 6px; }
+.header-text-main { font-size: 1.15rem; font-weight: 700; color: #D9A441; }
+.header-text-sub { font-size: 0.85rem; color: #4F8C47; }
 .card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  padding: 16px;
-  margin-bottom: 16px;
-  border-top: 3px solid #D9A441;
+  background: white; border-radius: 10px; padding: 16px; margin: 16px 0;
+  border-top: 3px solid #D9A441; box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
-
-h2 {
-  font-size: 1.06rem;
-  margin-top: 0;
-  color: #1E3A59;
-}
-
-label {
-  display: block;
-  margin-top: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
+label { display:block; font-weight:500; margin-top:8px; }
 input, select, button {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-top: 4px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  width:100%; padding:10px; border-radius:8px;
+  border:1px solid #ccc; margin-top:4px; font-size:1rem;
 }
-
-button {
-  background: #4F8C47;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  margin-top: 10px;
-}
-
-button.secondary {
-  background: #1E3A59;
-}
-
-button:active {
-  opacity: 0.85;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.col-4 { flex: 1 1 30%; }
-.col-6 { flex: 1 1 48%; }
-.col-12 { flex: 1 1 100%; }
-
-@media (max-width: 600px) {
-  .col-4, .col-6 {
-    flex: 1 1 100%;
-  }
-  .header-tagline { display: none; }
-}
-
-/* TABLES ---------------------------------------------------- */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 0.9rem;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 6px;
-  text-align: left;
-  white-space: nowrap;
-}
-
-th {
-  background: #f0f0f0;
-}
-
-.badge {
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  background: #e3f2fd;
-  color: #1E3A59;
-}
-
-.small-text {
-  font-size: 0.8rem;
-  color: #666;
-}
-
-/* BUTTON ROWS ------------------------------------------------ */
-.actions-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.actions-row button {
-  flex: 1 1 48%;
-}
-
-/* DATE PRESET PILLS ----------------------------------------- */
-.pill-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-}
-
+button { background:#4F8C47; color:white; font-weight:600; cursor:pointer; }
+button.secondary { background:#1E3A59; }
+.pill-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
 .pill {
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid #4F8C47;
-  background: #eaf5ec;
-  font-size: 0.8rem;
-  cursor: pointer;
-  color: #1E3A59;
+  padding:4px 10px; border-radius:999px; border:1px solid #4F8C47;
+  background:#eaf5ec; cursor:pointer; font-size:0.8rem;
 }
-
-/* SUMMARY BOX ----------------------------------------------- */
-.summary-box {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  background: #f7f9fc;
-  border: 1px solid #dde4f2;
-  font-size: 0.9rem;
-}
-
-/* SIGNATURE PAD --------------------------------------------- */
-#signatureWrapper {
-  position: relative;
-  margin-top: 6px;
-}
-
-#signaturePad {
-  width: 100%;
-  height: 140px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: #ffffff;
-  touch-action: none;
-}
-
-#sigPlaceholder {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #888;
-  font-size: 16px;
-  pointer-events: none;
-}
-
-.sig-btn {
-  width: auto;
-  padding: 4px 8px;
-  font-size: 0.75rem;
-  background: #4F8C47;
-  color: #fff;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-}
-
-/* ADMIN ------------------------------------------------------ */
-.admin-toggle-row {
-  text-align: right;
-  margin-bottom: 6px;
-}
-
-.admin-toggle-btn {
-  width: auto;
-  padding: 6px 10px;
-  font-size: 0.75rem;
-  background: #1E3A59;
-}
-
-.tag-list {
-  font-size: 0.8rem;
-  margin-top: 6px;
-  color: #555;
-}
+table { width:100%; border-collapse:collapse; margin-top:12px; font-size:0.9rem; }
+th, td { border:1px solid #ddd; padding:6px; white-space:nowrap; }
 </style>
-
 </head>
+
 <body>
 
 <header>
   <div class="header-left">
-    <div class="header-logo">
-      <img src="ams_logo_cropped.jpg" alt="AMS Logo" />
-    </div>
+    <div class="header-logo"><img src="ams_logo_cropped.jpg"></div>
     <div>
       <div class="header-text-main">AMS Check-In</div>
       <div class="header-text-sub">airport medical solutions</div>
@@ -285,922 +60,290 @@ th {
 </header>
 
 <main>
-  
-<script>
-/* ============================================================
-   AMS CORE ENGINE — STORAGE + UTILITIES
-   ============================================================ */
-
-const STORAGE_KEY = "ams_checkin_records_v1";
-const COMPANY_LIST_KEY = "ams_company_list_v1";
-const ADMIN_PIN = "2468";   // Change if needed
-
-let signatureStore = {}; // stores signature images temporarily
-
-
-/* ============================================================
-   LOAD + SAVE RECORDS
-   ============================================================ */
-function loadRecords() {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    try {
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-    } catch {
-        return [];
-    }
-}
-
-function saveRecords(list) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-}
-
-function addRecord(rec) {
-    const list = loadRecords();
-    list.push(rec);
-    saveRecords(list);
-}
-
-
-/* ============================================================
-   COMPANY LIST STORAGE
-   ============================================================ */
-function loadCompanyList() {
-    const raw = localStorage.getItem(COMPANY_LIST_KEY);
-    if (!raw) return [];
-    try {
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-    } catch {
-        return [];
-    }
-}
-
-function saveCompanyList(list) {
-    localStorage.setItem(COMPANY_LIST_KEY, JSON.stringify(list));
-}
-
-/* Render dropdown used in Check-In */
-function renderCompanySelect() {
-    const select = document.getElementById("companySelect");
-    if (!select) return;
-
-    const list = loadCompanyList();
-    select.innerHTML = `<option value="">-- Select company --</option>`;
-
-    list.forEach(c => {
-        const opt = document.createElement("option");
-        opt.value = c;
-        opt.textContent = c;
-        select.appendChild(opt);
-    });
-
-    // Extra option for typing custom company
-    const opt = document.createElement("option");
-    opt.value = "__OTHER__";
-    opt.textContent = "Other (type manually)";
-    select.appendChild(opt);
-}
-
-/* Render dropdown used for GENERAL REPORT */
-function renderGeneralReportCompanySelect() {
-    const sel = document.getElementById("genReportCompanyDropdown");
-    if (!sel) return;
-
-    const list = loadCompanyList();
-    sel.innerHTML = `<option value="">All Companies</option>`;
-    list.forEach(c => {
-        const opt = document.createElement("option");
-        opt.value = c;
-        opt.textContent = c;
-        sel.appendChild(opt);
-    });
-}
-
-
-/* ============================================================
-   DATE UTILITIES
-   ============================================================ */
-function formatDateInput(d) {
-    return d.toISOString().split("T")[0];
-}
-
-function getLocalDateString(d) {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, "0");
-    const da = String(d.getDate()).padStart(2, "0");
-    return `${y}-${m}-${da}`;
-}
-
-function formatDateTime(iso) {
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return { date: "", time: "" };
-
-    return {
-        date: d.toLocaleDateString(),
-        time: d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-    };
-}
-
-
-/* ============================================================
-   HTML ESCAPER
-   ============================================================ */
-function htmlEscape(str) {
-    if (!str) return "";
-    return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-}
-
-
-/* ============================================================
-   SERVICE FORMATTER (General Report + Company Report use this)
-   ============================================================ */
-function serviceCheckmark(flag) {
-    return flag ? "✔" : "—";
-}
-
-function getServiceColumns(svc) {
-    return {
-        drug: serviceCheckmark(svc.drug),
-        dna: serviceCheckmark(svc.dna),
-        vision: serviceCheckmark(svc.vision),
-        alcohol: serviceCheckmark(svc.alcohol),
-        dot: serviceCheckmark(svc.dot),
-        other: serviceCheckmark(svc.other),
-        otherText: svc.otherText || ""
-    };
-}
-</script>
 
 <script>
-/* ============================================================
-   SIGNATURE PAD SETUP
-   ============================================================ */
-function setupSignaturePad() {
-    const canvas = document.getElementById("signaturePad");
-    const placeholder = document.getElementById("sigPlaceholder");
+/* STORAGE */
+const STORAGE_KEY = "ams_records_v1";
+const COMPANY_KEY = "ams_company_list_v1";
+const ADMIN_PIN = "2468";
 
-    if (!canvas) return null;
+/* LOAD + SAVE */
+function loadRecords(){ return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+function saveRecords(list){ localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+function addRecord(r){ const list = loadRecords(); list.push(r); saveRecords(list); }
 
-    const ctx = canvas.getContext("2d");
-    let drawing = false;
-    let lastX = 0, lastY = 0;
-    let signed = false;
+/* COMPANIES */
+function loadCompanies(){ return JSON.parse(localStorage.getItem(COMPANY_KEY) || "[]"); }
+function saveCompanies(list){ localStorage.setItem(COMPANY_KEY, JSON.stringify(list)); }
 
-    function resizeCanvas() {
-        const box = canvas.getBoundingClientRect();
-        canvas.width = box.width;
-        canvas.height = box.height;
+function renderCompanySelect(){
+  const sel = document.getElementById("companySelect");
+  sel.innerHTML = `<option value="">-- Select Company --</option>`;
+  loadCompanies().forEach(c=>{
+    sel.innerHTML += `<option value="${c}">${c}</option>`;
+  });
+  sel.innerHTML += `<option value="__OTHER__">Other (type)</option>`;
+}
+
+/* OTHER WIRING */
+function htmlEscape(s){ return s.replace(/[&<>]/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;" }[m])); }
+function formatDateTime(iso){
+  const d = new Date(iso);
+  return {
+    date: d.toLocaleDateString(),
+    time: d.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})
+  };
+}
+/* SIGNATURE PAD */
+function setupSignaturePad(){
+  const pad = document.getElementById("signaturePad");
+  const ctx = pad.getContext("2d");
+  let drawing = false, signed = false;
+
+  function resize(){
+    pad.width = pad.clientWidth;
+    pad.height = 140;
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  pad.addEventListener("mousedown", e=>{ drawing=true; signed=true; ctx.moveTo(e.offsetX,e.offsetY); });
+  pad.addEventListener("mousemove", e=>{ if(drawing){ ctx.lineTo(e.offsetX,e.offsetY); ctx.stroke(); }});
+  window.addEventListener("mouseup", ()=> drawing=false);
+
+  return {
+    has:()=>signed,
+    get:()=> pad.toDataURL("image/png"),
+    clear:()=>{ ctx.clearRect(0,0,pad.width,pad.height); signed=false; }
+  };
+}
+
+/* SUBMIT */
+function setupSubmit(sig){
+  document.getElementById("submitBtn").onclick = ()=>{
+
+    let first = document.getElementById("firstName").value.trim();
+    let last = document.getElementById("lastName").value.trim();
+    let compSel = document.getElementById("companySelect").value;
+    let compOther = document.getElementById("otherCompany").value.trim();
+    let reason = document.getElementById("reasonSelect").value;
+    let reasonOther = document.getElementById("otherReason").value.trim();
+
+    if(compSel==="__OTHER__") compSel = compOther;
+    if(reason==="Other") reason = reasonOther;
+
+    if(!first || !last || !compSel || !reason){ alert("Complete all fields."); return; }
+    if(!sig.has()){ alert("Signature required."); return; }
+
+    const svc = [];
+    if(document.getElementById("svc_drug").checked) svc.push("Drug");
+    if(document.getElementById("svc_dna").checked) svc.push("DNA");
+    if(document.getElementById("svc_vision").checked) svc.push("Vision");
+    if(document.getElementById("svc_alcohol").checked) svc.push("Alcohol");
+    if(document.getElementById("svc_dot").checked) svc.push("DOT");
+    if(document.getElementById("svc_other").checked){
+        svc.push("Other: "+document.getElementById("svc_other_text").value.trim());
     }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
 
-    function getPos(e) {
-        const rect = canvas.getBoundingClientRect();
-        let x, y;
-
-        if (e.touches && e.touches[0]) {
-            x = e.touches[0].clientX - rect.left;
-            y = e.touches[0].clientY - rect.top;
-        } else {
-            x = e.clientX - rect.left;
-            y = e.clientY - rect.top;
-        }
-        return { x, y };
-    }
-
-    function start(e) {
-        e.preventDefault();
-        drawing = true;
-        const pos = getPos(e);
-        lastX = pos.x;
-        lastY = pos.y;
-        placeholder.style.display = "none";
-    }
-
-    function move(e) {
-        if (!drawing) return;
-        e.preventDefault();
-
-        const pos = getPos(e);
-        ctx.strokeStyle = "#000";
-        ctx.lineWidth = 2;
-        ctx.lineCap = "round";
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-
-        lastX = pos.x;
-        lastY = pos.y;
-        signed = true;
-    }
-
-    function end(e) {
-        drawing = false;
-    }
-
-    // Desktop
-    canvas.addEventListener("mousedown", start);
-    canvas.addEventListener("mousemove", move);
-    window.addEventListener("mouseup", end);
-
-    // Mobile
-    canvas.addEventListener("touchstart", start, { passive: false });
-    canvas.addEventListener("touchmove", move, { passive: false });
-    canvas.addEventListener("touchend", end);
-    canvas.addEventListener("touchcancel", end);
-
-    // Clear button
-    document.getElementById("clearSigBtn").addEventListener("click", () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        signed = false;
-        placeholder.style.display = "block";
+    addRecord({
+      id: Date.now(),
+      first, last,
+      company: compSel,
+      reason,
+      services: svc.join(" | "),
+      timestamp: new Date().toISOString(),
+      signature: sig.get()
     });
 
-    return {
-        hasSignature: () => signed,
-        getData: () => signed ? canvas.toDataURL("image/png") : "",
-        clear: () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            signed = false;
-            placeholder.style.display = "block";
-        }
-    };
+    alert("Saved!");
+    sig.clear();
+  };
 }
 
+/* SEARCH FOR INDIVIDUAL */
+function searchIndividuals(){
+  const name = document.getElementById("searchName").value.toLowerCase();
+  const comp = document.getElementById("searchCompany").value.toLowerCase();
+  const date = document.getElementById("searchDate").value;
 
-/* ============================================================
-   SUBMIT CHECK-IN LOGIC
-   ============================================================ */
+  const list = loadRecords();
+  const tb = document.getElementById("searchTableBody");
+  tb.innerHTML = "";
 
-function playSubmitSound() {
-    var audio = new Audio(
-        "data:audio/wav;base64,UklGRoQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQwAAACAgICAgICAgICAgICAhISEhISEhISEhICAhISEhISEhISEhICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg"
-    );
-    audio.volume = 0.35;
-    audio.play().catch(()=>{});
+  list.filter(r=>{
+    const d = new Date(r.timestamp);
+    const ds = d.toISOString().split("T")[0];
+    return (!name || r.first.toLowerCase().includes(name) || r.last.toLowerCase().includes(name))
+      && (!comp || r.company.toLowerCase().includes(comp))
+      && (!date || ds===date);
+  })
+  .sort((a,b)=> new Date(b.timestamp)-new Date(a.timestamp))
+  .forEach(r=>{
+    const dt = formatDateTime(r.timestamp);
+    tb.innerHTML += `
+      <tr>
+        <td>${dt.date}</td><td>${dt.time}</td>
+        <td>${r.first}</td><td>${r.last}</td>
+        <td>${r.company}</td><td>${r.reason}</td>
+        <td>${htmlEscape(r.services)}</td>
+      </tr>`;
+  });
 }
 
-function setupCheckInSubmit(signaturePad) {
-    const submitBtn = document.getElementById("submitBtn");
-    const msg = document.getElementById("submitMessage");
-
-    submitBtn.addEventListener("click", () => {
-        msg.textContent = "";
-
-        const first = document.getElementById("firstName").value.trim();
-        const last = document.getElementById("lastName").value.trim();
-        const companySel = document.getElementById("companySelect").value.trim();
-        const otherCompany = document.getElementById("otherCompany").value.trim();
-
-        let company = companySel;
-        if (companySel === "__OTHER__") {
-            if (!otherCompany) {
-                msg.textContent = "Please enter the company name.";
-                msg.style.color = "red";
-                return;
-            }
-            company = otherCompany;
-        }
-
-        let reason = document.getElementById("reasonSelect").value.trim();
-        const otherReason = document.getElementById("otherReasonInput").value.trim();
-        if (reason.includes("Other")) {
-            if (!otherReason) {
-                msg.textContent = "Please enter the testing reason.";
-                msg.style.color = "red";
-                return;
-            }
-            reason = otherReason;
-        }
-
-        // Validate names
-        if (!first || !last) {
-            msg.textContent = "First and last name required.";
-            msg.style.color = "red";
-            return;
-        }
-
-        // Validate company
-        if (!company) {
-            msg.textContent = "Please select or enter a company.";
-            msg.style.color = "red";
-            return;
-        }
-
-        // Validate reason
-        if (!reason) {
-            msg.textContent = "Please select the reason for testing.";
-            msg.style.color = "red";
-            return;
-        }
-
-        // Validate signature
-        if (!signaturePad.hasSignature()) {
-            msg.textContent = "Signature required.";
-            msg.style.color = "red";
-            return;
-        }
-
-        // Collect service selections
-        const svc = {
-            drug: document.querySelector("input[name='service_drug']").checked,
-            dna: document.querySelector("input[name='service_dna']").checked,
-            vision: document.querySelector("input[name='service_vision']").checked,
-            alcohol: document.querySelector("input[name='service_alcohol']").checked,
-            dot: document.querySelector("input[name='service_dot']").checked,
-            other: document.getElementById("service_other").checked,
-            otherText: document.getElementById("other_reason").value.trim()
-        };
-
-        if (svc.other && !svc.otherText) {
-            msg.textContent = "Please fill in the 'Other' service text.";
-            msg.style.color = "red";
-            return;
-        }
-
-        // Build record
-        const rec = {
-            id: Date.now().toString(),
-            firstName: first,
-            lastName: last,
-            company: company,
-            reason: reason,
-            serviceTypes: svc,
-            signatureDataUrl: signaturePad.getData(),
-            timestamp: new Date().toISOString()
-        };
-
-        addRecord(rec);
-
-        playSubmitSound();
-
-        // Reset form
-        document.getElementById("firstName").value = "";
-        document.getElementById("lastName").value = "";
-        document.getElementById("reasonSelect").value = "";
-        document.getElementById("otherReasonInput").value = "";
-        document.getElementById("otherReasonWrapper").style.display = "none";
-        document.getElementById("companySelect").value = "";
-        document.getElementById("otherCompany").value = "";
-        document.getElementById("otherCompanyWrapper").style.display = "none";
-
-        document.querySelectorAll(".service-options input[type='checkbox']")
-            .forEach(cb => cb.checked = false);
-
-        document.getElementById("other_reason").value = "";
-        document.getElementById("other_reason").style.display = "none";
-
-        signaturePad.clear();
-
-        msg.textContent = "Check-in saved.";
-        msg.style.color = "green";
-
-        setTimeout(() => msg.textContent = "", 2500);
-    });
+/* GENERAL REPORT */
+function applyPreset(p){
+  const s=document.getElementById("genStart"), e=document.getElementById("genEnd");
+  let S=new Date(),E=new Date();
+  switch(p){
+    case"today":break;
+    case"yesterday":S.setDate(S.getDate()-1);E=new Date(S);break;
+    case"thisWeek":S.setDate(S.getDate()-S.getDay());break;
+    case"lastWeek":S.setDate(S.getDate()-S.getDay()-7);E=new Date(S);E.setDate(S.getDate()+6);break;
+    case"thisMonth":S=new Date(S.getFullYear(),S.getMonth(),1);break;
+    case"lastMonth":S=new Date(S.getFullYear(),S.getMonth()-1,1);E=new Date(S.getFullYear(),S.getMonth()+1,0);break;
+    case"thisYear":S=new Date(S.getFullYear(),0,1);break;
+    case"lastYear":S=new Date(S.getFullYear()-1,0,1);E=new Date(S.getFullYear(),11,31);break;
+  }
+  s.value=S.toISOString().split("T")[0];
+  e.value=E.toISOString().split("T")[0];
 }
+
+function runGeneralReport(){
+  const s=document.getElementById("genStart").value;
+  const e=document.getElementById("genEnd").value;
+  const comp=document.getElementById("genCompany").value.toLowerCase();
+  const tb=document.getElementById("generalBody");
+  tb.innerHTML="";
+
+  if(!s||!e){ tb.innerHTML=`<tr><td colspan="7">Select date range</td></tr>`; return;}
+
+  let S=new Date(s),E=new Date(e+"T23:59:59");
+  loadRecords().filter(r=>{
+    const d=new Date(r.timestamp);
+    return d>=S && d<=E && (!comp || r.company.toLowerCase()===comp);
+  })
+  .sort((a,b)=> new Date(a.timestamp)-new Date(b.timestamp))
+  .forEach(r=>{
+    const dt=formatDateTime(r.timestamp);
+    tb.innerHTML+=`
+      <tr>
+        <td>${dt.date}</td><td>${dt.time}</td>
+        <td>${r.first}</td><td>${r.last}</td>
+        <td>${r.company}</td><td>${r.reason}</td>
+        <td>${htmlEscape(r.services)}</td>
+      </tr>`;
+  });
+}
+
+/* INIT */
+document.addEventListener("DOMContentLoaded", ()=>{
+  renderCompanySelect();
+  const sig=setupSignaturePad();
+  setupSubmit(sig);
+});
 </script>
-/* ============================================================
-   ADMIN LOGIN TOGGLE
-   ============================================================ */
-let adminUnlocked = false;
 
-function toggleAdmin() {
-    if (adminUnlocked) {
-        adminUnlocked = false;
-        document.getElementById("adminArea").style.display = "none";
-        document.getElementById("adminStatusText").textContent = "";
-        document.getElementById("toggleAdminBtn").textContent = "Admin Login";
-        return;
-    }
-
-    const pin = prompt("Enter Admin PIN:");
-    if (pin === ADMIN_PIN) {
-        adminUnlocked = true;
-        document.getElementById("adminArea").style.display = "block";
-        document.getElementById("adminStatusText").textContent = "Admin mode: ON";
-        document.getElementById("toggleAdminBtn").textContent = "Hide Admin";
-        refreshSearchTable();
-    } else if (pin !== null) {
-        alert("Incorrect PIN");
-    }
-}
-
-/* ============================================================
-   SEARCH FOR INDIVIDUAL
-   ============================================================ */
-function refreshSearchTable() {
-    const tbody = document.querySelector("#searchTableBody");
-    if (!tbody) return;
-
-    tbody.innerHTML = "";
-
-    const nameFilter = document.getElementById("searchName").value.trim().toLowerCase();
-    const companyFilter = document.getElementById("searchCompany").value.trim().toLowerCase();
-    const dateFilter = document.getElementById("searchDate").value;
-
-    const list = loadRecords();
-
-    const results = list.filter(rec => {
-        let ok = true;
-
-        // Name search (first, last, or both)
-        const fn = rec.firstName.toLowerCase();
-        const ln = rec.lastName.toLowerCase();
-
-        if (nameFilter) {
-            ok = ok && (fn.includes(nameFilter) || ln.includes(nameFilter));
-        }
-
-        // Company filter
-        if (companyFilter) {
-            ok = ok && rec.company.toLowerCase().includes(companyFilter);
-        }
-
-        // Date filter
-        if (dateFilter) {
-            const d = new Date(rec.timestamp);
-            const local = getLocalDateString(d);
-            ok = ok && (local === dateFilter);
-        }
-
-        return ok;
-    });
-
-    // Sort newest → oldest
-    results.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-    // Render rows
-    results.forEach(rec => {
-        const dt = formatDateTime(rec.timestamp);
-        const svc = getServiceColumns(rec.serviceTypes);
-
-        const sigButton = rec.signatureDataUrl
-            ? `<button class="sig-btn" data-sigid="${rec.id}">View</button>`
-            : "";
-
-        const row = `
-            <tr>
-                <td>${dt.date}</td>
-                <td>${dt.time}</td>
-                <td>${rec.firstName}</td>
-                <td>${rec.lastName}</td>
-                <td>${rec.company}</td>
-                <td>${rec.reason}</td>
-                <td>${svc.drug} ${svc.dna} ${svc.vision} ${svc.alcohol} ${svc.dot} ${svc.other} ${svc.otherText}</td>
-                <td>${sigButton}</td>
-            </tr>
-        `;
-        tbody.insertAdjacentHTML("beforeend", row);
-
-        signatureStore[rec.id] = rec.signatureDataUrl || "";
-    });
-}
-
-/* CLEAR SEARCH FILTERS */
-function clearSearchFilters() {
-    document.getElementById("searchName").value = "";
-    document.getElementById("searchCompany").value = "";
-    document.getElementById("searchDate").value = "";
-    document.querySelector("#searchTableBody").innerHTML = "";
-}
+<!-- ============================ CHECK-IN FORM ============================ -->
 <section class="card">
-    <h2>Search for Individual</h2>
+  <h2>Check-In</h2>
 
-    <div class="row">
-        <div class="col-4">
-            <label>Name</label>
-            <input id="searchName" type="text" placeholder="first or last">
-        </div>
+  <label>First Name</label>
+  <input id="firstName">
 
-        <div class="col-4">
-            <label>Company</label>
-            <input id="searchCompany" type="text" placeholder="company name">
-        </div>
+  <label>Last Name</label>
+  <input id="lastName">
 
-        <div class="col-4">
-            <label>Date</label>
-            <input id="searchDate" type="date">
-        </div>
-    </div>
+  <label>Company</label>
+  <select id="companySelect"></select>
+  <input id="otherCompany" placeholder="Type company here">
 
-    <div class="actions-row">
-        <button onclick="refreshSearchTable()">Search</button>
-        <button class="secondary" onclick="clearSearchFilters()">Clear</button>
-    </div>
+  <label>Reason for Testing</label>
+  <select id="reasonSelect">
+    <option value="">Select reason</option>
+    <option>Random</option>
+    <option>Pre-Employment</option>
+    <option>Post-Accident</option>
+    <option>Reasonable Suspicion</option>
+    <option>Follow-Up</option>
+    <option>Return to Duty</option>
+    <option>Other</option>
+  </select>
+  <input id="otherReason" placeholder="Enter other reason">
 
-    <div style="overflow-x:auto;">
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time In</th>
-                    <th>First</th>
-                    <th>Last</th>
-                    <th>Company</th>
-                    <th>Reason</th>
-                    <th>Services</th>
-                    <th>Signature</th>
-                </tr>
-            </thead>
-            <tbody id="searchTableBody"></tbody>
-        </table>
-    </div>
+  <label>Services</label>
+  <input type="checkbox" id="svc_drug"> Drug Test<br>
+  <input type="checkbox" id="svc_dna"> DNA / Paternity Test<br>
+  <input type="checkbox" id="svc_vision"> Vision Test<br>
+  <input type="checkbox" id="svc_alcohol"> Alcohol Test<br>
+  <input type="checkbox" id="svc_dot"> DOT Test<br>
+  <input type="checkbox" id="svc_other"> Other
+  <input id="svc_other_text">
+
+  <label>Signature</label>
+  <canvas id="signaturePad" style="border:1px solid #ccc; width:100%; height:140px;"></canvas>
+
+  <button id="submitBtn">Submit</button>
 </section>
-<!-- ============================================================
-     GENERAL REPORT (Version A — One Combined Services Column)
-     ============================================================ -->
-<script>
-/* DATE PRESET HANDLER */
-function applyGeneralPreset(preset) {
-    const start = document.getElementById("genStart");
-    const end = document.getElementById("genEnd");
 
-    const now = new Date();
-    let s = new Date();
-    let e = new Date();
-
-    switch (preset) {
-        case "today": break;
-
-        case "yesterday":
-            s.setDate(s.getDate() - 1);
-            e.setDate(e.getDate() - 1);
-            break;
-
-        case "thisWeek":
-            s = new Date(now.setDate(now.getDate() - now.getDay()));
-            break;
-
-        case "lastWeek":
-            const d = now.getDay();
-            s = new Date(now.setDate(now.getDate() - d - 7));
-            e = new Date(s);
-            e.setDate(s.getDate() + 6);
-            break;
-
-        case "thisMonth":
-            s = new Date(now.getFullYear(), now.getMonth(), 1);
-            break;
-
-        case "lastMonth":
-            s = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-            e = new Date(now.getFullYear(), now.getMonth(), 0);
-            break;
-
-        case "thisYear":
-            s = new Date(now.getFullYear(), 0, 1);
-            break;
-
-        case "lastYear":
-            s = new Date(now.getFullYear() - 1, 0, 1);
-            e = new Date(now.getFullYear() - 1, 11, 31);
-            break;
-    }
-
-    start.value = formatDateInput(s);
-    end.value = formatDateInput(e);
-}
-
-
-
-/* RUN GENERAL REPORT */
-function runGeneralReport() {
-    const start = document.getElementById("genStart").value;
-    const end = document.getElementById("genEnd").value;
-    const companyFilter = document.getElementById("genReportCompanyDropdown").value.trim().toLowerCase();
-    const tbody = document.getElementById("generalReportBody");
-
-    tbody.innerHTML = "";
-
-    if (!start || !end) {
-        tbody.innerHTML = `<tr><td colspan="7" style="color:red;">Select a valid date range.</td></tr>`;
-        return;
-    }
-
-    const list = loadRecords();
-    const s = new Date(start);
-    const e = new Date(end + "T23:59:59");
-
-    let filtered = list.filter(r => {
-        const t = new Date(r.timestamp);
-        let ok = t >= s && t <= e;
-
-        if (companyFilter && companyFilter !== "" &&
-            r.company.toLowerCase() !== companyFilter) {
-            ok = false;
-        }
-
-        return ok;
-    });
-
-    // SORT NEWEST → OLDEST
-    filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-    if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7">No results found.</td></tr>`;
-        return;
-    }
-
-    filtered.forEach(r => {
-        const dt = formatDateTime(r.timestamp);
-        const svc = getServiceColumns(r.serviceTypes);
-
-        const combined =
-            `${svc.drug} Drug | ${svc.dna} DNA | ${svc.vision} Vision | ` +
-            `${svc.alcohol} Alcohol | ${svc.dot} DOT | ${svc.other} Other` +
-            (svc.otherText ? `: ${svc.otherText}` : "");
-
-        const row = `
-            <tr>
-                <td>${dt.date}</td>
-                <td>${dt.time}</td>
-                <td>${htmlEscape(r.firstName)}</td>
-                <td>${htmlEscape(r.lastName)}</td>
-                <td>${htmlEscape(r.company)}</td>
-                <td>${htmlEscape(r.reason)}</td>
-                <td>${combined}</td>
-            </tr>
-        `;
-
-        tbody.insertAdjacentHTML("beforeend", row);
-    });
-}
-
-
-
-/* EXPORT TO XLS */
-function exportGeneralReportXLS() {
-    const table = document.getElementById("generalReportTable");
-    if (!table) {
-        alert("No report to export.");
-        return;
-    }
-
-    let csv = "";
-    const rows = table.querySelectorAll("tr");
-
-    rows.forEach(row => {
-        const cells = [...row.querySelectorAll("th, td")].map(c =>
-            `"${c.innerText.replace(/"/g, '""')}"`
-        );
-        csv += cells.join(",") + "\n";
-    });
-
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "General_Report.csv";
-    a.click();
-
-    URL.revokeObjectURL(url);
-}
-
-
-/* EXPORT PDF PLACEHOLDER */
-function exportGeneralReportPDF() {
-    alert("PDF export will be enabled next (browser print-to-PDF).");
-}
-</script>
-/* ============================================================
-   GENERAL REPORT ENGINE — FILTER + RENDER TABLE
-============================================================ */
-
-function runGeneralReport() {
-    const start = document.getElementById("genStart").value;
-    const end = document.getElementById("genEnd").value;
-    const companyFilter = document.getElementById("genReportCompanyDropdown").value.trim().toLowerCase();
-
-    const container = document.getElementById("generalReportResults");
-    if (!container) return;
-
-    if (!start || !end) {
-        container.innerHTML = `<p style="color:red;">Please select a valid date range.</p>`;
-        return;
-    }
-
-    const s = new Date(start);
-    const e = new Date(end);
-    e.setHours(23, 59, 59, 999);
-
-    const list = loadRecords();
-
-    const filtered = list.filter(r => {
-        const t = new Date(r.timestamp);
-
-        if (t < s || t > e) return false;
-
-        if (companyFilter && r.company.toLowerCase() !== companyFilter)
-            return false;
-
-        return true;
-    });
-
-    renderGeneralReportTable(filtered, start, end, companyFilter);
-}
-
-
-/* ============================================================
-   TABLE RENDERER — VERSION A (One Combined Services Column)
-============================================================ */
-
-function renderGeneralReportTable(list, start, end, companyFilter) {
-    const container = document.getElementById("generalReportResults");
-    if (!container) return;
-
-    if (list.length === 0) {
-        container.innerHTML = `<p>No results found for the selected filters.</p>`;
-        return;
-    }
-
-    let html = `
-        <h3>General Report</h3>
-        <p><b>Date Range:</b> ${start} → ${end}</p>
-        <p><b>Company:</b> ${companyFilter ? companyFilter : "All Companies"}</p>
-        
-        <button id="exportGeneralXLS" class="secondary">Export to Excel</button>
-        <button id="exportGeneralPDF" class="secondary">Export PDF</button>
-
-        <table class="admin-table" style="margin-top:12px;">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>First</th>
-                    <th>Last</th>
-                    <th>Company</th>
-                    <th>Reason</th>
-                    <th>Services</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-    list.forEach(r => {
-        const dt = formatDateTime(r.timestamp);
-        const svc = getServiceColumns(r.serviceTypes);
-
-        const combinedServices = `
-            ${svc.drug ? "Drug " : ""}
-            ${svc.dna ? "DNA " : ""}
-            ${svc.vision ? "Vision " : ""}
-            ${svc.alcohol ? "Alcohol " : ""}
-            ${svc.dot ? "DOT " : ""}
-            ${svc.other ? "Other: " + svc.otherText : ""}
-        `.trim();
-
-        html += `
-            <tr>
-                <td>${dt.date}</td>
-                <td>${dt.time}</td>
-                <td>${htmlEscape(r.firstName)}</td>
-                <td>${htmlEscape(r.lastName)}</td>
-                <td>${htmlEscape(r.company)}</td>
-                <td>${htmlEscape(r.reason)}</td>
-                <td>${combinedServices}</td>
-            </tr>
-        `;
-    });
-
-    html += `
-            </tbody>
-        </table>
-    `;
-
-    container.innerHTML = html;
-
-    // Wire up export buttons
-    document.getElementById("exportGeneralXLS").addEventListener("click", () => {
-        exportGeneralReportXLS(list);
-    });
-    document.getElementById("exportGeneralPDF").addEventListener("click", () => {
-        exportGeneralReportPDF(list);
-    });
-}
-/* ============================================================
-   EXPORT GENERAL REPORT — EXCEL (Version A)
-   ============================================================ */
-
-function exportGeneralReportXLS(list) {
-    if (!list || list.length === 0) {
-        alert("No data to export.");
-        return;
-    }
-
-    let csv = "Date,Time,First,Last,Company,Reason,Services\n";
-
-    list.forEach(r => {
-        const { date, time } = formatDateTime(r.timestamp);
-        const svc = getServiceColumns(r.serviceTypes);
-
-        const combined =
-            (svc.drug ? "Drug " : "") +
-            (svc.dna ? "DNA " : "") +
-            (svc.vision ? "Vision " : "") +
-            (svc.alcohol ? "Alcohol " : "") +
-            (svc.dot ? "DOT " : "") +
-            (svc.other ? "Other: " + svc.otherText : "");
-
-        csv += `"${date}","${time}","${r.firstName}","${r.lastName}","${r.company}","${r.reason}","${combined.trim()}"\n`;
-    });
-
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "General_Report.csv";
-    a.click();
-
-    URL.revokeObjectURL(url);
-}
-/* ============================================================
-   EXPORT GENERAL REPORT — PDF (Version A — Browser Print Mode)
-   ============================================================ */
-
-function exportGeneralReportPDF(list) {
-    if (!list || list.length === 0) {
-        alert("No data to export.");
-        return;
-    }
-
-    // Create a popup window
-    const win = window.open("", "_blank");
-    win.document.write(`
-        <html>
-        <head>
-            <title>General Report PDF</title>
-            <style>
-                body { font-family: Arial, sans-serif; padding: 20px; }
-                table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-                th, td {
-                    border: 1px solid #444;
-                    padding: 6px;
-                    font-size: 12px;
-                }
-                th { background: #eee; }
-            </style>
-        </head>
-        <body>
-            <h2>General Report</h2>
-            <p>Total Records: ${list.length}</p>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>First</th>
-                        <th>Last</th>
-                        <th>Company</th>
-                        <th>Reason</th>
-                        <th>Services</th>
-                    </tr>
-                </thead>
-                <tbody>
-    `);
-
-    list.forEach(r => {
-        const { date, time } = formatDateTime(r.timestamp);
-        const svc = getServiceColumns(r.serviceTypes);
-        const services =
-            (svc.drug ? "Drug " : "") +
-            (svc.dna ? "DNA " : "") +
-            (svc.vision ? "Vision " : "") +
-            (svc.alcohol ? "Alcohol " : "") +
-            (svc.dot ? "DOT " : "") +
-            (svc.other ? "Other: " + svc.otherText : "");
-
-        win.document.write(`
-            <tr>
-                <td>${date}</td>
-                <td>${time}</td>
-                <td>${r.firstName}</td>
-                <td>${r.lastName}</td>
-                <td>${r.company}</td>
-                <td>${r.reason}</td>
-                <td>${services}</td>
-            </tr>
-        `);
-    });
-
-    win.document.write(`
-                </tbody>
-            </table>
-
-            <script>
-                window.onload = function() { window.print(); }
-            </script>
-        </body>
-        </html>
-    `);
-
-    win.document.close();
-}
+<!-- ============================ SEARCH FOR INDIVIDUAL ============================ -->
+<section class="card">
+  <h2>Search for Individual</h2>
+
+  <label>Name</label>
+  <input id="searchName">
+
+  <label>Company</label>
+  <input id="searchCompany">
+
+  <label>Date</label>
+  <input id="searchDate" type="date">
+
+  <button onclick="searchIndividuals()">Search</button>
+
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Time</th><th>First</th><th>Last</th><th>Company</th><th>Reason</th><th>Services</th></tr>
+    </thead>
+    <tbody id="searchTableBody"></tbody>
+  </table>
+</section>
+
+<!-- ============================ GENERAL REPORT ============================ -->
+<section class="card">
+  <h2>General Report</h2>
+
+  <div class="pill-row">
+    <span class="pill" onclick="applyPreset('today')">Today</span>
+    <span class="pill" onclick="applyPreset('yesterday')">Yesterday</span>
+    <span class="pill" onclick="applyPreset('thisWeek')">This Week</span>
+    <span class="pill" onclick="applyPreset('lastWeek')">Last Week</span>
+    <span class="pill" onclick="applyPreset('thisMonth')">This Month</span>
+    <span class="pill" onclick="applyPreset('lastMonth')">Last Month</span>
+    <span class="pill" onclick="applyPreset('thisYear')">This Year</span>
+    <span class="pill" onclick="applyPreset('lastYear')">Last Year</span>
+  </div>
+
+  <label>Start Date</label>
+  <input type="date" id="genStart">
+
+  <label>End Date</label>
+  <input type="date" id="genEnd">
+
+  <label>Company (optional)</label>
+  <select id="genCompany">
+    <option value="">All</option>
+  </select>
+
+  <button onclick="runGeneralReport()">Run Report</button>
+
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Time</th><th>First</th><th>Last</th><th>Company</th><th>Reason</th><th>Services</th></tr>
+    </thead>
+    <tbody id="generalBody"></tbody>
+  </table>
+</section>
+
+</main>
+</body>
+</html>
