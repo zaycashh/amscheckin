@@ -688,7 +688,6 @@ function renderCompanyListDisplay() {
 
       row.appendChild(label);
 
-      // CLICK TO SELECT COMPANY
       row.addEventListener("click", () => {
           document.getElementById("selectedCompany").textContent = name;
           document.getElementById("editDeletePanel").style.display = "block";
@@ -696,6 +695,11 @@ function renderCompanyListDisplay() {
 
       container.appendChild(row);
   });
+
+}   // <-- THIS LINE WAS MISSING
+// ===============================
+// UNIFIED EDIT / DELETE FUNCTIONS
+
 // ===============================
 // UNIFIED EDIT / DELETE FUNCTIONS
 // ===============================
