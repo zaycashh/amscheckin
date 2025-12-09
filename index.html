@@ -621,14 +621,17 @@
 
   // Listen for the Search button click
   document.getElementById("searchBtn").addEventListener("click", function() {
+    console.log("Search button clicked");  // Debugging line to check if the button is clicked
+
     // Get the values from the search fields
     const name = document.getElementById("searchName").value.trim(); // Donor Name
     const company = document.getElementById("searchCompany").value.trim(); // Company Name
     const date = document.getElementById("searchDate").value.trim(); // Date
     const reason = document.getElementById("searchReason").value.trim(); // Reason for Test
 
-    // Filter through the check-ins (this example assumes data is in localStorage)
-    const log = JSON.parse(localStorage.getItem("amsLog") || "[]"); // Replace with actual data source if needed
+    console.log(`Searching with: Name: ${name}, Company: ${company}, Date: ${date}, Reason: ${reason}`); // Log the search values
+
+    const log = JSON.parse(localStorage.getItem("amsLog") || "[]");
     const filteredResults = log.filter(entry => {
         return (
             (name === "" || entry.first.includes(name) || entry.last.includes(name)) &&
@@ -638,8 +641,9 @@
         );
     });
 
-    // Display filtered results in the table
-    updateResultsTable(filteredResults);
+    console.log(`Filtered Results:`, filteredResults);  // Log the filtered results for verification
+
+    updateResultsTable(filteredResults);  // Show filtered results in the table
 });
 
   function updateResultsTable(results) {
