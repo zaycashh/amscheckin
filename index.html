@@ -1765,8 +1765,6 @@ function exportSearchResultsToExcel() {
         const range = pill.dataset.companyrange;   // read the preset
         applyCompanyDatePreset(range);             // update the inputs
     });
-});
-      });  // CLOSE DOMContentLoaded
 
       const runReportBtn = document.getElementById('runReportBtn');
       const clearReportBtn = document.getElementById('clearReportBtn');
@@ -2040,10 +2038,10 @@ if (exportSearchPdfBtn) {
     a.download = "search_results.pdf";
     a.click();
 
-    URL.revokeObjectURL(url);
+URL.revokeObjectURL(url);
 }
-
-  </script>
-        
+});
+    
+</script>   
 </body>
 </html>
