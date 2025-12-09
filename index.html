@@ -1167,7 +1167,7 @@ function renderSearchResults(results) {
         return;
     }
 
-    results.forEach(entry => {
+results.forEach(entry => {
     let tr = document.createElement("tr");
     tr.innerHTML = `
         <td>${entry.date || "N/A"}</td>
@@ -1177,7 +1177,7 @@ function renderSearchResults(results) {
         <td>${entry.company || "N/A"}</td>
         <td>${entry.reason || "N/A"}</td>
         <td>${entry.services ? entry.services.join(", ") : "N/A"}</td>
-        <td><img src="${entry.signature || 'placeholder-image.png'}" style="width:70px;border:1px solid #ccc;"></td>
+        <td><img src="${entry.signature || ''}" style="width:70px;border:1px solid #ccc;"></td>
     `;
     tbody.appendChild(tr);
 });
