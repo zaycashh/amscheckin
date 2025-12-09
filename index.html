@@ -696,7 +696,37 @@ function renderCompanyListDisplay() {
 
       container.appendChild(row);
   });
+// ===============================
+// UNIFIED EDIT / DELETE FUNCTIONS
+// ===============================
 
+function editCompany() {
+    const selected = document.getElementById("selectedCompany").textContent;
+    if (!selected) return alert("No company selected.");
+
+    const newName = prompt("Enter new company name:", selected);
+
+    if (newName && newName.trim()) {
+        let companies = loadCompanyList();
+        const index = companies.indexOf(selected);
+        companies[index] = newName.trim();
+        saveCompanyList(companies);
+        renderCompanySelect();
+        renderCompanyListDisplay();
+    }
+}
+
+function deleteCompany() {
+    const selected = document.getElementById("selectedCompany").textContent;
+    if (!selected) return alert("No company selected.");
+
+    if (confirm("Delete " + selected + "?")) {
+        let companies = loadCompanyList().filter(c => c !== selected);
+        saveCompanyList(companies);
+        renderCompanySelect();
+        renderCompanyListDisplay();
+        document.getElementById("editDeletePanel").style.display = "none";
+    }
 }
 
 // ===============================
